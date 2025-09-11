@@ -76,11 +76,74 @@ p {
             }
 p.beeg {
   font-size: 30px;
+
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+
+.sidebar a {
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #f1f1f1;
+  display: block;
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background: #575757;
+}
+
+.sidebar h3 {
+  color: #bbb;
+  margin: 20px 16px 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/* Hamburger button */
+.openbtn {
+  font-size: 24px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+}
+
 }
         </style>
 </head>
     
 <body>
+<!-- Sidebar -->
+<div id="mySidebar" class="sidebar">
+  <h3>Main</h3>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <h3>Site</h3>
+  <a href="/page1">Page 1</a>
+  <a href="/page2">Page 2</a>
+</div>
+
+<!-- Hamburger button -->
+<button class="openbtn" onclick="toggleSidebar()">☰</button>
+
     <br>
     <h1 style="color:White;">elastrixx</h1>
     <h2 style="color:White;">professional girlfailure and novice gamedev</h2>
@@ -187,5 +250,16 @@ p.beeg {
     <br>
     <br>
     <br>
+<script>
+function toggleSidebar() {
+  const sidebar = document.getElementById("mySidebar");
+  if (sidebar.style.width === "250px") {
+    sidebar.style.width = "0";
+  } else {
+    sidebar.style.width = "250px";
+  }
+}
+</script>
+
 </body>
 </html>
