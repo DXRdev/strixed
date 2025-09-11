@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>files</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #001100;
+      color: #00ff00;
+      font-family: monospace;
+      overflow: hidden;
+    }
+
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: #00ff00;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      z-index: 9999;
+    }
+
+    /* Desktop area */
+    #desktop {
+      display: none; /* shown after loading */
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .folder {
+      display: inline-block;
+      text-align: center;
+      margin: 20px;
+      cursor: pointer;
+    }
+
+    .folder img {
+      width: 64px;
+      height: 64px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .folder span {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #00ff00;
+    }
+
+    /* Password overlay */
+    #password-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    #password-box {
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 200px;
+    }
+
+    #password-box h2 {
+      margin: 0 0 10px;
+      font-family: monospace;
+    }
+
+    #password-input {
+      font-family: monospace;
+      border: 1px solid black;
+      padding: 5px;
+      width: 80%;
+    }
+
+    .blinking-cursor {
+      display: inline-block;
+      width: 10px;
+      animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading screen -->
+  <div id="loading-screen">
+    <p>LOADING SYSTEM...</p>
+    <p id="progress">0%</p>
+  </div>
+
+  <!-- Desktop -->
+  <div id="desktop">
+    <div class="folder">
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
+      <span>Folder 1</span>
+    </div>
+    <div class="folder">
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
+      <span>Folder 2</span>
+    </div>
+    <div class="folder locked">
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
+      <span>Folder 3</span>
+    </div>
+    <div class="folder locked">
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
+      <span>Folder 4</span>
+    </div>
+    <div class="folder locked">
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
+      <span>Folder 5</span>
+    </div>
+    <div class="folder">
+      <img src="https://i.imgur.com/H9mV2WD.png" alt="Unlocked Folder">
+      <span>Folder 6</span>
+    </div>
+    <div class="folder">
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
+      <span>Folder 7</span>
+    </div>
+  </div>
+
+  <!-- Password overlay -->
+  <div id="password-overlay">
+    <div id="password-box">
+      <h2>PASSWORD <span class="blinking-cursor">|</span></h2>
+      <input id="password-input" type="password" placeholder="Enter password...">
+    </div>
+  </div>
+
+  <script>
+    const loadingScreen = document.getElementById("loading-screen");
+    const progressText = document.getElementById("progress");
+    const desktop = document.getElementById("desktop");
+
+    setTimeout(() => { progressText.textContent = "39%"; }, 700);
+    setTimeout(() => { progressText.textContent = "100%"; }, 1500);
+    setTimeout(() => {
+      loadingScreen.style.display = "none";
+      desktop.style.display = "block";
+    }, 2000);
+
+    // Password overlay logic
+    const overlay = document.getElementById("password-overlay");
+    const passwordInput = document.getElementById("password-input");
+
+    document.querySelectorAll(".folder.locked").forEach(folder => {
+      folder.addEventListener("click", () => {
+        overlay.style.display = "flex";
+        passwordInput.focus();
+      });
+    });
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.style.display = "none";
+        passwordInput.value = "";
+      }
+    });
+  </script>
+
+</body>
+</html>
