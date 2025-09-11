@@ -128,30 +128,36 @@
     </div>
   </div>
 
-  <!-- Fake loading overlay -->
+  <! ts sucks icl -->
   <div class="loading-overlay" id="loading">
     <div class="spinner"></div>
     <p>Verifying credentials...</p>
   </div>
 
-  <script>
-    function checkLogin() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value.trim();
+<script>
+  function checkLogin() {
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+  const loginBtn = document.querySelector("button");
+  const correctUser = atob("c2lsdmVyb25l");
+  const correctPass = atob("c2NpZW5jZXRlYW0wNTE5"); 
 
-      const correctUser = atob("c2lsdmVyb25l");
-      const correctPass = atob("c2NpZW5jZXRlYW0wNTE5");
-      if (user === correctUser && pass === correctPass) {
-        // Show loading screen
-        document.getElementById("loading").style.display = "flex";
+  if (user === correctUser && pass === correctPass) {
+  document.getElementById("loading").style.display = "flex";
 
-        setTimeout(() => {
-          window.location.href = "/files_user_silverone";
-        }, 2000);
-      } else {
-        document.getElementById("error-msg").style.display = "block";
-      }
+  setTimeout(() => {
+    window.location.href = "/files_user_silverone";
+      }, 1900);
+    } else {
+      document.getElementById("error-msg").style.display = "block";
+    
+      loginBtn.disabled = true;
+      setTimeout(() => {
+        loginBtn.disabled = false;
+      }, 1000);
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>
