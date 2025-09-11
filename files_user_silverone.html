@@ -38,7 +38,7 @@
     .folder {
       display: inline-block;
       text-align: center;
-      margin: 40px;
+      margin: 50px;
       cursor: pointer;
     }
 
@@ -51,93 +51,12 @@
 
     .folder span {
       display: block;
-      margin-top: 8px;
-      font-size: 14px;
+      margin-top: 10px;
+      font-size: 15px;
       color: #00ff00;
     }
 
-       /* Password overlay */
-    #password-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    }
-
-    #password-box {
-      background: white;
-      color: black;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-      min-width: 200px;
-    }
-
-    #password-box h2 {
-      margin: 0 0 10px;
-      font-family: monospace;
-    }
-
-    #password-input {
-      font-family: monospace;
-      border: 1px solid black;
-      padding: 5px;
-      width: 80%;
-    }
-
-    #password-input::placeholder {
-      color: #888;
-      font-family: monospace;
-      animation: blink 1s step-start infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-  </style>
-</head>
-<body>
-  <div id="loading-screen">
-    <p>LOADING SYSTEM...</p>
-    <p id="progress">0%</p>
-  </div>
-
-  <!-- Desktop -->
-  <div id="desktop">
-    <div class="folder">
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
-      <span>Folder 1</span>
-    </div>
-    <div class="folder">
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
-      <span>Folder 2</span>
-    </div>
-    <div class="folder locked">
-      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
-      <span>Folder 3</span>
-    </div>
-    <div class="folder locked">
-      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
-      <span>Folder 4</span>
-    </div>
-    <div class="folder locked">
-      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
-      <span>Folder 5</span>
-    </div>
-    <div class="folder">
-      <img src="https://i.imgur.com/H9mV2WD.png" alt="Unlocked Folder">
-      <span>Folder 6</span>
-    </div>
-    <div class="folder">
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
-      <span>Folder 7</span>
-    </div>
-  </div>
-
- /* Password overlay */
+    /* Password overlay */
     #passwordOverlay {
       display: none;
       position: fixed;
@@ -259,7 +178,6 @@
         return;
       }
 
-      // Show overlay for locked folder
       overlay.style.display = "flex";
       passwordInput.value = "";
       passwordMessage.textContent = "";
