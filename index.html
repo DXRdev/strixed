@@ -6,7 +6,7 @@
         <br>
         <br>
    <header>
-       <!-- Sidebar -->
+<!-- Sidebar -->
 <div id="mySidebar" class="sidebar">
   <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
   <h3>Main</h3>
@@ -17,11 +17,15 @@
   <a href="/page2">Page 2</a>
 </div>
 
-<!-- Hamburger button -->
-<button class="openbtn" onclick="toggleSidebar()">☰</button>
+<!-- Top-left buttons (hamburger + home) -->
+<div class="top-left">
+  <button class="openbtn" onclick="toggleSidebar()">☰</button>
+  <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
+</div>
 
-       <a href="/">
-    <img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40" style="position: absolute; top: 10px; left: 10px;">
+<!-- Banner -->
+<a href="/"><img width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>
+
 </a>
    <a href="/"><img width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>
 </header>
@@ -94,11 +98,11 @@ p.beeg {
 /* Overlay Sidebar */
 .sidebar {
   height: 100%;
-  width: 0;
+  width: 0; /* hidden by default */
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(17, 17, 17, 0.95);
+  background-color: #d3d3d3; /* light gray */
   overflow-x: hidden;
   transition: 0.3s;
   padding-top: 60px;
@@ -110,17 +114,17 @@ p.beeg {
   text-decoration: none;
   font-size: 18px;
   font-family: 'Inter', sans-serif;
-  color: #f1f1f1;
+  color: #111; /* dark text for contrast */
   display: block;
   transition: 0.2s;
 }
 
 .sidebar a:hover {
-  background: #575757;
+  background: #bbb;
 }
 
 .sidebar h3 {
-  color: #bbb;
+  color: #333;
   margin: 20px 16px 8px;
   font-size: 14px;
   text-transform: uppercase;
@@ -132,7 +136,19 @@ p.beeg {
   top: 10px;
   right: 20px;
   font-size: 36px;
-  color: #fff;
+  color: #111;
+  text-decoration: none;
+}
+
+/* Top-left container (hamburger + home button) */
+.top-left {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1100;
 }
 
 /* Hamburger button */
@@ -142,43 +158,14 @@ p.beeg {
   background: none;
   border: none;
   color: white;
-  position: absolute;
-  top: 10px;
-  left: 60px; /* leaves space so your Home icon stays at far left */
-  z-index: 1100;
 }
 
-/* Sidebar styles */
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 60px;
-  z-index: 1000;
-}
 
 }
         </style>
 </head>
     
 <body>
-<!-- Sidebar -->
-<div id="mySidebar" class="sidebar">
-  <h3>Main</h3>
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <h3>Site</h3>
-  <a href="/page1">Page 1</a>
-  <a href="/page2">Page 2</a>
-</div>
-
-<!-- Hamburger button -->
-<button class="openbtn" onclick="toggleSidebar()">☰</button>
 
     <br>
     <h1 style="color:White;">elastrixx</h1>
