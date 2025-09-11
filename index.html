@@ -22,6 +22,25 @@
             color: white;
         }
 
+/* Make images, videos, banner scale on smaller screens */
+img.banner {
+    max-width: 90%;
+    height: auto;
+}
+
+video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.about-section, .notice {
+    padding: 0 15px; /* add breathing room on mobile */
+}
+
+
+
         .container {
             display: flex;
             align-items: center;
@@ -60,6 +79,17 @@
             font-size: 20px;
             padding-left: 20px;
         }
+
+        .notice {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #ff4d4d; /* red */
+    text-align: center;
+    margin: 10px auto 20px;
+    max-width: 800px;
+    line-height: 1.4;
+}
+
 
         @font-face {
             font-family: 'cutinregular';
@@ -161,10 +191,16 @@
         <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
     </div>
 
-    <!-- Banner -->
-    <header>
-        <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>
-    </header>
+<!-- Banner -->
+<header>
+    <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>
+</header>
+
+<!-- NOTICE -->
+<div class="notice">
+    ⚠️ Projects are currently on hiatus and/or in slower progress than usual due to my job.<br>
+    Updates will be posted on socials and here when hiatus is over.
+</div>
 
     <br>
     <h1 style="color:White;">elastrixx</h1>
