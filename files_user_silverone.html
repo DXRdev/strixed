@@ -137,15 +137,105 @@
     </div>
   </div>
 
+ /* Password overlay */
+    #passwordOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    #passwordBox {
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 250px;
+    }
+
+    #passwordBox h2 {
+      margin: 0 0 10px;
+      font-family: monospace;
+    }
+
+    #passwordInput {
+      font-family: monospace;
+      border: 1px solid black;
+      padding: 5px;
+      width: 80%;
+    }
+
+    #passwordMessage {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading-screen">
+    <p>LOADING SYSTEM...</p>
+    <p id="progress">0%</p>
+  </div>
+
+  <!-- Desktop -->
+  <div id="desktop">
+    <div class="folder" onclick="openFolder('folder_1', false)">
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
+      <span>Folder 1</span>
+    </div>
+    <div class="folder" onclick="openFolder('folder_2', false)">
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
+      <span>Folder 2</span>
+    </div>
+    <div class="folder" onclick="openFolder('folder_3', true)">
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
+      <span>Folder 3</span>
+    </div>
+    <div class="folder" onclick="openFolder('folder_4', true)">
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
+      <span>Folder 4</span>
+    </div>
+    <div class="folder" onclick="openFolder('folder_5', true)">
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
+      <span>Folder 5</span>
+    </div>
+    <div class="folder" onclick="openFolder('folder_6', true)">
+      <img src="https://i.imgur.com/H9mV2WD.png" alt="Unlocked Folder">
+      <span>Folder 6</span>
+    </div>
+    <div class="folder" onclick="openFolder('folder_7', false)">
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
+      <span>Folder 7</span>
+    </div>
+  </div>
+
   <!-- Password overlay -->
-  <div id="password-overlay">
-    <div id="password-box">
-      <h2>PASSWORD <span class="blinking-cursor"></span></h2>
-      <input id="password-input" type="password" placeholder="Enter password...">
+  <div id="passwordOverlay">
+    <div id="passwordBox">
+      <h2>Enter Password:</h2>
+      <input type="password" id="passwordInput">
+      <br><br>
+      <button id="submitPassword">Submit</button>
+      <p id="passwordMessage"></p>
     </div>
   </div>
 
   <script>
+    const Passwords = [
+      atob("c3VwZXJzZWNyZXRwYXNzMQ=="),
+      atob("bXlzdGVyaW91c2tleQ=="),
+      atob("c2lsdmVya2V5bW9ua2V5"),
+      atob("ZmFrZWxvZ2luMjAyNQ=="),
+      atob("c2NpZW5jZWlzY29vbA==")
+    ];
+
+    let attemptsLeft = 5;
+
+    // Loading screen
     const loadingScreen = document.getElementById("loading-screen");
     const progressText = document.getElementById("progress");
     const desktop = document.getElementById("desktop");
@@ -157,23 +247,50 @@
       desktop.style.display = "block";
     }, 2000);
 
-    // Password overlay logic
-    const overlay = document.getElementById("password-overlay");
-    const passwordInput = document.getElementById("password-input");
+    // Overlay elements
+    const overlay = document.getElementById("passwordOverlay");
+    const passwordInput = document.getElementById("passwordInput");
+    const passwordMessage = document.getElementById("passwordMessage");
+    const submitPassword = document.getElementById("submitPassword");
 
-    document.querySelectorAll(".folder.locked").forEach(folder => {
-      folder.addEventListener("click", () => {
-        overlay.style.display = "flex";
-        passwordInput.focus();
-      });
-    });
-
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) {
-        overlay.style.display = "none";
-        passwordInput.value = "";
+    function openFolder(name, locked = false) {
+      if (!locked) {
+        window.location.href = `/files_user_silverone_${name}`;
+        return;
       }
-    });
+
+      // Show overlay for locked folder
+      overlay.style.display = "flex";
+      passwordInput.value = "";
+      passwordMessage.textContent = "";
+      passwordInput.focus();
+
+      submitPassword.onclick = () => {
+        if (attemptsLeft <= 0) {
+          window.location.href = "/";
+          return;
+        }
+
+        attemptsLeft--;
+
+        passwordMessage.style.color = "red";
+        if (attemptsLeft > 0) {
+          passwordMessage.textContent = `INCORRECT PASSWORD – ${attemptsLeft} attempts remaining`;
+        } else {
+          passwordMessage.textContent = "No attempts left. Redirecting...";
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 2000);
+        }
+
+        // Clear message after 3s if still attempts left
+        if (attemptsLeft > 0) {
+          setTimeout(() => {
+            passwordMessage.textContent = "";
+          }, 3000);
+        }
+      };
+    }
   </script>
 
 </body>
