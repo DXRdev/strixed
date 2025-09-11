@@ -6,6 +6,20 @@
         <br>
         <br>
    <header>
+       <!-- Sidebar -->
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+  <h3>Main</h3>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <h3>Site</h3>
+  <a href="/page1">Page 1</a>
+  <a href="/page2">Page 2</a>
+</div>
+
+<!-- Hamburger button -->
+<button class="openbtn" onclick="toggleSidebar()">☰</button>
+
        <a href="/">
     <img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40" style="position: absolute; top: 10px; left: 10px;">
 </a>
@@ -77,14 +91,14 @@ p {
 p.beeg {
   font-size: 30px;
 
-/* Sidebar styles */
+/* Overlay Sidebar */
 .sidebar {
   height: 100%;
   width: 0;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: rgba(17, 17, 17, 0.95);
   overflow-x: hidden;
   transition: 0.3s;
   padding-top: 60px;
@@ -92,9 +106,9 @@ p.beeg {
 }
 
 .sidebar a {
-  padding: 8px 16px;
+  padding: 10px 20px;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   font-family: 'Inter', sans-serif;
   color: #f1f1f1;
   display: block;
@@ -112,18 +126,40 @@ p.beeg {
   text-transform: uppercase;
 }
 
+/* Close button inside sidebar */
+.sidebar .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 36px;
+  color: #fff;
+}
+
 /* Hamburger button */
 .openbtn {
   font-size: 24px;
   cursor: pointer;
-  background-color: #111;
-  color: white;
-  padding: 10px 15px;
+  background: none;
   border: none;
-  position: fixed;
+  color: white;
+  position: absolute;
   top: 10px;
-  left: 10px;
+  left: 60px; /* leaves space so your Home icon stays at far left */
   z-index: 1100;
+}
+
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
 }
 
 }
@@ -260,6 +296,7 @@ function toggleSidebar() {
   }
 }
 </script>
+
 
 </body>
 </html>
