@@ -67,13 +67,30 @@
       z-index: 10000;
     }
 
-    #passwordBox {
+        #passwordBox {
       background: white;
       color: black;
       padding: 30px;
       border-radius: 8px;
       text-align: center;
-      min-width: 250px;
+      width: 300px;
+      min-height: 180px;
+      position: relative;
+    }
+
+    #closeOverlay {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: none;
+      background: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: black;
+    }
+
+    #closeOverlay:hover {
+      color: red;
     }
 
     #passwordBox h2 {
@@ -91,7 +108,9 @@
     #passwordMessage {
       margin-top: 10px;
       font-size: 14px;
+      min-height: 18px;
     }
+    
   </style>
 </head>
 <body>
@@ -135,6 +154,7 @@
   <!-- Password overlay -->
   <div id="passwordOverlay">
     <div id="passwordBox">
+      <button id="closeOverlay">✖</button>
       <h2>Enter Password:</h2>
       <input type="password" id="passwordInput">
       <br><br>
@@ -144,6 +164,14 @@
   </div>
 
   <script>
+
+        const closeOverlay = document.getElementById("closeOverlay");
+    closeOverlay.addEventListener("click", () => {
+      overlay.style.display = "none";
+      passwordInput.value = "";
+      passwordMessage.textContent = "";
+    });
+    
     const Passwords = [
       atob("c3VwZXJzZWNyZXRwYXNzMQ=="),
       atob("bXlzdGVyaW91c2tleQ=="),
