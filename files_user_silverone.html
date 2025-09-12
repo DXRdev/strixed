@@ -6,11 +6,15 @@
   <style>
 
     #path {
-  font-size: 18px;
-  color: #00ff00;
-  font-family: monospace;
-  margin-bottom: 20px;
-}
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 18px;
+      color: #00ff00;
+      font-family: monospace;
+      pointer-events: none;
+  }
+
 
     body {
       margin: 0;
@@ -134,6 +138,7 @@
   <!-- Desktop -->
   <div id="desktop">
     <div id="path">C://USERS/SILVERONE</div>
+    
     <div class="folder" onclick="openFolder('folder_1', false)">
       <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
       <span>Folder 1</span>
