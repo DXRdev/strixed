@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ela Wiki</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #001100;
+      color: #00ff00;
+      font-family: monospace, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #002200;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 2px solid #00ff00;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    #search-bar {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    #search-bar input {
+      padding: 8px;
+      width: 60%;
+      max-width: 400px;
+      font-family: monospace;
+      background: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+    }
+
+    #main {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .box {
+      background-color: #000800;
+      border: 1px solid #00ff00;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .box h2 {
+      margin-top: 0;
+      border-bottom: 1px solid #00ff00;
+      padding-bottom: 5px;
+    }
+
+    footer {
+      background: #002200;
+      padding: 10px;
+      text-align: center;
+      border-top: 2px solid #00ff00;
+      font-size: 12px;
+    }
+
+    a {
+      color: #66ff66;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Ela Wiki</h1>
+  <p>The free green-on-black encyclopedia</p>
+</header>
+
+<div id="search-bar">
+  <input type="text" placeholder="Search Ela Wiki...">
+</div>
+
+<div id="main">
+  <!-- Left column -->
+  <div class="box">
+    <h2>Featured Article</h2>
+    <p><b>scrapped_sprite</b> is a lost 2021 asset that was intended for early design work. It was later scrapped, but remains available <a href="/files/user/silverone/scrapped_sprite">here</a>.</p>
+  </div>
+
+  <!-- Right column -->
+  <div class="box">
+    <h2>Did you know...</h2>
+    <ul>
+      <li>That this wiki isn’t white?</li>
+      <li>That it’s powered by pure HTML + CSS?</li>
+      <li>That <a href="/files/user/silverone">Silverone’s files</a> can be browsed like a desktop?</li>
+    </ul>
+  </div>
+</div>
+
+<div id="main">
+  <div class="box">
+    <h2>Articles</h2>
+    <ul>
+      <li><a href="wiki_info_scrapped.html">scrapped_sprite</a></li>
+      <li><a href="wiki_info_projectx.html">Project X</a></li>
+      <li><a href="wiki_info_eladev.html">Ela Dev</a></li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>News</h2>
+    <p>Wiki launched on <b>Sept 2025</b>. Stay tuned for more entries!</p>
+  </div>
+</div>
+
+<footer>
+  <p>Ela Wiki © 2025 – This is a parody wiki</p>
+</footer>
+
+</body>
+</html>
