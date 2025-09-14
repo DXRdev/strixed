@@ -6,12 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    /* Animate the gradient background */
     body {
       margin: 0;
       font-family: 'Arial', Helvetica, sans-serif;
-      background-color: #2b2b2b;
       color: #ffffff;
       line-height: 1.6;
+      background: linear-gradient(45deg, #2b2b2b, #4f4f4f, #383838); 
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+    }
+
+    /* Gradient animation */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     header {
