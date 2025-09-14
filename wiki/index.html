@@ -97,12 +97,55 @@
     .page-list a {
       font-size: 1.2em;
     }
+
+    /* Search Bar Styles */
+    .search-bar-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .search-bar {
+      padding: 10px 15px;
+      font-size: 1em;
+      border: 1px solid #66b3ff;
+      border-radius: 5px;
+      background-color: #383838;
+      color: #ffffff;
+      width: 300px;
+    }
+
+    .search-bar:focus {
+      outline: none;
+      border-color: #66b3ff;
+      box-shadow: 0 0 5px rgba(102, 179, 255, 0.7);
+    }
+
+    .search-btn {
+      padding: 10px 20px;
+      background-color: #66b3ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-left: 10px;
+    }
+
+    .search-btn:hover {
+      background-color: #3399ff;
+    }
   </style>
 </head>
 <body>
   <header>
     Rifted Wiki
   </header>
+
+  <!-- Search Bar -->
+  <div class="search-bar-container">
+    <input type="text" class="search-bar" placeholder="Search the Rifted Wiki...">
+    <button class="search-btn">Search</button>
+  </div>
 
   <main>
     <h1>Welcome to the Rifted Wiki!</h1>
