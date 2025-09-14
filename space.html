@@ -151,10 +151,10 @@
   const user = document.getElementById("username").value.trim();
   const pass = document.getElementById("password").value.trim();
   const loginBtn = document.querySelector("button");
-  const correctUser = atob("c2lsdmVyb25l");
-  const correctPass = atob("c2NpZW5jZXRlYW0wNTE5"); 
+  const lookfor = atob("c2lsdmVyb25l");
+  const button = atob("c2NpZW5jZXRlYW0wNTE5"); 
 
-  if (user === correctUser && pass === correctPass) {
+  if (user === lookfor && pass === button) {
   document.getElementById("loading").style.display = "flex";
 
   setTimeout(() => {
