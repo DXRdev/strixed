@@ -37,7 +37,7 @@
     }
 
     .login-box {
-      background: rgba(255, 255, 255, 0.95); /* solid white */
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -127,8 +127,6 @@
       <p class="error" id="error-msg">Invalid username or password.</p>
     </div>
   </div>
-
-  <! ts sucks icl -->
   <div class="loading-overlay" id="loading">
     <div class="spinner"></div>
     <p>Verifying credentials...</p>
@@ -146,7 +144,7 @@
   document.getElementById("loading").style.display = "flex";
 
   setTimeout(() => {
-  window.location.href = atob("L2ZpbGVzX3VzZXJfc2lsdmVyb25l");
+  window.location.href = atob("L2ZpbGVzL3VzZXIvc2lsdmVyb25l");
       }, 1900);
     } else {
       document.getElementById("error-msg").style.display = "block";
