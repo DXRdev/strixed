@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Wiki</title>
+  <title>Rifted Wiki</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #2b2b2b; /* modern gray */
+      font-family: 'Arial', Helvetica, sans-serif;
+      background-color: #2b2b2b; /* dark gray background */
       color: #ffffff; /* white text */
       line-height: 1.6;
     }
@@ -18,32 +18,68 @@
       background: #3c3c3c;
       padding: 20px;
       text-align: center;
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
+      letter-spacing: 1px;
+      color: #fff;
+      border-bottom: 3px solid #66b3ff; /* subtle blue line */
     }
 
     main {
-      padding: 20px;
-      max-width: 900px;
+      padding: 30px 20px;
+      max-width: 1000px;
       margin: auto;
     }
 
     h1, h2, h3 {
       color: #ffffff;
       margin-top: 20px;
+      font-weight: 600;
+    }
+
+    p {
+      color: #d0d0d0;
+      font-size: 1.1em;
     }
 
     a {
-      color: #66b3ff; /* nice link blue */
+      color: #66b3ff; /* bright link color */
       text-decoration: none;
+      font-weight: 500;
     }
 
     a:hover {
       text-decoration: underline;
     }
 
+    .news, .featured-article {
+      background-color: #383838;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 30px;
+    }
+
+    .news h2, .featured-article h2 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    .news ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .news li {
+      margin-bottom: 12px;
+    }
+
+    .featured-article p {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+
     .page-list {
-      margin-top: 20px;
+      margin-top: 30px;
       background: #383838;
       padding: 15px;
       border-radius: 6px;
@@ -51,11 +87,15 @@
 
     .page-list ul {
       list-style: none;
-      padding: 0;
+      padding-left: 0;
     }
 
     .page-list li {
       margin: 8px 0;
+    }
+
+    .page-list a {
+      font-size: 1.2em;
     }
   </style>
 </head>
@@ -65,9 +105,27 @@
   </header>
 
   <main>
-    <h1>Welcome to the Rifted Wiki</h1>
-    <p>This wiki contains various pages of info. Which currently youre not supposed to see, nor be on here, but whatever. Browse below:</p>
+    <h1>Welcome to the Rifted Wiki!</h1>
+    <p>Explore the worlds of Rifted, dive into lore, discover hidden details, and stay updated with the latest news. Here’s what's new:</p>
 
+    <!-- News Section -->
+    <div class="news">
+      <h2>Latest News</h2>
+      <ul>
+        <li><a href="#">New lore chapter released: "The Shattered Lands"</a></li>
+        <li><a href="#">Rifted Wiki now open to the public (finally!)</a></li>
+        <li><a href="#">Upcoming update: "Darkness Rising" teaser revealed</a></li>
+      </ul>
+    </div>
+
+    <!-- Featured Article Section -->
+    <div class="featured-article">
+      <h2>Featured Article</h2>
+      <p><strong>Elina</strong> - Elina, the enigmatic sorceress, is one of the most powerful and feared figures in the Rifted universe. Known for her mastery of shadow magic, Elina’s past remains shrouded in mystery. Discover her journey and the role she plays in the ongoing saga.</p>
+      <a href="elina.html">Read more about Elina</a>
+    </div>
+
+    <!-- Available Pages Section -->
     <div class="page-list">
       <h2>Available Pages</h2>
       <ul>
