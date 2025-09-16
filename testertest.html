@@ -75,20 +75,60 @@
         .openbtn { font-size: 24px; cursor: pointer; background: none; border: none; color: white; }  
         header img.banner { display: block; margin: 60px auto 20px; }  
 
-        /* --- Gallery styles --- */  
-        /* width:90% makes it scale down on small screens like your other images */  
-        .gallery { max-width: 800px; width: 90%; margin: 40px auto; overflow: hidden; border-radius: 12px; }  
-        .carousel { position: relative; width: 100%; }  
+        /* --- Gallery styles --- */
 
-        /* slides will be controlled by JS for dynamic count; keep transform smooth */  
-        .slides { display: flex; transition: transform 0.6s ease-in-out; will-change: transform; }  
+        .gallery { 
+            max-width: 800px; 
+            margin: 40px auto; 
+            overflow: hidden; 
+            border-radius: 12px; 
+        }
+        
+        .carousel { 
+            position: relative; 
+            width: 100%; 
+        }
 
-        /* each slide stacks the image + caption vertically and centers them */  
-        .slide { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }  
-        .slide img { max-width: 100%; width: 100%; height: auto; border-radius: 8px; display: block; object-fit: contain; }  
-        .slide p { margin: 10px 0 20px; font-size: 16px; font-family: 'Inter', sans-serif; text-align: center; }  
-        .slide a { color: #69cfff; text-decoration: none; font-weight: 500; }  
-        .slide a:hover { color: #ff4d4d; }  
+        .slides { 
+  
+            display: flex; 
+            width: 300%; 
+            transition: transform 0.5s ease-in-out;
+            }
+
+        .slide { 
+            width: 100%; 
+            flex-shrink: 0; 
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        .slide img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 450px; /* keeps images neat */
+            object-fit: contain; 
+            border-radius: 8px; 
+            display: block; 
+        }
+
+        .slide p { 
+
+            margin: 10px 0 20px; 
+            font-size: 16px; 
+            font-family: 'Inter', sans-serif; 
+        }
+
+        .slide a { 
+            color: #69cfff; 
+            text-decoration: none; 
+            font-weight: 500; 
+        }
+
+        .slide a:hover { 
+    color: #ff4d4d; 
+        }
 
         /* small tweak so the top-left home icon can be hidden without reflow issues */  
         .top-left a { display: inline-block; }
