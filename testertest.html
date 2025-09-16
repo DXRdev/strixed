@@ -168,25 +168,29 @@
 
     <video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>  
 
-    <!-- GALLERY SHOWCASE -->  
-    <section class="gallery">  
-      <div class="carousel" id="carousel">  
-        <div class="slides">  
-          <div class="slide">  
-            <img src="https://i.imgur.com/98EJWYG_d.webp?maxwidth=1520&fidelity=grand" alt="Project 1">  
-            <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>  
-          </div>  
-          <div class="slide">  
-            <img src="https://i.imgur.com/SPbKE6e.png" alt="Rifted: WARPED (placeholder)">  
-            <p><a href="https://example.com/project2" target="_blank">Rifted: WARPED (placeholder)</a></p>  
-          </div>  
-          <div class="slide">  
-            <img src="https://i.imgur.com/ucS0p5N.jpeg" alt="Project 3">  
-            <p><a href="https://example.com/project3" target="_blank">More to come...</a></p>  
-          </div>  
-        </div>  
+<br><br><hr><br>
+<h2 style="color:White;">PROJECTS</h2>
+<br><hr>
+
+<!-- GALLERY SHOWCASE -->
+<section class="gallery">  
+  <div class="carousel" id="carousel">  
+    <div class="slides">  
+      <div class="slide">  
+        <img src="https://i.imgur.com/98EJWYG_d.webp?maxwidth=1520&fidelity=grand" alt="Project 1">  
+        <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>  
       </div>  
-    </section>  
+      <div class="slide">  
+        <img src="https://i.imgur.com/SPbKE6e.png" alt="Rifted: WARPED (placeholder)">  
+        <p><a href="https://example.com/project2" target="_blank">Rifted: WARPED (placeholder)</a></p>  
+      </div>  
+      <div class="slide">  
+        <img src="https://i.imgur.com/ucS0p5N.jpeg" alt="Project 3">  
+        <p><a href="https://example.com/project3" target="_blank">More to come...</a></p>  
+      </div>  
+    </div>  
+  </div>  
+</section>
 
     <br><br><hr><br>  
     <h2 style="color:White;">ABOUT</h2>  
@@ -246,24 +250,27 @@
     <script>  
         // Toggle sidebar and hide/show home icon while sidebar is open
         function toggleSidebar() {
-          const sidebar = document.getElementById("mySidebar");
-          const homeLink = document.querySelector(".top-left a");
-          const openBtn = document.querySelector(".openbtn");
+        function toggleSidebar() {  
+  const sidebar = document.getElementById("mySidebar");  
+  const topLeft = document.querySelector(".top-left");  
+  if (sidebar.style.width === "250px") {  
+    sidebar.style.width = "0";  
+    topLeft.style.display = "flex";  
+  } else {  
+    sidebar.style.width = "250px";  
+    topLeft.style.display = "none";  
+  }  
+}  
 
-          if (sidebar.style.width === "250px") {
-            // close
-            sidebar.style.width = "0";
-            if (homeLink) homeLink.style.display = "";
-            // remove outside click listener
-            document.removeEventListener('click', handleOutsideClick);
-          } else {
-            // open
-            sidebar.style.width = "250px";
-            if (homeLink) homeLink.style.display = "none";
-            // add outside click listener after call stack to avoid immediate close
-            setTimeout(() => document.addEventListener('click', handleOutsideClick));
-          }
-        }
+document.addEventListener('click', function(e) {  
+  const sidebar = document.getElementById("mySidebar");  
+  const openBtn = document.querySelector(".openbtn");  
+  const topLeft = document.querySelector(".top-left");  
+  if (sidebar.style.width === "250px" && !sidebar.contains(e.target) && !openBtn.contains(e.target)) {  
+    sidebar.style.width = "0";  
+    topLeft.style.display = "flex";  
+  }  
+});  
 
         // handler for clicks outside the sidebar to close it
         function handleOutsideClick(e) {
