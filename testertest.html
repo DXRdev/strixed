@@ -76,14 +76,22 @@
         header img.banner { display: block; margin: 60px auto 20px; }  
 
         /* --- Gallery styles --- */  
-        .gallery { max-width: 800px; margin: 40px auto; overflow: hidden; border-radius: 12px; }  
+        /* width:90% makes it scale down on small screens like your other images */  
+        .gallery { max-width: 800px; width: 90%; margin: 40px auto; overflow: hidden; border-radius: 12px; }  
         .carousel { position: relative; width: 100%; }  
-        .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; }  
+
+        /* slides will be controlled by JS for dynamic count; keep transform smooth */  
+        .slides { display: flex; transition: transform 0.6s ease-in-out; will-change: transform; }  
+
+        /* each slide stacks the image + caption vertically and centers them */  
         .slide { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }  
-        .slide img { width: 100%; height: auto; border-radius: 8px; display: block; }  
-        .slide p { margin: 10px 0 20px; font-size: 16px; font-family: 'Inter', sans-serif; }  
+        .slide img { max-width: 100%; width: 100%; height: auto; border-radius: 8px; display: block; object-fit: contain; }  
+        .slide p { margin: 10px 0 20px; font-size: 16px; font-family: 'Inter', sans-serif; text-align: center; }  
         .slide a { color: #69cfff; text-decoration: none; font-weight: 500; }  
         .slide a:hover { color: #ff4d4d; }  
+
+        /* small tweak so the top-left home icon can be hidden without reflow issues */  
+        .top-left a { display: inline-block; }
     </style>  
 </head>  
 
@@ -130,7 +138,7 @@
           </div>  
           <div class="slide">  
             <img src="https://i.imgur.com/SPbKE6e.png" alt="Rifted: WARPED (placeholder)">  
-            <p><a href="https://example.com/project2" target="_blank">Rifted: WARPED (placeholder)/a></p>  
+            <p><a href="https://example.com/project2" target="_blank">Rifted: WARPED (placeholder)</a></p>  
           </div>  
           <div class="slide">  
             <img src="https://i.imgur.com/ucS0p5N.jpeg" alt="Project 3">  
@@ -196,26 +204,57 @@
     <br><br><br>  
 
     <script>  
-        function toggleSidebar() {  
-            const sidebar = document.getElementById("mySidebar");  
-            sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";  
-        }  
+        // Toggle sidebar and hide/show home icon while sidebar is open
+        function toggleSidebar() {
+          const sidebar = document.getElementById("mySidebar");
+          const homeLink = document.querySelector(".top-left a");
+          const openBtn = document.querySelector(".openbtn");
 
-        document.addEventListener('click', function(e) {  
-          const sidebar = document.getElementById("mySidebar");  
-          const openBtn = document.querySelector(".openbtn");  
-          if (sidebar.style.width === "250px" && !sidebar.contains(e.target) && !openBtn.contains(e.target)) {  
-            sidebar.style.width = "0";  
-          }  
-        });  
+          if (sidebar.style.width === "250px") {
+            // close
+            sidebar.style.width = "0";
+            if (homeLink) homeLink.style.display = "";
+            // remove outside click listener
+            document.removeEventListener('click', handleOutsideClick);
+          } else {
+            // open
+            sidebar.style.width = "250px";
+            if (homeLink) homeLink.style.display = "none";
+            // add outside click listener after call stack to avoid immediate close
+            setTimeout(() => document.addEventListener('click', handleOutsideClick));
+          }
+        }
 
-        // Gallery automatic slide  
-        const slides = document.querySelector(".slides");  
-        let index = 0;  
-        setInterval(() => {  
-          index = (index + 1) % 3;  
-          slides.style.transform = `translateX(-${index * 100}%)`;  
-        }, 4000); // 4 seconds per slide  
+        // handler for clicks outside the sidebar to close it
+        function handleOutsideClick(e) {
+          const sidebar = document.getElementById("mySidebar");
+          const openBtn = document.querySelector(".openbtn");
+          // if clicked target isn't inside sidebar or the open button, close
+          if (!sidebar.contains(e.target) && !openBtn.contains(e.target)) {
+            sidebar.style.width = "0";
+            const homeLink = document.querySelector(".top-left a");
+            if (homeLink) homeLink.style.display = "";
+            document.removeEventListener('click', handleOutsideClick);
+          }
+        }
+
+        // Gallery automatic slide (responsive & dynamic)
+        (function initCarousel(){
+          const slidesContainer = document.querySelector(".slides");
+          const slideElems = document.querySelectorAll(".slide");
+          if (!slidesContainer || slideElems.length === 0) return;
+
+          const total = slideElems.length;
+          // Make slidesContainer width dynamic (so slide width = container width)
+          slidesContainer.style.width = (total * 100) + "%";
+          slideElems.forEach(s => s.style.width = (100 / total) + "%");
+
+          let index = 0;
+          setInterval(() => {
+            index = (index + 1) % total;
+            slidesContainer.style.transform = `translateX(-${index * (100 / total)}%)`;
+          }, 4000); // 4 seconds per slide
+        })();
     </script>  
 </body>  
-                    </html>
+</html>
