@@ -36,7 +36,6 @@
             color: white;  
         }  
 
-        /* Make images, videos, banner scale on smaller screens */  
         img.banner { max-width: 90%; height: auto; }  
         video { max-width: 100%; height: auto; display: block; margin: 0 auto; }  
         .about-section, .notice { padding: 0 15px; }  
@@ -72,26 +71,19 @@
         .sidebar h3 { color: #bbb; margin: 20px 16px 8px; font-size: 14px; text-transform: uppercase; }  
         .sidebar .closebtn { position: absolute; top: 10px; right: 20px; font-size: 36px; color: #fff; }  
 
-        /* Top-left (hamburger + home) */  
         .top-left { position: fixed; top: 10px; left: 10px; display: flex; align-items: center; gap: 10px; z-index: 1100; }  
         .openbtn { font-size: 24px; cursor: pointer; background: none; border: none; color: white; }  
         header img.banner { display: block; margin: 60px auto 20px; }  
 
-        /* --- Gallery styles (isolated) --- */  
-        .gallery { max-width: 800px; margin: 40px auto; overflow: hidden; border-radius: 12px; text-align: center; }  
-        .gallery .carousel { position: relative; width: 100%; }  
-        .gallery .slides { display: flex; width: 300%; animation: gallery-slide 12s infinite; }  
-        .gallery .slide { width: 100%; flex-shrink: 0; }  
-        .gallery .slide img { width: 100%; height: auto; border-radius: 8px; display: block; }  
-        .gallery .slide p { margin: 10px 0 20px; font-size: 16px; font-family: 'Inter', sans-serif; }  
-        .gallery .slide a { color: #69cfff; text-decoration: none; font-weight: 500; }  
-        .gallery .slide a:hover { color: #ff4d4d; }  
-        @keyframes gallery-slide {  
-            0% { transform: translateX(0%); }  
-            33% { transform: translateX(-100%); }  
-            66% { transform: translateX(-200%); }  
-            100% { transform: translateX(0%); }  
-        }  
+        /* --- Gallery styles --- */  
+        .gallery { max-width: 800px; margin: 40px auto; overflow: hidden; border-radius: 12px; }  
+        .carousel { position: relative; width: 100%; }  
+        .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; }  
+        .slide { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }  
+        .slide img { width: 100%; height: auto; border-radius: 8px; display: block; }  
+        .slide p { margin: 10px 0 20px; font-size: 16px; font-family: 'Inter', sans-serif; }  
+        .slide a { color: #69cfff; text-decoration: none; font-weight: 500; }  
+        .slide a:hover { color: #ff4d4d; }  
     </style>  
 </head>  
 
@@ -108,18 +100,15 @@
         <a href="/page1">???</a>  
     </div>  
 
-    <!-- Top-left buttons -->  
     <div class="top-left">  
         <button class="openbtn" onclick="toggleSidebar()">☰</button>  
         <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>  
     </div>  
 
-    <!-- Banner -->  
     <header>  
         <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>  
     </header>  
 
-    <!-- NOTICE -->  
     <div class="notice">  
         ⚠️ Projects are currently on hiatus and/or in slower progress than usual due to my job<br>  
         Updates will be posted on socials and here when hiatus is over.  
@@ -133,7 +122,7 @@
 
     <!-- GALLERY SHOWCASE -->  
     <section class="gallery">  
-      <div class="carousel">  
+      <div class="carousel" id="carousel">  
         <div class="slides">  
           <div class="slide">  
             <img src="https://i.imgur.com/example1.png" alt="Project 1">  
