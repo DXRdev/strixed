@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 
   <!-- Favicon -->  
-  <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">  
+  <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">  
 
   <!-- Fonts -->  
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">  
@@ -15,11 +15,15 @@
   <link rel="stylesheet" href="style.css">  
 
   <style>  
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+    }
     body {  
       font-family: "Press Start 2P", system-ui;  
       margin: 0;  
-      background: black;  
-      color: white;  
+      background: var(--bg);  
+      color: var(--text);  
       transition: background 0.3s, color 0.3s;
     }  
 
@@ -72,14 +76,17 @@
       position: absolute; right: 0; top: 40px; 
       background: rgba(30,30,30,0.95); 
       border-radius: 8px; 
-      min-width: 180px; 
+      min-width: 220px; 
       font-family: 'Inter', sans-serif; 
     }
     .settings-menu a { display: block; padding: 10px 15px; color: #f1f1f1; text-decoration: none; font-size: 14px; }
     .settings-menu a:hover { background: #575757; }
 
     /* Dark mode */
-    body.dark { background: #111; color: #eee; }
+    body.dark { --bg: #111111; --text: #eeeeee; }
+
+    /* Light mode */
+    body.light { --bg: #ffffff; --text: #000000; }
 
     /* Evil mode */
     body.evil { filter: invert(1) hue-rotate(180deg); }
@@ -110,108 +117,107 @@
   <div class="top-right">
     <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
     <div class="settings-menu" id="settingsMenu">
-      <a href="javascript:void(0)" onclick="toggleSidebarMode()">Sidebar Animations: <span id="sidebarModeLabel">OFF</span></a>
-      <a href="javascript:void(0)" onclick="toggleDarkMode()">🌙 Dark Mode</a>
-      <a href="javascript:void(0)" onclick="toggleEvilMode()">Super Secret and Fucking Evil Mode</a>
+      <a href="javascript:void(0)" onclick="toggleSidebarMode()">Enable Smooth Sidebar: <span id="sidebarModeLabel">OFF</span></a>
+      <a href="javascript:void(0)" onclick="setMode('light')">☀️ Light Mode</a>
+      <a href="javascript:void(0)" onclick="setMode('dark')">🌙 Dark Mode</a>
+      <a href="javascript:void(0)" onclick="setMode('evil')">Super Secret Evil Mode</a>
     </div>
   </div>
 
   <!-- Banner -->
-      <header>    
-        <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>    
-    </header>    
-  
-    <div class="notice">    
-        ⚠️ Projects are currently in slower progress than usual due to my job<br>    
-        Updates will be posted on socials and here when hiatus is over.    
-    </div>    
-  
-    <br>    
-    <h1 style="color:White;">elastrixx</h1>    
-    <h2 style="color:White;">professional girlfailure and novice gamedev</h2>    
-  
-    <video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>    
-  
-    <!-- GALLERY SHOWCASE -->    
-<br><br><hr><br>  
-<h2 style="color:White;">PROJECT GALLERY</h2>  
-<br><hr>  
-  
-<!-- GALLERY SHOWCASE -->  
-<section class="gallery">    
-  <div class="carousel" id="carousel">    
-    <div class="slides">    
-      <div class="slide">    
-        <img src="https://i.imgur.com/98EJWYG_d.webp?maxwidth=1520&fidelity=grand" alt="Project 1">    
-        <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>    
-      </div>    
-      <div class="slide">    
-        <img src="https://i.imgur.com/g1EiBvk.png" alt="STARBOUND">    
-        <p><a href="https://example.com/project2" target="_blank">STARBOUND</a></p>    
-      </div>    
-      <div class="slide">    
-        <img src="https://i.imgur.com/ucS0p5N.jpeg" alt="Project 3">    
-        <p><a href="https://example.com/project3" target="_blank">More to come...</a></p>    
-      </div>    
-    </div>    
+  <header>    
+    <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>    
+  </header>    
+
+  <div class="notice">    
+    ⚠️ Projects are currently in slower progress than usual due to my job<br>    
+    Updates will be posted on socials and here when hiatus is over.    
   </div>    
-</section>  
-  
-    <br><br><hr><br>    
-    <h2 style="color:White;">ABOUT</h2>    
-    <br><hr>    
-  
-    <div class="about-section">    
-        <p>Welcome traveler, I am the internet witch, Elaina, also known as elastrix...</p>    
-        <p>I go by Elaina, I'm currently working on my project "Rifted" and studying game dev for it.</p>    
-        <p>I also do UEFN/Fortnite Creative work sometimes!</p>    
-        <p>This page will work as a blogpost for updates on works and projects,</p>    
-        <p>some of these I'll be posting updates for in my socials every once in a while,</p>    
-        <p>which you can find right below here yes like right here ↓</p>    
+
+  <br>    
+  <h1 style="color:White;">elastrixx</h1>    
+  <h2 style="color:White;">professional girlfailure and novice gamedev</h2>    
+
+  <video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>    
+
+  <!-- GALLERY SHOWCASE -->    
+  <br><br><hr><br>  
+  <h2 style="color:White;">PROJECT GALLERY</h2>  
+  <br><hr>  
+
+  <section class="gallery">    
+    <div class="carousel" id="carousel">    
+      <div class="slides">    
+        <div class="slide">    
+          <img src="https://i.imgur.com/98EJWYG_d.webp?maxwidth=1520&fidelity=grand" alt="Project 1">    
+          <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>    
+        </div>    
+        <div class="slide">    
+          <img src="https://i.imgur.com/g1EiBvk.png" alt="STARBOUND">    
+          <p><a href="https://example.com/project2" target="_blank">STARBOUND</a></p>    
+        </div>    
+        <div class="slide">    
+          <img src="https://i.imgur.com/ucS0p5N.jpeg" alt="Project 3">    
+          <p><a href="https://example.com/project3" target="_blank">More to come...</a></p>    
+        </div>    
+      </div>    
     </div>    
-  
-    <br><hr><br>    
-    <h2 style="color:White;">SOCIALS</h2>    
-    <br><hr>    
-  
-    <p style="color:White;">    
-        <br><br>    
-        <div class="container">    
-            <div class="image"><img src="https://i.imgur.com/0Ig8fuc.png"></div>    
-            <div class="text"><a href="https://x.com/elastrixx" style="color: #2378d9" target="_blank">Twitter (still it's name)</a></div>    
-        </div>    
-  
-        <br><br>    
-        <div class="container">    
-            <div class="image"><img src="https://i.imgur.com/eGgZzZa.png"></div>    
-            <div class="text"><a href="https://bsky.app/profile/elastrixx.bsky.social" style="color: #69cfff" target="_blank">Boomer Twitter (BlueSky)</a></div>    
-        </div>    
-  
-        <br><br>    
-        <div class="container">    
-            <div class="image"><img src="https://i.imgur.com/iGi5EqB.png"></div>    
-            <div class="text"><a href="https://www.fortnite.com/@dxrdev" style="color: #c559e5" target="_blank">Fortnite Creator Profile</a></div>    
-        </div>    
-  
-        <br><br>    
-        <div class="container">    
-            <div class="image"><img src="https://i.imgur.com/Bet3Dtv.png"></div>    
-            <div class="text"><a href="mailto:elastrixed@gmail.com" style="color: #FF0000" target="_blank">Email</a></div>    
-        </div>    
-    </p>    
-  
-    <hr><br>    
-    <h2 style="color:White;">MORE MORE MORE MORE MORE</h2>    
-    <br><hr><br><br>    
-    <a href="https://elastrix.itch.io/rifted-together" style="color:White;" target="_blank">Rifted: Together (Coming Soon)</a>    
-  
-    <br><br><br><br><br>    
-    <h4 style="color:White;">this is a WIP so...give me time here......</h4>    
-  
-    <video autoplay loop muted width="300" height="100" src="https://i.imgur.com/o2ksfSs.mp4"></video>    
-    <a href="https://ela.is-a.dev/space" style="color:White;" target="_blank">login</a>    
-    <br><br><br>    
-  
+  </section>  
+
+  <br><br><hr><br>    
+  <h2 style="color:White;">ABOUT</h2>    
+  <br><hr>    
+
+  <div class="about-section">    
+    <p>Welcome traveler, I am the internet witch, Elaina, also known as elastrix...</p>    
+    <p>I go by Elaina, I'm currently working on my project "Rifted" and studying game dev for it.</p>    
+    <p>I also do UEFN/Fortnite Creative work sometimes!</p>    
+    <p>This page will work as a blogpost for updates on works and projects,</p>    
+    <p>some of these I'll be posting updates for in my socials every once in a while,</p>    
+    <p>which you can find right below here yes like right here ↓</p>    
+  </div>    
+
+  <br><hr><br>    
+  <h2 style="color:White;">SOCIALS</h2>    
+  <br><hr>    
+
+  <p style="color:White;">    
+    <br><br>    
+    <div class="container">    
+      <div class="image"><img src="https://i.imgur.com/0Ig8fuc.png"></div>    
+      <div class="text"><a href="https://x.com/elastrixx" style="color: #2378d9" target="_blank">Twitter (still it's name)</a></div>    
+    </div>    
+
+    <br><br>    
+    <div class="container">    
+      <div class="image"><img src="https://i.imgur.com/eGgZzZa.png"></div>    
+      <div class="text"><a href="https://bsky.app/profile/elastrixx.bsky.social" style="color: #69cfff" target="_blank">Boomer Twitter (BlueSky)</a></div>    
+    </div>    
+
+    <br><br>    
+    <div class="container">    
+      <div class="image"><img src="https://i.imgur.com/iGi5EqB.png"></div>    
+      <div class="text"><a href="https://www.fortnite.com/@dxrdev" style="color: #c559e5" target="_blank">Fortnite Creator Profile</a></div>    
+    </div>    
+
+    <br><br>    
+    <div class="container">    
+      <div class="image"><img src="https://i.imgur.com/Bet3Dtv.png"></div>    
+      <div class="text"><a href="mailto:elastrixed@gmail.com" style="color: #FF0000" target="_blank">Email</a></div>    
+    </div>    
+  </p>    
+
+  <hr><br>    
+  <h2 style="color:White;">MORE MORE MORE MORE MORE</h2>    
+  <br><hr><br><br>    
+  <a href="https://elastrix.itch.io/rifted-together" style="color:White;" target="_blank">Rifted: Together (Coming Soon)</a>    
+
+  <br><br><br><br><br>    
+  <h4 style="color:White;">this is a WIP so...give me time here......</h4>    
+
+  <video autoplay loop muted width="300" height="100" src="https://i.imgur.com/o2ksfSs.mp4"></video>    
+  <a href="https://ela.is-a.dev/space" style="color:White;" target="_blank">login</a>    
+  <br><br><br>    
 
   <script>
     const sidebar = document.getElementById("mySidebar");
@@ -231,10 +237,11 @@
         sidebar.style.transition = "width 0.3s";
         sidebar.style.transform = "none";
       }
+      localStorage.setItem("sidebarMode", sidebarClean ? "clean" : "normal");
+      document.getElementById("sidebarModeLabel").innerText = sidebarClean ? "ON" : "OFF";
     }
     function toggleSidebarMode() {
       sidebarClean = !sidebarClean;
-      document.getElementById("sidebarModeLabel").innerText = sidebarClean ? "ON" : "OFF";
       applySidebarMode();
     }
 
@@ -285,14 +292,11 @@
       settingsMenu.style.display = settingsMenu.style.display === "block" ? "none" : "block";
     }
 
-    // Dark mode
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-    }
-
-    // Evil mode
-    function toggleEvilMode() {
-      document.body.classList.toggle("evil");
+    // Theme modes
+    function setMode(mode) {
+      document.body.classList.remove("light", "dark", "evil");
+      document.body.classList.add(mode);
+      localStorage.setItem("siteMode", mode);
     }
 
     // Carousel
@@ -311,6 +315,16 @@
         slidesContainer.style.transform = `translateX(-${index * (100 / total)}%)`;
       }, 5000);
     })();
+
+    // Restore saved settings
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedMode = localStorage.getItem("siteMode");
+      if (savedMode) document.body.classList.add(savedMode);
+      else document.body.classList.add("light"); // default light
+
+      const savedSidebarMode = localStorage.getItem("sidebarMode");
+      if (savedSidebarMode === "clean") sidebarClean = true;
+      applySidebarMode();
+    });
   </script>
-</body>  
-</html>
+</body>
