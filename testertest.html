@@ -105,7 +105,7 @@
 .slide img { 
   width: 100%; 
   height: auto; 
-  max-height: 450px; /* keeps images neat */
+  max-height: 450px;
   object-fit: contain; 
   border-radius: 8px; 
   display: block; 
@@ -143,7 +143,7 @@
         <a href="/diary">Blogpost (Coming soon)</a>  
         <h3>Site</h3>  
         <a href="/riftedwiki">Rifted Wiki (Coming Soon)</a>  
-        <a href="/space">C:</a>  
+        <a href="/space">[C:]</a>  
     </div>  
 
     <div class="top-left">  
@@ -156,7 +156,7 @@
     </header>  
 
     <div class="notice">  
-        ⚠️ Projects are currently on hiatus and/or in slower progress than usual due to my job<br>  
+        ⚠️ Projects are currently in slower progress than usual due to my job<br>  
         Updates will be posted on socials and here when hiatus is over.  
     </div>  
 
@@ -168,7 +168,7 @@
 
     <!-- GALLERY SHOWCASE -->  
 <br><br><hr><br>
-<h2 style="color:White;">PROJECTS GALLERY</h2>
+<h2 style="color:White;">PROJECT GALLERY</h2>
 <br><hr>
 
 <!-- GALLERY SHOWCASE -->
@@ -247,63 +247,52 @@
     <br><br><br>  
 
     <script>
-  // Elements
-  const sidebar = document.getElementById("mySidebar");
-  const topLeft = document.querySelector(".top-left");
-  const openBtn = document.querySelector(".openbtn");
-
-  // Open / close helpers
-  function openSidebar() {
-    sidebar.style.width = "250px";
-    // hide top-left (hamburger + home icon) while sidebar is open
-    if (topLeft) topLeft.style.display = "none";
-    // attach click-away listener
-    document.addEventListener("click", outsideClickListener);
+        const sidebar = document.getElementById("mySidebar");
+        const topLeft = document.querySelector(".top-left");
+        const openBtn = document.querySelector(".openbtn");
+        
+        function openSidebar() {
+            sidebar.style.width = "250px";
+            // hide top-left (hamburger + home icon) while sidebar is open
+            if (topLeft) topLeft.style.display = "none";
+            document.addEventListener("click", outsideClickListener);
   }
 
-  function closeSidebar() {
-    sidebar.style.width = "0";
-    if (topLeft) topLeft.style.display = "flex";
-    // remove click-away listener
-    document.removeEventListener("click", outsideClickListener);
+        function closeSidebar() {
+            sidebar.style.width = "0";
+            if (topLeft) topLeft.style.display = "flex";
+            document.removeEventListener("click", outsideClickListener);
   }
 
   // Public toggle used by your button
-  function toggleSidebar() {
-    if (sidebar.style.width === "250px") {
-      closeSidebar();
-    } else {
-      openSidebar();
+        function toggleSidebar() {
+            if (sidebar.style.width === "250px") {
+                closeSidebar();
+            } else {
+                openSidebar();
     }
+  } 
+        function outsideClickListener(e) {
+            // safety checks
+            if (!sidebar) return;
+            if (sidebar.contains(e.target)) return; // clicked inside sidebar -> ignore
+            if (openBtn && openBtn.contains(e.target)) return; // clicked the open button -> ignore
+            closeSidebar();
+  }
+        if (sidebar) {
+            sidebar.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", () => closeSidebar());
+            });
   }
 
-  // Click-away listener: closes sidebar if click is neither inside sidebar nor on the open button
-  function outsideClickListener(e) {
-    // safety checks
-    if (!sidebar) return;
-    if (sidebar.contains(e.target)) return; // clicked inside sidebar -> ignore
-    if (openBtn && openBtn.contains(e.target)) return; // clicked the open button -> ignore
-    // otherwise close
-    closeSidebar();
-  }
-
-  // Also close sidebar when any link inside it is clicked (nice UX)
-  if (sidebar) {
-    sidebar.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => closeSidebar());
-    });
-  }
-
-  // -------------------------------
-  // Carousel init (keeps your current behavior)
-  // -------------------------------
+  // ---------------
+  // Carousel innit?
   (function initCarousel(){
     const slidesContainer = document.querySelector(".slides");
     const slideElems = document.querySelectorAll(".slide");
     if (!slidesContainer || slideElems.length === 0) return;
 
     const total = slideElems.length;
-    // Make slidesContainer width dynamic and set each slide width
     slidesContainer.style.width = (total * 100) + "%";
     slideElems.forEach(s => s.style.width = (100 / total) + "%");
 
@@ -311,11 +300,10 @@
     setInterval(() => {
       index = (index + 1) % total;
       slidesContainer.style.transform = `translateX(-${index * (100 / total)}%)`;
-    }, 5000); // change slide every 5s
+    }, 5000); // slide timer
   })();
-
-  // Expose toggleSidebar to global scope (so your HTML inline onclick still works)
-  window.toggleSidebar = toggleSidebar;
+        window.toggleSidebar = toggleSidebar;
+        
     </script>
 </body>  
 </html>
