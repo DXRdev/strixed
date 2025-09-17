@@ -246,57 +246,76 @@
     <a href="https://ela.is-a.dev/space" style="color:White;" target="_blank">login</a>  
     <br><br><br>  
 
-    <script>  
-        // Toggle sidebar and hide/show home icon while sidebar is open
-function toggleSidebar() {  
-  const sidebar = document.getElementById("mySidebar");  
-  const topLeft = document.querySelector(".top-left");  
-  if (sidebar.style.width === "250px") {  
-    sidebar.style.width = "0";  
-    topLeft.style.display = "flex";  
-  } else {  
-    sidebar.style.width = "250px";  
-    topLeft.style.display = "none";  
-  }  
-}  
+    <script>
+  // Elements
+  const sidebar = document.getElementById("mySidebar");
+  const topLeft = document.querySelector(".top-left");
+  const openBtn = document.querySelector(".openbtn");
 
-        // handler for clicks outside the sidebar to close it
-        function handleOutsideClick(e) {
-          const sidebar = document.getElementById("mySidebar");
-          const openBtn = document.querySelector(".openbtn");
-
-window.addEventListener('click', function (event) {
-  const sidebar = document.getElementById('sidebar');
-  if (event.target === sidebar) {
-    sidebar.style.width = "0"; 
+  // Open / close helpers
+  function openSidebar() {
+    sidebar.style.width = "250px";
+    // hide top-left (hamburger + home icon) while sidebar is open
+    if (topLeft) topLeft.style.display = "none";
+    // attach click-away listener
+    document.addEventListener("click", outsideClickListener);
   }
-});
-            
-          if (!sidebar.contains(e.target) && !openBtn.contains(e.target)) {
-            sidebar.style.width = "0";
-            const homeLink = document.querySelector(".top-left a");
-            if (homeLink) homeLink.style.display = "";
-            document.removeEventListener('click', handleOutsideClick);
-          }
-        }
 
-        // Gallery automatic slide
-        (function initCarousel(){
-          const slidesContainer = document.querySelector(".slides");
-          const slideElems = document.querySelectorAll(".slide");
-          if (!slidesContainer || slideElems.length === 0) return;
+  function closeSidebar() {
+    sidebar.style.width = "0";
+    if (topLeft) topLeft.style.display = "flex";
+    // remove click-away listener
+    document.removeEventListener("click", outsideClickListener);
+  }
 
-          const total = slideElems.length;
-          // Makes slidesContainer width dynamic (so slide width = container width)
-          slidesContainer.style.width = (total * 100) + "%";
-          slideElems.forEach(s => s.style.width = (100 / total) + "%");
+  // Public toggle used by your button
+  function toggleSidebar() {
+    if (sidebar.style.width === "250px") {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  }
 
-          let index = 0;
-          setInterval(() => {
-            index = (index + 1) % total;
-            slidesContainer.style.transform = `translateX(-${index * (100 / total)}%)`;
-          }, 5000); // slide timer
-        })();
-    </script>  
+  // Click-away listener: closes sidebar if click is neither inside sidebar nor on the open button
+  function outsideClickListener(e) {
+    // safety checks
+    if (!sidebar) return;
+    if (sidebar.contains(e.target)) return; // clicked inside sidebar -> ignore
+    if (openBtn && openBtn.contains(e.target)) return; // clicked the open button -> ignore
+    // otherwise close
+    closeSidebar();
+  }
+
+  // Also close sidebar when any link inside it is clicked (nice UX)
+  if (sidebar) {
+    sidebar.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => closeSidebar());
+    });
+  }
+
+  // -------------------------------
+  // Carousel init (keeps your current behavior)
+  // -------------------------------
+  (function initCarousel(){
+    const slidesContainer = document.querySelector(".slides");
+    const slideElems = document.querySelectorAll(".slide");
+    if (!slidesContainer || slideElems.length === 0) return;
+
+    const total = slideElems.length;
+    // Make slidesContainer width dynamic and set each slide width
+    slidesContainer.style.width = (total * 100) + "%";
+    slideElems.forEach(s => s.style.width = (100 / total) + "%");
+
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % total;
+      slidesContainer.style.transform = `translateX(-${index * (100 / total)}%)`;
+    }, 5000); // change slide every 5s
+  })();
+
+  // Expose toggleSidebar to global scope (so your HTML inline onclick still works)
+  window.toggleSidebar = toggleSidebar;
+    </script>
 </body>  
 </html>
