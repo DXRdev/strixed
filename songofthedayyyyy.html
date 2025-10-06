@@ -1,68 +1,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Song of the Day</title>
+  <title>Song of the Day | STRIXED</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
 
   <style>
     body {
-      background: #fefefe;
-      text-align: center;
-      font-family: Comic Sans MS, Papyrus, cursive; /* cursed font combo */
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: black;
+      color: white;
     }
 
-    h1 {
-      font-size: 48px;
-      font-weight: bold;
-      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    /* keep your sidebar system */
+    .top-left, .top-right, .sidebar {
+      position: fixed;
+      z-index: 1000;
+    }
+
+    /* "graphic design is my passion" header */
+    .title {
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 40px;
+      background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-      margin-top: 40px;
-      margin-bottom: 20px;
+      text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+      margin-top: 100px;
+      margin-bottom: 50px;
+      letter-spacing: 2px;
+      animation: rainbow 6s linear infinite;
+    }
+    @keyframes rainbow {
+      0% {filter: hue-rotate(0deg);}
+      100% {filter: hue-rotate(360deg);}
     }
 
-    .song-section {
-      margin-top: 20px;
+    .song-container {
+      text-align: center;
+      font-family: 'Inter', sans-serif;
     }
-
     .song-cover {
-      width: 300px;
-      border: 5px solid hotpink;
-      border-radius: 15px;
-      box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+      width: 250px;
+      border-radius: 8px;
+      transition: transform 0.2s;
     }
+    .song-cover:hover { transform: scale(1.05); }
 
-    .song-title {
-      font-size: 28px;
-      margin-top: 10px;
-      color: #444;
+    .song-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 15px;
     }
-
     .song-artist {
-      font-size: 22px;
-      margin-top: 5px;
-      color: #666;
+      font-size: 18px;
+      color: #ccc;
     }
 
     a {
       text-decoration: none;
+      color: inherit;
     }
+
+    /* reuse your sidebar etc */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      top: 0;
+      left: 0;
+      background-color: rgba(17, 17, 17, 0.95);
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+    }
+    .sidebar a {
+      padding: 10px 20px;
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .sidebar a:hover { background: #575757; }
+
+    .openbtn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    .top-left { top: 10px; left: 10px; display: flex; gap: 10px; align-items: center; }
+    .top-right { top: 10px; right: 10px; }
   </style>
 </head>
+
 <body>
-
-  <h1>Song of the Day</h1>
-
-  <div class="song-section">
-    <a href="https://open.spotify.com/album/7ycBtnsMtyVbbwTfJwRjSP" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/en/9/9c/To_Pimp_a_Butterfly.png" 
-           alt="To Pimp a Butterfly" 
-           class="song-cover">
-      <div class="song-title">To Pimp a Butterfly</div>
-      <div class="song-artist">Kendrick Lamar</div>
-    </a>
+  <!-- Sidebar -->
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" onclick="toggleSidebar()">&times; Close</a>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/socials">Socials</a>
+    <a href="/diary">Blog</a>
   </div>
 
+  <!-- Top Left -->
+  <div class="top-left">
+    <button class="openbtn" onclick="toggleSidebar()">☰</button>
+    <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
+  </div>
+
+  <!-- Title -->
+  <h1 class="title">🎵 SONG OF THE DAY 🎵</h1>
+
+  <!-- Song block -->
+  <div class="song-container">
+    <a href="https://open.spotify.com/album/7ycBtnsMtyVbbwTfJwRjSP" target="_blank">
+      <img class="song-cover" src="https://upload.wikimedia.org/wikipedia/en/9/9f/To_Pimp_a_Butterfly_cover_art.jpeg" alt="To Pimp a Butterfly cover">
+    </a>
+    <div class="song-name">To Pimp a Butterfly</div>
+    <div class="song-artist">Kendrick Lamar</div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("mySidebar");
+      if (sidebar.style.width === "250px") {
+        sidebar.style.width = "0";
+      } else {
+        sidebar.style.width = "250px";
+      }
+    }
+  </script>
 </body>
 </html>
