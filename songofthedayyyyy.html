@@ -3,29 +3,105 @@
   <meta charset="UTF-8">
   <title>Song of the Day | STRIXED</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
+  <!-- Favicon -->
+  <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
 
+  <!-- EMBED META TAGS -->
+  <meta property="og:title"SONG OF THE DAY" />
+  <meta property="og:site_name" content="ela.is-a.dev" />
+  <meta property="og:description" content="Today's song of the day!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ela.is-a.dev/songoftheday" />
+  <meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png" />
+
+  <!-- Twitter Embed (optional, improves embeds on Twitter/X) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="STRIXED - Song Of The Day" />
+  <meta name="twitter:description" content="STRIXED - elastrixx's projects, updates and more." />
+  <meta name="twitter:image" content="https://i.imgur.com/1NaqL9Z.png" />
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+  
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: "Press Start 2P", system-ui;
       margin: 0;
       background: black;
       color: white;
     }
 
-    .top-left, .top-right, .sidebar {
-      position: fixed;
-      z-index: 1000;
-    }
+       /* Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(17, 17, 17, 0.95);
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
 
-    /* "graphic design is my passion" header */
+        .sidebar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            font-family: 'Inter', sans-serif;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: #575757;
+        }
+
+        .sidebar h3 {
+            color: #bbb;
+            margin: 20px 16px 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+            color: #fff;
+        }
+
+        /* Top-left (hamburger + home) */
+        .top-left {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1100;
+        }
+
+        .openbtn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+        }
+
     .title {
       text-align: center;
-      font-family: 'Comic Sans MS', cursive;
+      font-family: 'Comic Sans MS', bold;
       font-size: 40px;
       background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
       -webkit-background-clip: text;
@@ -89,15 +165,24 @@
   </style>
 </head>
 
-<body>
-  <!-- Sidebar -->
-  <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" onclick="toggleSidebar()">&times; Close</a>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/socials">Socials</a>
-    <a href="/diary">Blog</a>
-  </div>
+    <!-- Sidebar -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+        <h3>Main</h3>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/diary">Blogpost (Coming soon)</a>
+        <h3>Site</h3>
+        <a href="/page32">Rifted Wiki (Coming Soon)</a>
+        <a href="/page1">???</a>
+    </div>
+
+    <!-- Top-left buttons -->
+    <div class="top-left">
+        <button class="openbtn" onclick="toggleSidebar()">☰</button>
+        <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
+    </div>
+
 
   <!-- Top Left -->
   <div class="top-left">
@@ -106,7 +191,7 @@
   </div>
 
   <!-- Title -->
-  <h1 class="title">SONG OF THE DAY</h1>
+  <h1 class="title">song of the day</h1>
 
   <!-- Song Embed -->
   <div class="song-container">
@@ -117,11 +202,11 @@
       loading="lazy"></iframe>
   </div>
 
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById("mySidebar");
-      sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
-    }
-  </script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+        }
+    </script>
 </body>
 </html>
