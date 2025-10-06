@@ -17,7 +17,6 @@
       color: white;
     }
 
-    /* keep your sidebar system */
     .top-left, .top-right, .sidebar {
       position: fixed;
       z-index: 1000;
@@ -46,21 +45,11 @@
       text-align: center;
       font-family: 'Inter', sans-serif;
     }
-    .song-cover {
-      width: 250px;
-      border-radius: 8px;
-      transition: transform 0.2s;
-    }
-    .song-cover:hover { transform: scale(1.05); }
 
-    .song-name {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-    .song-artist {
-      font-size: 18px;
-      color: #ccc;
+    iframe {
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      margin-bottom: 40px;
     }
 
     a {
@@ -68,7 +57,7 @@
       color: inherit;
     }
 
-    /* reuse your sidebar etc */
+    /* Sidebar system */
     .sidebar {
       height: 100%;
       width: 0;
@@ -117,25 +106,21 @@
   </div>
 
   <!-- Title -->
-  <h1 class="title">🎵 SONG OF THE DAY 🎵</h1>
+  <h1 class="title">SONG OF THE DAY</h1>
 
-  <!-- Song block -->
+  <!-- Song Embed -->
   <div class="song-container">
-    <a href="https://open.spotify.com/album/7ycBtnsMtyVbbwTfJwRjSP" target="_blank">
-      <img class="song-cover" src="https://upload.wikimedia.org/wikipedia/en/9/9f/To_Pimp_a_Butterfly_cover_art.jpeg" alt="To Pimp a Butterfly cover">
-    </a>
-    <div class="song-name">To Pimp a Butterfly</div>
-    <div class="song-artist">Kendrick Lamar</div>
+    <iframe style="border-radius:12px" 
+      src="https://open.spotify.com/embed/track/0ECs7wpW9157Tk5yBUGbE0?utm_source=generator"
+      width="300" height="380" frameBorder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"></iframe>
   </div>
 
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("mySidebar");
-      if (sidebar.style.width === "250px") {
-        sidebar.style.width = "0";
-      } else {
-        sidebar.style.width = "250px";
-      }
+      sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
     }
   </script>
 </body>
