@@ -13,22 +13,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
 
   <!-- EMBED META TAGS -->
-  <meta property="og:title"SONG OF THE DAY" />
+  <meta property="og:title" content="SONG OF THE DAY" />
   <meta property="og:site_name" content="ela.is-a.dev" />
   <meta property="og:description" content="Today's song of the day!" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ela.is-a.dev/songoftheday" />
   <meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png" />
 
-  <!-- Twitter Embed (optional, improves embeds on Twitter/X) -->
+  <!-- Twitter Embed -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="STRIXED - Song Of The Day" />
   <meta name="twitter:description" content="STRIXED - elastrixx's projects, updates and more." />
   <meta name="twitter:image" content="https://i.imgur.com/1NaqL9Z.png" />
 
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
-  
   <style>
     body {
       font-family: "Press Start 2P", system-ui;
@@ -38,69 +35,17 @@
     }
 
     img.banner {
-    max-width: 90%;
-    height: auto;
-       /* Sidebar */
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: rgba(17, 17, 17, 0.95);
-            overflow-x: hidden;
-            transition: 0.3s;
-            padding-top: 60px;
-            z-index: 1000;
-        }
+      display: block;
+      max-width: 90%;
+      height: auto;
+      margin: 0 auto;
+    }
 
-        .sidebar a {
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 18px;
-            font-family: 'Inter', sans-serif;
-            color: #f1f1f1;
-            display: block;
-            transition: 0.2s;
-        }
-
-        .sidebar a:hover {
-            background: #575757;
-        }
-
-        .sidebar h3 {
-            color: #bbb;
-            margin: 20px 16px 8px;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-
-        .sidebar .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 36px;
-            color: #fff;
-        }
-
-        /* Top-left (hamburger + home) */
-        .top-left {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 1100;
-        }
-
-        .openbtn {
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: white;
-        }
+    @media (max-width: 600px) {
+      img.banner {
+        max-width: 80%;
+      }
+    }
 
     .title {
       text-align: center;
@@ -115,26 +60,16 @@
       letter-spacing: 2px;
       animation: rainbow 6s linear infinite;
     }
+
     @keyframes rainbow {
-      0% {filter: hue-rotate(0deg);}
-      100% {filter: hue-rotate(360deg);}
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
     }
 
     .song-container {
       text-align: center;
       font-family: 'Inter', sans-serif;
     }
-
-     <!-- Song Frame -->
-  <div class="song-container">
-    <a href="https://open.spotify.com/track/4Q6vlkeyjtmNFZEIWY4iWJ?si=iu52FfpIR36JwT8H8HvpSQ" target="_blank" style="text-decoration:none;">
-      <div class="song-frame">
-        <img class="song-cover" src="https://i.scdn.co/image/ab67616d0000b273ac3f44e01924e11f1f6f2e02" alt="Pandemonium is my Candy cover">
-        <div class="song-name">Pandemonium is my Candy</div>
-        <div class="song-artist">Nihmune</div>
-      </div>
-    </a>
-  </div>
 
     a {
       text-decoration: none;
@@ -147,11 +82,14 @@
       width: 0;
       top: 0;
       left: 0;
+      position: fixed;
       background-color: rgba(17, 17, 17, 0.95);
       overflow-x: hidden;
       transition: 0.3s;
       padding-top: 60px;
+      z-index: 1000;
     }
+
     .sidebar a {
       padding: 10px 20px;
       display: block;
@@ -159,7 +97,26 @@
       text-decoration: none;
       font-size: 18px;
     }
+
     .sidebar a:hover { background: #575757; }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 36px;
+      color: #fff;
+    }
+
+    .top-left {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1100;
+    }
 
     .openbtn {
       font-size: 24px;
@@ -168,34 +125,26 @@
       border: none;
       color: white;
     }
-    .top-left { top: 10px; left: 10px; display: flex; gap: 10px; align-items: center; }
-    .top-right { top: 10px; right: 10px; }
   </style>
 </head>
 
-    <!-- Sidebar -->
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
-        <h3>Main</h3>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/diary">Blogpost (Coming soon)</a>
-        <h3>Site</h3>
-        <a href="/page32">Rifted Wiki (Coming Soon)</a>
-        <a href="/page1">???</a>
-    </div>
+<body>
+  <!-- Sidebar -->
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+    <h3>Main</h3>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/diary">Blogpost (Coming soon)</a>
+    <h3>Site</h3>
+    <a href="/page32">Rifted Wiki (Coming Soon)</a>
+    <a href="/page1">???</a>
+  </div>
 
-    <!-- Top-left buttons -->
-    <div class="top-left">
-        <button class="openbtn" onclick="toggleSidebar()">☰</button>
-        <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
-    </div>
-
-
-  <!-- Top Left -->
+  <!-- Top-left buttons -->
   <div class="top-left">
     <button class="openbtn" onclick="toggleSidebar()">☰</button>
-    <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
+    <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" class="banner" alt="Home"></a>
   </div>
 
   <!-- Title -->
@@ -211,12 +160,12 @@
       </div>
     </a>
   </div>
-  </div>
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById("mySidebar");
-            sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
-        }
-    </script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("mySidebar");
+      sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+    }
+  </script>
 </body>
 </html>
