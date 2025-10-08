@@ -1,302 +1,174 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>STRIXED</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Song of the Day | STRIXED</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Favicon -->
-    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">
+  <!-- Favicon -->
+  <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
 
-    <!-- EMBED META TAGS -->
-    <meta property="og:title" content="STRIXED" />
-    <meta property="og:site_name" content="ela.is-a.dev" />
-    <meta property="og:description" content="STRIXED - explore elastrixx's website" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ela.is-a.dev/" />
-    <meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png" />
+  <!-- EMBED META TAGS -->
+  <meta property="og:title" content="SONG OF THE DAY" />
+  <meta property="og:site_name" content="ela.is-a.dev" />
+  <meta property="og:description" content="Today's song of the day!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ela.is-a.dev/songoftheday" />
+  <meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png" />
 
-    <!-- Twitter Embed -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="STRIXED" />
-    <meta name="twitter:description" content="STRIXED - elastrixx's projects, updates and more." />
-    <meta name="twitter:image" content="https://i.imgur.com/1NaqL9Z.png" />
+  <!-- Twitter Embed -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="STRIXED - Song Of The Day" />
+  <meta name="twitter:description" content="STRIXED - elastrixx's projects, updates and more." />
+  <meta name="twitter:image" content="https://i.imgur.com/1NaqL9Z.png" />
 
-    <link rel="stylesheet" href="style.css">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
 
-    <style>
-        body {
-            font-family: "Press Start 2P", system-ui;
-            margin: 0;
-            background: black;
-            color: white;
-            overflow-x: hidden;
-        }
+  <style>
+    body {
+      font-family: "Press Start 2P", system-ui;
+      margin: 0;
+      color: white;
+      background: linear-gradient(270deg, #ff0040, #ff8000, #00bfff, #8000ff);
+      background-size: 800% 800%;
+      animation: ambientShift 20s ease infinite;
+    }
 
-        /* Ambient gradient shift */
-        @keyframes ambientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    @keyframes ambientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        body {
-            background: linear-gradient(-45deg, #0a001f, #1a004d, #30006b, #000000);
-            background-size: 400% 400%;
-            animation: ambientShift 20s ease infinite;
-        }
+    img.banner {
+      max-width: 90%;
+      height: auto;
+    }
 
-        video {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
+    .title {
+      text-align: center;
+      font-family: 'Comic Sans MS', bold;
+      font-size: 40px;
+      background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+      margin-top: 100px;
+      margin-bottom: 50px;
+      letter-spacing: 2px;
+      animation: rainbow 6s linear infinite;
+    }
 
-        .about-section, .notice {
-            padding: 0 15px;
-        }
+    @keyframes rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
 
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .song-container {
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+    }
 
-        img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-        .about-title {
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            color: white;
-            text-align: center;
-            margin-bottom: 1em;
-        }
+    /* Sidebar system */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      top: 0;
+      left: 0;
+      position: fixed;
+      background-color: rgba(17, 17, 17, 0.95);
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
 
-        .about-section {
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            font-weight: 500;
-            color: white;
-            text-align: center;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .sidebar a {
+      padding: 10px 20px;
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
 
-        p {
-            margin-bottom: 1em;
-        }
+    .sidebar a:hover { background: #575757; }
 
-        .text {
-            font-size: 20px;
-            padding-left: 20px;
-        }
+    .sidebar .closebtn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 36px;
+      color: #fff;
+    }
 
-        .notice {
-            font-family: 'Inter', sans-serif;
-            font-size: 20px;
-            color: #ff4d4d;
-            text-align: center;
-            margin: 10px auto 20px;
-            max-width: 800px;
-            line-height: 1.4;
-        }
+    .top-left {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1100;
+    }
 
-        @font-face {
-            font-family: 'cutinregular';
-            src: url("../css/fonts/cutin-webfont.woff2") format("woff2"),
-                 url("../css/fonts/cutin-webfont.woff") format("woff");
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        p.beeg {
-            font-size: 30px;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: rgba(17, 17, 17, 0.95);
-            overflow-x: hidden;
-            transition: 0.3s;
-            padding-top: 60px;
-            z-index: 1000;
-        }
-
-        .sidebar a {
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 18px;
-            font-family: 'Inter', sans-serif;
-            color: #f1f1f1;
-            display: block;
-            transition: 0.2s;
-        }
-
-        .sidebar a:hover {
-            background: #575757;
-        }
-
-        .sidebar h3 {
-            color: #bbb;
-            margin: 20px 16px 8px;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-
-        .sidebar .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 36px;
-            color: #fff;
-        }
-
-        .top-left {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 1100;
-        }
-
-        .openbtn {
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: white;
-        }
-
-        header img.banner {
-            display: block;
-            margin: 60px auto 20px;
-        }
-    </style>
+    .openbtn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
-        <h3>Main</h3>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/diary">Blogpost (Coming soon)</a>
-        <h3>Site</h3>
-        <a href="/page32">Rifted Wiki (Coming Soon)</a>
-        <a href="/page1">???</a>
-    </div>
+  <!-- Sidebar -->
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+    <h3>Main</h3>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/diary">Blogpost (Coming soon)</a>
+    <h3>Site</h3>
+    <a href="/page32">Rifted Wiki (Coming Soon)</a>
+    <a href="/page1">???</a>
+  </div>
 
-    <div class="top-left">
-        <button class="openbtn" onclick="toggleSidebar()">☰</button>
-        <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
-    </div>
+  <!-- Top-left buttons -->
+  <div class="top-left">
+    <button class="openbtn" onclick="toggleSidebar()">☰</button>
+    <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>
+  </div>
 
-    <header>
-        <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>
-    </header>
+  <!-- Title -->
+  <h1 class="title">song of the day</h1>
 
-    <div class="notice">
-        ⚠️ Projects are currently on hiatus and/or in slower progress than usual due to my job<br>
-        Updates will be posted on socials and here when hiatus is over.
-    </div>
+  <!-- Song Embed -->
+  <div class="song-container">
+    <a href="https://open.spotify.com/track/4Q6vlkeyjtmNFZEIWY4iWJ?si=iu52FfpIR36JwT8H8HvpSQ" target="_blank" style="text-decoration:none;">
+      <div class="song-frame">
+        <img class="song-cover" src="https://i.scdn.co/image/ab67616d0000b273b8b746982ec0a576f4d61381" alt="Pandemonium is my Candy cover">
+        <div class="song-name">Pandemonium is my Candy</div>
+        <div class="song-artist">Nihmune</div>
+      </div>
+    </a>
+  </div>
 
-    <br>
-    <h1 style="color:white;">elastrixx</h1>
-    <h2 style="color:white;">professional girlfailure and novice gamedev</h2>
-
-    <video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>
-
-    <br><br><hr><br>
-    <h2 style="color:white;">ABOUT</h2>
-    <br><hr>
-
-    <div class="about-section">
-        <p>Welcome traveler, I am the internet witch, Elaina, also known as elastrix...</p>
-        <p>I go by Elaina, I'm currently working on my project "Rifted" and studying game dev for it.</p>
-        <p>I also do UEFN/Fortnite Creative work sometimes!</p>
-        <p>This page will work as a blogpost for updates on works and projects,</p>
-        <p>some of these I'll be posting updates for in my socials every once in a while,</p>
-        <p>which you can find right below here yes like right here ↓</p>
-    </div>
-
-    <br><hr><br>
-    <h2 style="color:white;">SOCIALS</h2>
-    <br><hr>
-
-    <p style="color:white;">
-        <br><br>
-        <div class="container">
-            <div class="image">
-                <img src="https://i.imgur.com/0Ig8fuc.png">
-            </div>
-            <div class="text">
-                <a href="https://x.com/elastrixx" style="color:#2378d9" target="_blank">Twitter (still it's name)</a>
-            </div>
-        </div>
-
-        <br><br>
-        <div class="container">
-            <div class="image">
-                <img src="https://i.imgur.com/eGgZzZa.png">
-            </div>
-            <div class="text">
-                <a href="https://bsky.app/profile/elastrixx.bsky.social" style="color:#69cfff" target="_blank">Boomer Twitter (BlueSky)</a>
-            </div>
-        </div>
-
-        <br><br>
-        <div class="container">
-            <div class="image">
-                <img src="https://i.imgur.com/iGi5EqB.png">
-            </div>
-            <div class="text">
-                <a href="https://www.fortnite.com/@dxrdev" style="color:#c559e5" target="_blank">Fortnite Creator Profile</a>
-            </div>
-        </div>
-
-        <br><br>
-        <div class="container">
-            <div class="image">
-                <img src="https://i.imgur.com/Bet3Dtv.png">
-            </div>
-            <div class="text">
-                <a href="mailto:elastrixed@gmail.com" style="color:#FF0000" target="_blank">Email</a>
-            </div>
-        </div>
-    </p>
-
-    <hr><br>
-    <h2 style="color:white;">MORE MORE MORE MORE MORE</h2>
-    <br><hr><br><br>
-    <a href="https://elastrix.itch.io/rifted-together" style="color:white;" target="_blank">Rifted: Together (Coming Soon)</a>
-
-    <br><br><br><br><br>
-    <h4 style="color:white;">this is a WIP so...give me time here......</h4>
-
-    <video autoplay loop muted width="300" height="100" src="https://i.imgur.com/o2ksfSs.mp4"></video>
-    <a href="https://ela.is-a.dev/space" style="color:white;" target="_blank">login</a>
-    <br><br><br>
-
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById("mySidebar");
-            sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
-        }
-    </script>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("mySidebar");
+      sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+    }
+  </script>
 </body>
 </html>
