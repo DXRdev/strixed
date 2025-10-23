@@ -1,0 +1,86 @@
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <title>MEMBER_RESEARCH(1)</title>  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <style>  
+    body {  
+      margin: 0;  
+      height: 100vh;  
+      background-color: #001100;  
+      color: #00ff00;  
+      font-family: monospace;  
+      overflow: hidden;  
+    }  
+
+    #path {  
+      position: absolute;  
+      top: 10px;  
+      left: 20px;  
+      font-size: 16px;  
+      color: #00ff00;  
+      pointer-events: none;  
+    }  
+
+    /*grid*/  
+    #desktop {  
+      display: grid;  
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));  
+      justify-items: center;  
+      align-items: start;  
+      gap: 40px;  
+      padding: 60px 40px;  
+    }  
+
+    .folder, .document {  
+      text-align: center;  
+      cursor: pointer;  
+    }  
+
+    .folder img, .document img {  
+      width: 70px;  
+      height: 70px;  
+      display: block;  
+      margin: 0 auto;  
+      image-rendering: pixelated;  
+    }  
+
+    .folder span, .document span {  
+      display: block;  
+      margin-top: 8px;  
+      font-size: 13px;  
+      color: #00ff00;  
+      word-wrap: break-word;  
+    }  
+
+    /*hover effect*/  
+    .folder:hover span, .document:hover span {  
+      text-decoration: underline;  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div id="path">C://USERS/SILVERONE/MEMBER_RESEARCH(1)</div>  
+
+  <div id="desktop">   
+    <div class="folder" onclick="location.href='https://ela.is-a.dev/files/users/silverone/member_research(1)/witch'">  
+      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
+      <span>w</span>  
+    </div>  
+    
+    <div class="document" onclick="location.href='DOC_REDIRECT_2'">  
+      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
+      <span>hina_fungi_variety.docx</span>  
+
+    <div class="folder" onclick="location.href='FOLDER_REDIRECT_2'">  
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Folder">  
+      <span>hanako_growthcalculation.docx</span>  
+    </div>  
+
+    <div class="document" onclick="location.href='DOC_REDIRECT_2'">  
+      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
+      <span>suduplaceholder</span>  
+    </div>  
+  </div>  
+</body>  
+</html>
