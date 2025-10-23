@@ -21,20 +21,11 @@
       font-size: 12rem;
       cursor: pointer;
       animation: float 3s ease-in-out infinite;
-      transition: none;
     }
 
     @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    .question:hover {
-      filter: none;
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     audio {
@@ -45,7 +36,7 @@
 <body>
   <div class="question" id="qmark">?</div>
 
-  <audio id="ominous">
+  <audio id="ominous" loop>
     <source src="https://ela.is-a.dev/files/audio/ominous.ogg" type="audio/ogg">
     <source src="https://ela.is-a.dev/files/audio/ominous.mp3" type="audio/mpeg">
   </audio>
@@ -53,10 +44,17 @@
   <script>
     const audio = document.getElementById('ominous');
     const qmark = document.getElementById('qmark');
-    audio.volume = 0.6; // I once had a dream i still remember to this day, i was in a seemingly infinite flower field, up a hill, my house was there, ruined, run down, but it was my home, as i began walking through the flowers, i slowly became slower and slower, but as i walked, the house began collapsing and holding it's pieces in the air, as if it was being disarmed and the broken into floating pieces, and as i kept the walking, the field began consuming me like quicksand, from the small glimpse i had left, i saw my room, allowing me to see him, th
+    audio.volume = 0.6;
+
+    // I once had a dream i still remember to this day, i was in a seemingly infinite flower field, up a hill, my house was there, ruined, run down, but it was my home, as i began walking through the flowers, i slowly became slower and slower, but as i walked, the house began collapsing and holding it's pieces in the air, as if it was being disarmed and the broken into floating pieces, and as i kept the walking, the field began consuming me like quicksand, from the small glimpse i had left, i saw my room, allowing me to see him, th
     audio.play().catch(() => {
-      qmark.addEventListener('mouseenter', () => audio.play(), { once: true });
-      qmark.addEventListener('click', () => audio.play(), { once: true });
+    const startAudio = () => {
+        audio.play().catch(() => {}); // just in case
+        qmark.removeEventListener('mouseenter', startAudio);
+        qmark.removeEventListener('click', startAudio);
+      };
+      qmark.addEventListener('mouseenter', startAudio);
+      qmark.addEventListener('click', startAudio);
     });
   </script>
 </body>
