@@ -22,7 +22,7 @@
       pointer-events: none;  
     }  
 
-    /* Mini desktop grid */  
+    /*grid*/  
     #desktop {  
       display: grid;  
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));  
@@ -53,7 +53,7 @@
       word-wrap: break-word;  
     }  
 
-    /* Optional hover effect */  
+    /*hover effect*/  
     .folder:hover span, .document:hover span {  
       text-decoration: underline;  
     }  
@@ -62,8 +62,7 @@
 <body>  
   <div id="path">C://USERS/SILVERONE/WORK</div>  
 
-  <div id="desktop">  
-    <!-- ✅ Example folder (change hrefs easily) -->  
+  <div id="desktop">   
     <div class="folder" onclick="location.href='FOLDER_REDIRECT_1'">  
       <img src="https://i.imgur.com/9Ml0l4F.png" alt="Folder">  
       <span>project_alpha</span>  
@@ -74,7 +73,6 @@
       <span>archive</span>  
     </div>  
 
-    <!-- ✅ Example documents -->  
     <div class="document" onclick="location.href='DOC_REDIRECT_1'">  
       <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
       <span>readme.txt</span>  
