@@ -1,268 +1,304 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>files</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-
-    #path {
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      font-size: 18px;
-      color: #00ff00;
-      font-family: monospace;
-      pointer-events: none;
-  }
-
-
-    body {
-      margin: 0;
-      height: 100vh;
-      background-color: #001100;
-      color: #00ff00;
-      font-family: monospace;
-      overflow: hidden;
-    }
-
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background: black;
-      color: #00ff00;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      z-index: 9999;
-    }
-
-    /* Desktop area */
-    #desktop {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 per row */
-      justify-items: center;
-      align-items: start;
-      gap: 40px; /* space between items */
-      padding: 40px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 60px;
-      justify-items: center;
-      align-items: start;
-    }
-
-    .folder, .document {
-      text-align: center;
-      cursor: pointer;
-      margin: 0;
-    }
-
-    .folder img, .document img {
-      width: 100px;
-      height: 100px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .folder span, .document span {
-      display: block;
-      margin-top: 10px;
-      font-size: 15px;
-      color: #00ff00;
-    }
-
-    /* Password overlay */
-    #passwordOverlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    }
-
-    #passwordBox {
-      background: white;
-      color: black;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-      width: 300px;
-      min-height: 180px;
-      position: relative;
-    }
-
-    #closeOverlay {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      border: none;
-      background: none;
-      font-size: 16px;
-      cursor: pointer;
-      color: black;
-    }
-
-    #closeOverlay:hover {
-      color: red;
-    }
-
-    #passwordBox h2 {
-      margin: 0 0 10px;
-      font-family: monospace;
-    }
-
-    #passwordInput {
-      font-family: monospace;
-      border: 1px solid black;
-      padding: 5px;
-      width: 80%;
-    }
-
-    #passwordMessage {
-      margin-top: 10px;
-      font-size: 14px;
-      min-height: 18px;
-    }
-  </style>
-</head>
-<body>
-  <div id="loading-screen">
-    <p>LOADING SYSTEM...</p>
-    <p id="progress">0%</p>
-  </div>
-
-  <!-- Desktop -->
-  <div id="desktop">
-    <div id="path">C://USERS/SILVERONE</div>
-    
-    <div class="folder" onclick="openFolder('folder_1', false)">
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
-      <span>work</span>
-    </div>
-    <div class="folder" onclick="openFolder('folder_2', false)">
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">
-      <span>personal</span>
-    </div>
-    <div class="folder" onclick="openFolder('folder_3', true)">
-      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
-      <span>monthly_reports</span>
-    </div>
-    <div class="folder" onclick="openFolder('folder_4', true)">
-      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
-      <span>member_research</span>
-    </div>
-    <div class="folder" onclick="openFolder('folder_5', true)">
-      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">
-      <span>homework</span>
-    </div>
-    <div class="folder" onclick="openFolder('folder_6', false)">
-      <img src="https://i.imgur.com/H9mV2WD.png" alt="Unlocked Folder">
-      <span>member_research(1)</span>
-    </div>
-    <div class="document" onclick="openFolder('document_1', false)">
-      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">
-      <span>pixelart.gif</span>
-    </div>
-    <div class="document" onclick="openFolder('document_2', false)">
-      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">
-      <span>jdkdjfkfjdkfjkl</span>
-    </div>
-    <div class="document" onclick="openFolder('document_3', false)">
-      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">
-      <span>layoutmap_final_FINAL</span>
-    </div>
-  </div>
-
-  <!-- Password overlay -->
-  <div id="passwordOverlay">
-    <div id="passwordBox">
-      <button id="closeOverlay">✖</button>
-      <h2>Enter Password:</h2>
-      <input type="password" id="passwordInput">
-      <br><br>
-      <button id="submitPassword">Submit</button>
-      <p id="passwordMessage"></p>
-    </div>
-  </div>
-
-  <script>
-    const closeOverlay = document.getElementById("closeOverlay");
-    closeOverlay.addEventListener("click", () => {
-      overlay.style.display = "none";
-      passwordInput.value = "";
-      passwordMessage.textContent = "";
-    });
-
-    const Passwords = [
-      atob("c3VwZXJzZWNyZXRwYXNzMQ=="),
-      atob("bXlzdGVyaW91c2tleQ=="),
-      atob("c2lsdmVya2V5bW9ua2V5"),
-      atob("ZmFrZWxvZ2luMjAyNQ=="),
-      atob("c2NpZW5jZWlzY29vbA==")
-    ];
-
-    let attemptsLeft = 5;
-
-    // Loading screen
-    const loadingScreen = document.getElementById("loading-screen");
-    const progressText = document.getElementById("progress");
-    const desktop = document.getElementById("desktop");
-
-    setTimeout(() => { progressText.textContent = "39%"; }, 700);
-    setTimeout(() => { progressText.textContent = "100%"; }, 1500);
-    setTimeout(() => {
-      loadingScreen.style.display = "none";
-      desktop.style.display = "grid";
-    }, 2000);
-
-    // Overlay elements
-    const overlay = document.getElementById("passwordOverlay");
-    const passwordInput = document.getElementById("passwordInput");
-    const passwordMessage = document.getElementById("passwordMessage");
-    const submitPassword = document.getElementById("submitPassword");
-
-    function openFolder(name, locked = false) {
-      if (!locked) {
-        window.location.href = `/files/user/silverone/${name}`;
-        return;
-      }
-
-      overlay.style.display = "flex";
-      passwordInput.value = "";
-      passwordMessage.textContent = "";
-      passwordInput.focus();
-
-      submitPassword.onclick = () => {
-        if (attemptsLeft <= 0) {
-          window.location.href = "/";
-          return;
-        }
-
-        attemptsLeft--;
-
-        passwordMessage.style.color = "red";
-        if (attemptsLeft > 0) {
-          passwordMessage.textContent = `INCORRECT PASSWORD – ${attemptsLeft} attempts remaining`;
-        } else {
-          passwordMessage.textContent = "No attempts left. Redirecting...";
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 2000);
-        }
-
-        // Clear message
-        if (attemptsLeft > 0) {
-          setTimeout(() => {
-            passwordMessage.textContent = "";
-          }, 3000);
-        }
-      };
-    }
-  </script>
-
-</body>
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <title>files</title>  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <style>  
+    #path {  
+      position: absolute;  
+      top: 10px;  
+      left: 20px;  
+      font-size: 18px;  
+      color: #00ff00;  
+      font-family: monospace;  
+      pointer-events: none;  
+    }  
+  
+    body {  
+      margin: 0;  
+      height: 100vh;  
+      background-color: #001100;  
+      color: #00ff00;  
+      font-family: monospace;  
+      overflow: hidden;  
+    }  
+  
+    #loading-screen {  
+      position: fixed;  
+      inset: 0;  
+      background: black;  
+      color: #00ff00;  
+      display: flex;  
+      flex-direction: column;  
+      justify-content: center;  
+      align-items: center;  
+      font-size: 18px;  
+      z-index: 9999;  
+    }  
+  
+    #desktop {  
+      display: grid;  
+      grid-template-columns: repeat(3, 1fr);  
+      justify-items: center;  
+      align-items: start;  
+      gap: 40px;  
+      padding: 40px;  
+      grid-template-columns: repeat(3, 1fr);  
+      gap: 60px;  
+      justify-items: center;  
+      align-items: start;  
+    }  
+  
+    .folder, .document {  
+      text-align: center;  
+      cursor: pointer;  
+      margin: 0;  
+    }  
+  
+    .folder img, .document img {  
+      width: 100px;  
+      height: 100px;  
+      display: block;  
+      margin: 0 auto;  
+    }  
+  
+    .folder span, .document span {  
+      display: block;  
+      margin-top: 10px;  
+      font-size: 15px;  
+      color: #00ff00;  
+    }  
+  
+    #passwordOverlay {  
+      display: none;  
+      position: fixed;  
+      inset: 0;  
+      background: rgba(0,0,0,0.85);  
+      justify-content: center;  
+      align-items: center;  
+      z-index: 10000;  
+    }  
+  
+    #passwordBox {  
+      background: white;  
+      color: black;  
+      padding: 30px;  
+      border-radius: 8px;  
+      text-align: center;  
+      width: 300px;  
+      min-height: 180px;  
+      position: relative;  
+    }  
+  
+    #closeOverlay {  
+      position: absolute;  
+      top: 8px;  
+      right: 8px;  
+      border: none;  
+      background: none;  
+      font-size: 16px;  
+      cursor: pointer;  
+      color: black;  
+    }  
+  
+    #closeOverlay:hover {  
+      color: red;  
+    }  
+  
+    #passwordBox h2 {  
+      margin: 0 0 10px;  
+      font-family: monospace;  
+    }  
+  
+    #passwordInput {  
+      font-family: monospace;  
+      border: 1px solid black;  
+      padding: 5px;  
+      width: 80%;  
+    }  
+  
+    #passwordMessage {  
+      margin-top: 10px;  
+      font-size: 14px;  
+      min-height: 18px;  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div id="loading-screen">  
+    <p>LOADING SYSTEM...</p>  
+    <p id="progress">0%</p>  
+  </div>  
+  
+  <div id="desktop">  
+    <div id="path">C://USERS/SILVERONE</div>  
+      
+    <div class="folder" onclick="openFolder('folder_1', false)">  
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">  
+      <span>work</span>  
+    </div>  
+    <div class="folder" onclick="openFolder('folder_2', false)">  
+      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Open Folder">  
+      <span>personal</span>  
+    </div>  
+    <div class="folder" onclick="openFolder('folder_3', true)">  
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">  
+      <span>monthly_reports</span>  
+    </div>  
+    <div class="folder" onclick="openFolder('folder_4', true)">  
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">  
+      <span>member_research</span>  
+    </div>  
+    <div class="folder" onclick="openFolder('folder_5', true)">  
+      <img src="https://i.imgur.com/4NcVCjW.png" alt="Locked Folder">  
+      <span>homework</span>  
+    </div>  
+    <div class="folder" onclick="openFolder('folder_6', false)">  
+      <img src="https://i.imgur.com/H9mV2WD.png" alt="Unlocked Folder">  
+      <span>member_research(1)</span>  
+    </div>  
+    <div class="document" onclick="openFolder('document_1', false)">  
+      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
+      <span>pixelart.gif</span>  
+    </div>  
+    <div class="document" onclick="openFolder('document_2', false)">  
+      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
+      <span>jdkdjfkfjdkfjkl</span>  
+    </div>  
+    <div class="document" onclick="openFolder('document_3', false)">  
+      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
+      <span>layoutmap_final_FINAL</span>  
+    </div>  
+  </div>  
+  
+  <div id="passwordOverlay">  
+    <div id="passwordBox">  
+      <button id="closeOverlay">✖</button>  
+      <h2>Enter Password:</h2>  
+      <input type="password" id="passwordInput">  
+      <br><br>  
+      <button id="submitPassword">Submit</button>  
+      <p id="passwordMessage"></p>  
+    </div>  
+  </div>  
+  
+  <script>  
+    const closeOverlay = document.getElementById("closeOverlay");  
+    const overlay = document.getElementById("passwordOverlay");  
+    const passwordInput = document.getElementById("passwordInput");  
+    const passwordMessage = document.getElementById("passwordMessage");  
+    const submitPassword = document.getElementById("submitPassword");  
+  
+    closeOverlay.addEventListener("click", () => {  
+      overlay.style.display = "none";  
+      passwordInput.value = "";  
+      passwordMessage.textContent = "";  
+      currentUnlockTarget = null;  
+    });  
+  
+    const Passwords = [  
+      atob("c3VwZXJzZWNyZXRwYXNzMQ=="),  
+      atob("bXlzdGVyaW91c2tleQ=="),  
+      atob("c2lsdmVya2V5bW9ua2V5"),  
+      atob("ZmFrZWxvZ2luMjAyNQ=="),  
+      atob("c2NpZW5jZWlzY29vbA==")  
+    ];  
+  
+    let attemptsLeft = 5;  
+  
+    const loadingScreen = document.getElementById("loading-screen");  
+    const progressText = document.getElementById("progress");  
+    const desktop = document.getElementById("desktop");  
+  
+    function jitterLoad() {  
+      let percent = 0;  
+      const totalTime = 3000 + Math.random() * 1600;  
+      const start = Date.now();  
+      const interval = setInterval(() => {  
+        const elapsed = Date.now() - start;  
+        percent = Math.min(100, Math.floor((elapsed / totalTime) * 100 + Math.random() * 6 - Math.random()*3));  
+        if (percent < 0) percent = 0;  
+        progressText.textContent = percent + "%";  
+        if (percent >= 100) {  
+          clearInterval(interval);  
+          setTimeout(() => {  
+            loadingScreen.style.display = "none";  
+            desktop.style.display = "grid";  
+          }, 120);  
+        }  
+      }, 80 + Math.random() * 120);  
+    }  
+    jitterLoad();  
+  
+    let currentUnlockTarget = null;  
+  
+    const routeMap = {  
+      folder_1: "/files/user/silverone/work",  
+      folder_2: "/files/user/silverone/personal",  
+      folder_3: "/files/user/silverone/monthly_reports",  
+      folder_4: "/files/user/silverone/member_research",  
+      folder_5: "/files/user/silverone/homework",  
+      folder_6: "/files/user/silverone/member_research(1)",  
+      document_1: "/files/idlesprite.html",  
+      document_2: "/files/doc_placeholder_2.html",  
+      document_3: "/files/doc_placeholder_3.html"  
+    };  
+  
+    const lockedPasswordIndex = {  
+      folder_3: 2, // Passwords[2] unlocks folder_3  
+      folder_4: 3, // Passwords[3] unlocks folder_4  
+      folder_5: 4  // Passwords[4] unlocks folder_5  
+    };  
+  
+    function openFolder(name, locked = false) {  
+      const target = routeMap[name] || (`/files/user/silverone/${name}`);  
+      if (!locked) {  
+        window.location.href = target;  
+        return;  
+      }  
+  
+      currentUnlockTarget = { name, target };  
+      overlay.style.display = "flex";  
+      passwordInput.value = "";  
+      passwordMessage.textContent = "";  
+      passwordInput.focus();  
+    }  
+  
+    submitPassword.addEventListener("click", () => {  
+      if (!currentUnlockTarget) return;  
+      if (attemptsLeft <= 0) {  
+        window.location.href = "/";  
+        return;  
+      }  
+  
+      const val = (passwordInput.value || "").trim();  
+      const idx = lockedPasswordIndex[currentUnlockTarget.name];  
+      const expected = (typeof idx === "number") ? Passwords[idx] : null;  
+  
+      if (expected && val === expected) {  
+        passwordMessage.style.color = "green";  
+        passwordMessage.textContent = "ACCESS GRANTED";  
+        setTimeout(() => {  
+          overlay.style.display = "none";  
+          passwordInput.value = "";  
+          passwordMessage.textContent = "";  
+          attemptsLeft = 5;  
+          window.location.href = currentUnlockTarget.target;  
+          currentUnlockTarget = null;  
+        }, 600);  
+        return;  
+      }  
+  
+      attemptsLeft--;  
+      passwordMessage.style.color = "red";  
+      if (attemptsLeft > 0) {  
+        passwordMessage.textContent = `INCORRECT PASSWORD – ${attemptsLeft} attempts remaining`;  
+        setTimeout(() => { passwordMessage.textContent = ""; }, 3000);  
+      } else {  
+        passwordMessage.textContent = "No attempts left. Redirecting...";  
+        setTimeout(() => { window.location.href = "/"; }, 2000);  
+      }  
+    });  
+  </script>  
+</body>  
 </html>
