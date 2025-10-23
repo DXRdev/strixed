@@ -16,10 +16,17 @@
 
     .question {
       color: white;
-      font-size: 200px;
+      font-size: 270px; /* originally 200px — now ~35% larger */
       font-family: 'Courier New', monospace;
       animation: float 4s ease-in-out infinite;
       user-select: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .question:hover {
+      color: #808080;
+      transform: translateY(-25px) scale(1.05);
     }
 
     @keyframes float {
@@ -29,22 +36,35 @@
   </style>
 </head>
 <body>
-  <div class="question">?</div>
+  <div class="question" id="mystery">?</div>
 
   <audio id="ominous" autoplay loop>
-    <source src="AUDIO_URL_HERE.mp3" type="audio/mpeg">
+    <source src="https://ela.is-a.dev/files/audio/beyondtheflowerfield.ogg" type="audio/ogg">
   </audio>
 
   <script>
     const audio = document.getElementById('ominous');
-    // You can set the default volume here (0.0 to 1.0)
-    audio.volume = 0.3; // 30% volume
-
-    // Some browsers block autoplay until the user interacts.
-    // This makes it start once the user clicks anywhere.
-    document.body.addEventListener('click', () => {
-      audio.play();
-    }, { once: true });
+    const q = document.getElementById('mystery');
+    audio.volume = 0.6;
+    audio.play().catch(() => {
+      console.log("Autoplay blocked — will play on hover.");
+    });
+    q.addEventListener('mouseenter', () => {
+      if (audio.paused) audio.play();
+    });
+    let fadeInterval;
+    audio.addEventListener('play', () => {
+      clearInterval(fadeInterval);
+      audio.volume = 0.0;
+      const targetVolume = 0.4;
+      fadeInterval = setInterval(() => {
+        if (audio.volume < targetVolume) {
+          audio.volume = Math.min(audio.volume + 0.02, targetVolume);
+        } else {
+          clearInterval(fadeInterval);
+        }
+      }, 200);
+    });
   </script>
 </body>
 </html>
