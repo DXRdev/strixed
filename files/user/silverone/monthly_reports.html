@@ -1,87 +1,108 @@
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8">  
-  <title>MONTHLY REPORTS</title>  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <style>  
-    body {  
-      margin: 0;  
-      height: 100vh;  
-      background-color: #001100;  
-      color: #00ff00;  
-      font-family: monospace;  
-      overflow: hidden;  
-    }  
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>MONTHLY REPORTS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  html,body{height:100%;margin:0;font-family:monospace;background:#001100;color:#00ff00}
+  /* Hide the main content until unlocked */
+  #mainContent{display:none; padding:60px 40px;}
+  #path{position:absolute;top:10px;left:20px;font-size:16px;color:#00ff00;pointer-events:none}
+  /* overlay */
+  #pwOverlay{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:#001100; /* green-ish background as requested */
+    z-index:9999;
+  }
+  #pwBox{
+    background:#001100;color:#00ff00;border:2px solid #00ff00;padding:24px;border-radius:6px;
+    width:320px;text-align:center;backdrop-filter:blur(0);
+  }
+  #pwBox h2{margin:0 0 12px;font-size:18px}
+  #pwInput{width:90%;padding:8px;font-family:monospace;margin-bottom:12px;border:1px solid #004400;background:#002200;color:#00ff00}
+  #pwMsg{min-height:18px;margin-top:6px;font-size:14px}
+  #closeBtn{
+    position:absolute;top:18px;right:18px;background:none;border:0;color:#00ff00;font-size:20px;cursor:pointer;
+  }
+  /* keep the rest minimal and hidden until unlocked */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:28px;justify-items:center;align-items:start}
+  .folder img{width:70px;height:70px;image-rendering:pixelated}
+  .folder span{display:block;margin-top:8px;font-size:13px;color:#00ff00;word-wrap:break-word}
+</style>
+</head>
+<body>
+  <div id="path">C://USERS/SILVERONE/MONTHLY_REPORTS</div>
 
-    #path {  
-      position: absolute;  
-      top: 10px;  
-      left: 20px;  
-      font-size: 16px;  
-      color: #00ff00;  
-      pointer-events: none;  
-    }  
+  <!-- Password overlay shown on load -->
+  <div id="pwOverlay" aria-hidden="false">
+    <button id="closeBtn" title="Back to index">✖</button>
 
-    /*grid*/  
-    #desktop {  
-      display: grid;  
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));  
-      justify-items: center;  
-      align-items: start;  
-      gap: 40px;  
-      padding: 60px 40px;  
-    }  
+    <div id="pwBox" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
+      <h2 id="pwTitle">🔒 Protected Folder</h2>
 
-    .folder, .document {  
-      text-align: center;  
-      cursor: pointer;  
-    }  
+      <!-- POSTs to /unlock Worker endpoint. The hidden 'folder' value is set by JS to current path -->
+      <form id="pwForm" method="POST" action="/unlock">
+        <input type="hidden" name="folder" id="folderField" value="">
+        <input id="pwInput" name="password" type="password" placeholder="Enter password" autocomplete="off" />
+        <div style="margin-top:12px">
+          <button type="submit" style="padding:8px 14px; font-family:monospace; cursor:pointer">Unlock</button>
+        </div>
+        <div id="pwMsg" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
 
-    .folder img, .document img {  
-      width: 70px;  
-      height: 70px;  
-      display: block;  
-      margin: 0 auto;  
-      image-rendering: pixelated;  
-    }  
+  <!-- Main content (kept hidden until Worker allows access) -->
+  <div id="mainContent">
+    <div class="grid">
+      <div class="folder" onclick="location.href='FOLDER_REDIRECT_1'">
+        <img src="https://i.imgur.com/9Ml0l4F.png" alt="Folder" />
+        <span>AFOLDER!</span>
+      </div>
 
-    .folder span, .document span {  
-      display: block;  
-      margin-top: 8px;  
-      font-size: 13px;  
-      color: #00ff00;  
-      word-wrap: break-word;  
-    }  
+      <div class="folder" onclick="location.href='https://ela.is-a.dev/forbidden'">
+        <img src="https://i.imgur.com/9Ml0l4F.png" alt="Folder" />
+        <span>Nexus Energy Readings Reports 202X</span>
+      </div>
 
-    /*hover effect*/  
-    .folder:hover span, .document:hover span {  
-      text-decoration: underline;  
-    }  
-  </style>  
-</head>  
-<body>  
-  <div id="path">C://USERS/SILVERONE/MONTHLY_REPORTS</div>  
+      <div class="document" onclick="location.href='https://ela.is-a.dev/files/docs/NEXUS%20ENERGY%20READINGS%20REPORT%20–%20JULY.pdf'">
+        <img src="https://i.imgur.com/PUUF5qn.png" alt="Document" />
+        <span>Nexus Energy Readings Report - JULY.pdf</span>
+      </div>
 
-  <div id="desktop">   
-    <div class="folder" onclick="location.href='FOLDER_REDIRECT_1'">  
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Folder">  
-      <span>AFOLDER!</span>  
-    </div>  
+      <div class="document" onclick="location.href='DOC_REDIRECT_2'">
+        <img src="https://i.imgur.com/PUUF5qn.png" alt="Document" />
+        <span>reference_notes</span>
+      </div>
+    </div>
+  </div>
 
-    <div class="folder" onclick="location.href='https://ela.is-a.dev/forbidden'">  
-      <img src="https://i.imgur.com/9Ml0l4F.png" alt="Folder">  
-      <span>Nexus Energy Readings Reports 202X</span>  
-    </div>  
+<script>
+  // set the hidden folder field to exactly the current path the Worker expects
+  const folderField = document.getElementById('folderField');
+  folderField.value = location.pathname; // e.g. "/files/user/silverone/monthly_reports"
 
-    <div class="document" onclick="location.href='https://ela.is-a.dev/files/docs/NEXUS%20ENERGY%20READINGS%20REPORT%20–%20JULY.pdf'">  
-      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
-      <span>Nexus Energy Readings Report - JULY.pdf</span>  
-    </div>  
+  // Close button => go back to index
+  document.getElementById('closeBtn').addEventListener('click', () => {
+    location.href = '/files/user/silverone/';
+  });
 
-    <div class="document" onclick="location.href='DOC_REDIRECT_2'">  
-      <img src="https://i.imgur.com/PUUF5qn.png" alt="Document">  
-      <span>reference_notes</span>  
-    </div>  
-  </div>  
-</body>  
+  // usability: focus input and handle Enter
+  const pwInput = document.getElementById('pwInput');
+  pwInput.focus();
+
+  const msg = document.getElementById('pwMsg');
+  const form = document.getElementById('pwForm');
+
+  // Optional: show "Verifying..." before the browser follows the POST
+  form.addEventListener('submit', (e) => {
+    // Let the browser perform the normal POST so the Worker can set cookies and redirect.
+    // We show a message so the UX isn't confusing. Do NOT preventDefault().
+    msg.style.color = '#00ff00';
+    msg.textContent = 'Verifying...';
+    // No further JS handling — the Worker should respond with a redirect/refresh to the folder path.
+  });
+</script>
+</body>
 </html>
