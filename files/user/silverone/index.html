@@ -182,123 +182,98 @@
     </div>  
   </div>  
   
-  <script>  
-    const closeOverlay = document.getElementById("closeOverlay");  
-    const overlay = document.getElementById("passwordOverlay");  
-    const passwordInput = document.getElementById("passwordInput");  
-    const passwordMessage = document.getElementById("passwordMessage");  
-    const submitPassword = document.getElementById("submitPassword");  
-  
-    closeOverlay.addEventListener("click", () => {  
-      overlay.style.display = "none";  
-      passwordInput.value = "";  
-      passwordMessage.textContent = "";  
-      currentUnlockTarget = null;  
-    });  
-  
-    const Passwords = [  
-      atob("c3VwZXJzZWNyZXRwYXNzMQ=="),  
-      atob("bXlzdGVyaW91c2tleQ=="),  
-      atob("c2lsdmVya2V5bW9ua2V5"),  
-      atob("ZmFrZWxvZ2luMjAyNQ=="),  
-      atob("c2NpZW5jZWlzY29vbA==")  
-    ];  
-  
-    let attemptsLeft = 5;  
-  
-    const loadingScreen = document.getElementById("loading-screen");  
-    const progressText = document.getElementById("progress");  
-    const desktop = document.getElementById("desktop");  
-  
-    function jitterLoad() {  
-      let percent = 0;  
-      const totalTime = 3000 + Math.random() * 1600;  
-      const start = Date.now();  
-      const interval = setInterval(() => {  
-        const elapsed = Date.now() - start;  
-        percent = Math.min(100, Math.floor((elapsed / totalTime) * 100 + Math.random() * 6 - Math.random()*3));  
-        if (percent < 0) percent = 0;  
-        progressText.textContent = percent + "%";  
-        if (percent >= 100) {  
-          clearInterval(interval);  
-          setTimeout(() => {  
-            loadingScreen.style.display = "none";  
-            desktop.style.display = "grid";  
-          }, 120);  
-        }  
-      }, 80 + Math.random() * 120);  
-    }  
-    jitterLoad();  
-  
-    let currentUnlockTarget = null;  
-  
-    const routeMap = {  
-      folder_1: "/files/user/silverone/work",  
-      folder_2: "/files/user/silverone/personal",  
-      folder_3: "/files/user/silverone/monthly_reports",  
-      folder_4: "/files/user/silverone/member_research",  
-      folder_5: "/files/user/silverone/homework",  
-      folder_6: "/files/user/silverone/member_research(1)",  
-      document_1: "/files/idlesprite.html",  
-      document_2: "/files/doc_placeholder_2.html",  
-      document_3: "/files/images/layoutmap_final_FINAL.jpg"  
-    };  
-  
-    const lockedPasswordIndex = {  
-      folder_3: 2, // Passwords[2] unlocks folder_3  
-      folder_4: 3, // Passwords[3] unlocks folder_4  
-      folder_5: 4  // Passwords[4] unlocks folder_5  
-    };  
-  
-    function openFolder(name, locked = false) {  
-      const target = routeMap[name] || (`/files/user/silverone/${name}`);  
-      if (!locked) {  
-        window.location.href = target;  
-        return;  
-      }  
-  
-      currentUnlockTarget = { name, target };  
-      overlay.style.display = "flex";  
-      passwordInput.value = "";  
-      passwordMessage.textContent = "";  
-      passwordInput.focus();  
-    }  
-  
-    submitPassword.addEventListener("click", () => {  
-      if (!currentUnlockTarget) return;  
-      if (attemptsLeft <= 0) {  
-        window.location.href = "/";  
-        return;  
-      }  
-  
-      const val = (passwordInput.value || "").trim();  
-      const idx = lockedPasswordIndex[currentUnlockTarget.name];  
-      const expected = (typeof idx === "number") ? Passwords[idx] : null;  
-  
-      if (expected && val === expected) {  
-        passwordMessage.style.color = "green";  
-        passwordMessage.textContent = "ACCESS GRANTED";  
-        setTimeout(() => {  
-          overlay.style.display = "none";  
-          passwordInput.value = "";  
-          passwordMessage.textContent = "";  
-          attemptsLeft = 5;  
-          window.location.href = currentUnlockTarget.target;  
-          currentUnlockTarget = null;  
-        }, 600);  
-        return;  
-      }  
-  
-      attemptsLeft--;  
-      passwordMessage.style.color = "red";  
-      if (attemptsLeft > 0) {  
-        passwordMessage.textContent = `INCORRECT PASSWORD – ${attemptsLeft} attempts remaining`;  
-        setTimeout(() => { passwordMessage.textContent = ""; }, 3000);  
-      } else {  
-        passwordMessage.textContent = "No attempts left. Redirecting...";  
-        setTimeout(() => { window.location.href = "/"; }, 2000);  
-      }  
-    });  
-  </script>  
+  <script>
+  const closeOverlay = document.getElementById("closeOverlay");
+  const overlay = document.getElementById("passwordOverlay");
+  const passwordInput = document.getElementById("passwordInput");
+  const passwordMessage = document.getElementById("passwordMessage");
+  const submitPassword = document.getElementById("submitPassword");
+
+  closeOverlay.addEventListener("click", () => {
+    overlay.style.display = "none";
+    passwordInput.value = "";
+    passwordMessage.textContent = "";
+    currentUnlockTarget = null;
+  });
+
+  const loadingScreen = document.getElementById("loading-screen");
+  const progressText = document.getElementById("progress");
+  const desktop = document.getElementById("desktop");
+
+  function jitterLoad() {
+    let percent = 0;
+    const totalTime = 3000 + Math.random() * 1600;
+    const start = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start;
+      percent = Math.min(100, Math.floor((elapsed / totalTime) * 100 + Math.random() * 6 - Math.random()*3));
+      if (percent < 0) percent = 0;
+      progressText.textContent = percent + "%";
+      if (percent >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          loadingScreen.style.display = "none";
+          desktop.style.display = "grid";
+        }, 120);
+      }
+    }, 80 + Math.random() * 120);
+  }
+  jitterLoad();
+
+  let currentUnlockTarget = null;
+
+  const routeMap = {
+    folder_1: "/files/user/silverone/work",
+    folder_2: "/files/user/silverone/personal",
+    folder_3: "/files/user/silverone/monthly_reports",
+    folder_4: "/files/user/silverone/member_research",
+    folder_5: "/files/user/silverone/homework",
+    folder_6: "/files/user/silverone/member_research(1)",
+    document_1: "/files/idlesprite.html",
+    document_2: "/files/doc_placeholder_2.html",
+    document_3: "/files/images/layoutmap_final_FINAL.jpg"
+  };
+
+  function openFolder(name, locked = false) {
+    const target = routeMap[name] || (`/files/user/silverone/${name}`);
+    if (!locked) {
+      window.location.href = target;
+      return;
+    }
+
+    // show overlay
+    currentUnlockTarget = target;
+    overlay.style.display = "flex";
+    passwordInput.value = "";
+    passwordMessage.textContent = "";
+    passwordInput.focus();
+  }
+
+  submitPassword.addEventListener("click", async () => {
+    if (!currentUnlockTarget) return;
+    const val = (passwordInput.value || "").trim();
+    passwordMessage.style.color = "#00ff00";
+    passwordMessage.textContent = "Verifying...";
+
+    // send to Worker
+    const res = await fetch("/unlock", {
+      method: "POST",
+      body: new URLSearchParams({
+        folder: currentUnlockTarget,
+        password: val
+      }),
+    });
+
+    if (res.ok) {
+      passwordMessage.textContent = "ACCESS GRANTED";
+      setTimeout(() => {
+        window.location.href = currentUnlockTarget;
+      }, 600);
+    } else {
+      passwordMessage.style.color = "red";
+      passwordMessage.textContent = "INVALID PASSWORD";
+    }
+  });
+</script>
 </body>  
 </html>
