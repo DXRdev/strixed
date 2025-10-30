@@ -1,193 +1,44 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Rifted Wiki</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta property="og:title" content="secret" />
+    <meta property="og:description" content="scrapped sprite from 2021." />
+    <meta property="og:type" content="image" />
+    <meta property="og:url" content="https://ela.is-a.dev/files/user/silverone/scrapped_sprite" />
+    <meta property="og:image" content="https://i.imgur.com/bb2Yr54.gif" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Scrapped 2021 Sprite" />
+    <meta name="twitter:description" content="scrapped sprite from 2021." />
+    <meta name="twitter:image" content="https://i.imgur.com/bb2Yr54.gif" />
 
-  <style>
-    /* Animate the gradient background */
-    body {
-      margin: 0;
-      font-family: 'Arial', Helvetica, sans-serif;
-      color: #ffffff;
-      line-height: 1.6;
-      background: linear-gradient(45deg, #2b2b2b, #4f4f4f, #383838); 
-      background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <header>
+       <a href="/">
+    <img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="50" height="50" style="position: absolute; top: 10px; left: 10px;">
+       </a>
+          </header>
 
-    /* Gradient animation */
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    header {
-      background: #3c3c3c;
-      padding: 20px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      color: #fff;
-      border-bottom: 3px solid #66b3ff;
-    }
-
-    main {
-      padding: 30px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h1, h2, h3 {
-      color: #ffffff;
-      margin-top: 20px;
-      font-weight: 600;
-    }
-
-    p {
-      color: #d0d0d0;
-      font-size: 1.1em;
-    }
-
-    a {
-      color: #66b3ff;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .news, .featured-article {
-      background-color: #383838;
-      padding: 20px;
-      border-radius: 6px;
-      margin-bottom: 30px;
-    }
-
-    .news h2, .featured-article h2 {
-      font-size: 1.5em;
-      margin-bottom: 15px;
-    }
-
-    .news ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .news li {
-      margin-bottom: 12px;
-    }
-
-    .featured-article p {
-      font-size: 1.1em;
-      margin-top: 10px;
-    }
-
-    .page-list {
-      margin-top: 30px;
-      background: #383838;
-      padding: 15px;
-      border-radius: 6px;
-    }
-
-    .page-list ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .page-list li {
-      margin: 8px 0;
-    }
-
-    .page-list a {
-      font-size: 1.2em;
-    }
-
-    /* Search Bar Styles */
-    .search-bar-container {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .search-bar {
-      padding: 10px 15px;
-      font-size: 1em;
-      border: 1px solid #66b3ff;
-      border-radius: 5px;
-      background-color: #383838;
-      color: #ffffff;
-      width: 300px;
-    }
-
-    .search-bar:focus {
-      outline: none;
-      border-color: #66b3ff;
-      box-shadow: 0 0 5px rgba(102, 179, 255, 0.7);
-    }
-
-    .search-btn {
-      padding: 10px 20px;
-      background-color: #66b3ff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-      margin-left: 10px;
-    }
-
-    .search-btn:hover {
-      background-color: #3399ff;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    Rifted Wiki
-  </header>
-
-  <!-- Search Bar -->
-  <div class="search-bar-container">
-    <input type="text" class="search-bar" placeholder="Search the Rifted Wiki...">
-    <button class="search-btn">Search</button>
-  </div>
-
-  <main>
-    <h1>Welcome to the Rifted Wiki!</h1>
-    <p>Explore Rifted's world, dive into lore, discover hidden details, and stay updated with the latest news. Here’s what's new:</p>
-    <p>! THIS SITE IS STILL A W.I.P</p>
-
-    <!-- News Section -->
-    <div class="news">
-      <h2>Latest News</h2>
-      <ul>
-        <li><a href="#">NEWS 1</a></li>
-        <li><a href="#">Rifted Wiki now in progress</a></li>
-        <li><a href="#">NEWS 3</a></li>
-      </ul>
-    </div>
-
-    <!-- Featured Article Section -->
-    <div class="featured-article">
-      <h2>Featured Article</h2>
-      <p><strong>Elina</strong> - Elina, the witch.</p>
-      <a href="elina.html">Read more about Elina</a>
-    </div>
-
-    <!-- Available Pages Section -->
-    <div class="page-list">
-      <h2>Available Pages</h2>
-      <ul>
-        <li><a href="elina.html">ONE</a></li>
-        <li><a href="scrapped_sprite.html">TWO</a></li>
-        <li><a href="anotherpage.html">THREE</a></li>
-      </ul>
-    </div>
-  </main>
-</body>
+    <title>WORK IN PROGRESS!</title>
+        <body style="background-color:9F9F9F;">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <br>
+        <!-- Back in May 2021, me and my friends had a discord server, it's purpose was barely that of a group chat but moreso a group chat to test my first discord bot, we had a good time, and i began to get interested in ARGs, which kicked off lore fueled by some small roleplay some of us did, the name of the server was "Science Team", and soon enough i began to get many ideas for the story and i began to use my newly found dev skills to make a game which would be based off the story in that server.  -->
+        <br>
+        <!-- ... -->
+        <br>
+        <!-- "Science Team: Retold" was scrapped and the story has been in hiatus since 2022. -->
+        <br>
+        <br>
+        <a><img width="250" height="250" src="ela.is-a.dev/wikiWIP" alt="Image of a tired Elina doodle infront of Rifted's prototype logo and black and yellow tapes, declaring a work in progress" class="center"/></a>
+    </body>
 </html>
