@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RIFTED — Stories & Comics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { background:black; color:white; margin:0; font-family:'Inter',sans-serif; }
+    h1 { text-align:center; font-family:'Press Start 2P'; margin-top:60px; }
+
+    .category-toggle {
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      margin:40px auto;
+    }
+
+    .category-toggle button {
+      background:#111;
+      border:2px solid white;
+      padding:12px 25px;
+      font-size:16px;
+      color:white;
+      cursor:pointer;
+      font-family:'Inter',sans-serif;
+      transition:0.2s;
+    }
+
+    .category-toggle button:hover {
+      background:white;
+      color:black;
+    }
+
+    .grid {
+      display:none;
+      max-width:900px;
+      margin:0 auto;
+      padding:20px;
+      grid-template-columns:repeat(2,1fr);
+      gap:25px;
+    }
+
+    .entry {
+      background:#161616;
+      border:1px solid #444;
+      padding:20px;
+      border-radius:8px;
+    }
+
+    .entry img {
+      width:100%;
+      border-radius:6px;
+      margin-bottom:10px;
+    }
+
+    .entry h3 { margin:0 0 10px 0; font-family:'Press Start 2P'; font-size:14px; }
+
+    .entry p { font-size:15px; line-height:1.5; }
+
+    /* Immersive reader */
+    #reader {
+      display:none;
+      max-width:800px;
+      margin:40px auto;
+      padding:20px;
+      line-height:1.7;
+      font-size:19px;
+      background:#0f0f0f;
+      border:1px solid #444;
+      border-radius:10px;
+    }
+
+    #backBtn {
+      display:none;
+      margin:20px auto;
+      background:#111;
+      border:2px solid white;
+      padding:10px 20px;
+      color:white;
+      cursor:pointer;
+      font-family:'Inter';
+      transition:.2s;
+    }
+
+    #backBtn:hover { background:white; color:black; }
+  </style>
+</head>
+<body>
+
+<h1>STORIES & COMICS</h1>
+
+<div class="category-toggle">
+  <button onclick="showGrid('storiesGrid')">SHORT STORIES</button>
+  <button onclick="showGrid('comicsGrid')">COMICS</button>
+</div>
+
+<!-- STORIES GRID -->
+<div id="storiesGrid" class="grid">
+  <div class="entry" onclick="openReader('Example story text goes here...')">
+    <h3>Story 1</h3>
+    <p>A short description of the story.</p>
+  </div>
+  <div class="entry" onclick="openReader('Another example story...')">
+    <h3>Story 2</h3>
+    <p>Another small teaser summary.</p>
+  </div>
+</div>
+
+<!-- COMICS GRID -->
+<div id="comicsGrid" class="grid">
+  <div class="entry">
+    <img src="/placeholder.png" alt="Comic 1 thumbnail">
+    <h3>Comic 1</h3>
+    <p>Click to view full comic (feature to be added).</p>
+  </div>
+  <div class="entry">
+    <img src="/placeholder.png" alt="Comic 2 thumbnail">
+    <h3>Comic 2</h3>
+    <p>Click to view full comic (feature to be added).</p>
+  </div>
+</div>
+
+<!-- IMMERSIVE READER -->
+<button id="backBtn" onclick="closeReader()">← Back</button>
+<div id="reader"></div>
+
+<script>
+function showGrid(id) {
+  document.getElementById('storiesGrid').style.display = 'none';
+  document.getElementById('comicsGrid').style.display = 'none';
+  document.getElementById(id).style.display = 'grid';
+  closeReader();
+}
+
+function openReader(text) {
+  document.getElementById('reader').innerText = text;
+  document.getElementById('reader').style.display = 'block';
+  document.getElementById('backBtn').style.display = 'block';
+  document.getElementById('storiesGrid').style.display = 'none';
+  document.getElementById('comicsGrid').style.display = 'none';
+}
+
+function closeReader() {
+  document.getElementById('reader').style.display = 'none';
+  document.getElementById('backBtn').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
