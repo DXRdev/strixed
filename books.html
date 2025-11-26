@@ -128,11 +128,18 @@
 <div id="reader"></div>
 
 <script>
+let lastGrid = 'storiesGrid';
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('storiesGrid').style.display = 'grid';
+});
+
 function showGrid(id) {
+  lastGrid = id;
   document.getElementById('storiesGrid').style.display = 'none';
   document.getElementById('comicsGrid').style.display = 'none';
   document.getElementById(id).style.display = 'grid';
-  closeReader();
+  closeReader(false);
 }
 
 function openReader(text) {
@@ -143,9 +150,10 @@ function openReader(text) {
   document.getElementById('comicsGrid').style.display = 'none';
 }
 
-function closeReader() {
+function closeReader(restore = true) {
   document.getElementById('reader').style.display = 'none';
   document.getElementById('backBtn').style.display = 'none';
+  if (restore) document.getElementById(lastGrid).style.display = 'grid';
 }
 </script>
 
