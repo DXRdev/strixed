@@ -48,7 +48,6 @@
       border:1px solid #444;
       padding:20px;
       border-radius:8px;
-      cursor:pointer;
     }
 
     .entry img {
@@ -61,6 +60,7 @@
 
     .entry p { font-size:15px; line-height:1.5; }
 
+    /* Immersive reader */
     #reader {
       display:none;
       max-width:800px;
@@ -71,7 +71,6 @@
       background:#0f0f0f;
       border:1px solid #444;
       border-radius:10px;
-      white-space:pre-wrap;
     }
 
     #backBtn {
@@ -100,20 +99,31 @@
 
 <!-- STORIES GRID -->
 <div id="storiesGrid" class="grid">
-  <div class="entry" onclick="loadStory('https://ela.is-a.dev/files/user/silverone/personal/readme.txt')">
-    <h3>Example Story</h3>
-    <p>Loads a .txt file from your site.</p>
+  <div class="entry" onclick="openReader('Example story text goes here...')">
+    <h3>Story 1</h3>
+    <p>A short description of the story.</p>
+  </div>
+  <div class="entry" onclick="openReader('Another example story...')">
+    <h3>Story 2</h3>
+    <p>Another small teaser summary.</p>
   </div>
 </div>
 
 <!-- COMICS GRID -->
 <div id="comicsGrid" class="grid">
-  <div class="entry" onclick="openPDF('https://ela.is-a.dev/files/docs/NEXUS ENERGY READINGS REPORT – JULY.pdf')">
-    <h3>PDF Placeholder</h3>
-    <p>Opens the PDF in a new tab.</p>
+  <div class="entry">
+    <img src="/placeholder.png" alt="Comic 1 thumbnail">
+    <h3>Comic 1</h3>
+    <p>Click to view full comic (feature to be added).</p>
+  </div>
+  <div class="entry">
+    <img src="/placeholder.png" alt="Comic 2 thumbnail">
+    <h3>Comic 2</h3>
+    <p>Click to view full comic (feature to be added).</p>
   </div>
 </div>
 
+<!-- IMMERSIVE READER -->
 <button id="backBtn" onclick="closeReader()">← Back</button>
 <div id="reader"></div>
 
@@ -132,25 +142,12 @@ function showGrid(id) {
   closeReader(false);
 }
 
-function loadStory(url) {
-  fetch(url)
-    .then(r => r.text())
-    .then(text => {
-      document.getElementById('reader').innerText = text;
-      document.getElementById('reader').style.display = 'block';
-      document.getElementById('backBtn').style.display = 'block';
-      document.getElementById('storiesGrid').style.display = 'none';
-      document.getElementById('comicsGrid').style.display = 'none';
-    })
-    .catch(() => {
-      document.getElementById('reader').innerText = "Failed to load story.";
-      document.getElementById('reader').style.display = 'block';
-      document.getElementById('backBtn').style.display = 'block';
-    });
-}
-
-function openPDF(url) {
-  window.open(url, '_blank');
+function openReader(text) {
+  document.getElementById('reader').innerText = text;
+  document.getElementById('reader').style.display = 'block';
+  document.getElementById('backBtn').style.display = 'block';
+  document.getElementById('storiesGrid').style.display = 'none';
+  document.getElementById('comicsGrid').style.display = 'none';
 }
 
 function closeReader(restore = true) {
