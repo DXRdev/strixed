@@ -2,86 +2,278 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Offline</title>
+<title>STRIXED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Preconnect Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<!-- Favicon -->
+<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="STRIXED (TEST SITE)">
+<meta property="og:site_name" content="ela.is-a.dev">
+<meta property="og:description" content="TESTING SITE">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ela.is-a.dev/">
+<meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png">
+
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        overflow: hidden;
-        font-family: monospace;
-    }
+/* ===== Base ===== */
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+body.locked { overflow: hidden; }
 
-    /* Container for the static */
-    .static-box {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 60vw;
-        height: 40vh;
-        max-width: 700px;
-        max-height: 400px;
-        transform: translate(-50%, -50%);
-        background: #000;
-        box-shadow: 0 0 40px rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        overflow: hidden;
-    }
+h1, h2, h3, h4 {
+  font-family: "Press Start 2P", monospace;
+  text-align: center;
+}
 
-    canvas {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-    
-    .tease {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        text-align: center;
-        color: rgba(0,0,0,0.3);
-        font-size: 12px;
-        letter-spacing: 2px;
-    }
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+header img.banner {
+  display: block;
+  margin: 60px auto 20px;
+  max-width: 90%;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(17,17,17,.95);
+  overflow-x: hidden;
+  transition: .3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+.sidebar a {
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  color: #eee;
+}
+.sidebar a:hover { background: #444; }
+.sidebar h3 {
+  color: #aaa;
+  font-size: 12px;
+  margin: 20px 16px 8px;
+}
+.sidebar .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 36px;
+}
+
+.top-left {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1100;
+}
+.openbtn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* ===== Sections ===== */
+.notice {
+  text-align: center;
+  color: #ff4d4d;
+  font-size: 18px;
+  max-width: 800px;
+  margin: 10px auto;
+}
+.about-section {
+  max-width: 800px;
+  margin: auto;
+  font-size: 17px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* ===== Gallery ===== */
+.gallery {
+  max-width: 800px;
+  margin: 40px auto;
+}
+.carousel { overflow: hidden; }
+.slides {
+  display: flex;
+  transition: transform .5s ease-in-out;
+}
+.slide {
+  width: 100%;
+  flex-shrink: 0;
+  text-align: center;
+}
+.slide img {
+  width: 100%;
+  max-height: 450px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.slide p { margin: 12px 0; }
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.dots span {
+  width: 8px;
+  height: 8px;
+  background: #444;
+  border-radius: 50%;
+}
+.dots span.active { background: #69cfff; }
+
+/* ===== Socials ===== */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.container img { max-width: 40px; }
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  margin: 60px 0;
+}
 </style>
 </head>
+
 <body>
 
-<div class="static-box">
-    <canvas id="noise"></canvas>
+<div id="mySidebar" class="sidebar">
+  <a class="closebtn" onclick="closeSidebar()">&times;</a>
+  <h3>Main</h3>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="/socials">Socials</a>
+  <a href="/songoftheday">Song of the Day</a>
+  <h3>Site</h3>
+  <a href="/space">[C:]</a>
 </div>
 
-<div class="tease">INITIALIZING SYSTEM REBOOT</div>
+<div class="top-left">
+  <button class="openbtn" onclick="openSidebar()">☰</button>
+  <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" width="35"></a>
+</div>
+
+<header class="fade-in">
+  <img class="banner" src="https://i.imgur.com/7yo4ycF.png">
+</header>
+
+<main>
+
+<div class="notice fade-in">Update coming 2026.</div>
+
+<h1 class="fade-in">elastrixx</h1>
+<h2 class="fade-in">professional girlfailure · novice gamedev · internet witch</h2>
+
+<video class="fade-in" autoplay muted loop src="https://i.imgur.com/J8A8KZo.mp4"></video>
+
+<section class="gallery fade-in">
+  <div class="carousel">
+    <div class="slides">
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/98EJWYG_d.webp">
+        <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691">MEGA GUN GAME</a></p>
+      </div>
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/hCN1xUG.jpeg">
+        <p><a href="/starbound">STARBOUND</a></p>
+      </div>
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/ucS0p5N.jpeg">
+        <p>More to come…</p>
+      </div>
+    </div>
+  </div>
+  <div class="dots"></div>
+</section>
+
+<section class="about-section fade-in">
+  <p>Welcome traveler, I am the internet witch, Elaina.</p>
+  <p>Game dev student, UEFN creator, builder of strange things.</p>
+</section>
+
+</main>
+
+<footer class="fade-in">
+  <a href="/space">login</a>
+</footer>
 
 <script>
-const canvas = document.getElementById("noise");
-const ctx = canvas.getContext("2d");
+const sidebar = document.getElementById("mySidebar");
+const dotsContainer = document.querySelector(".dots");
+const slides = document.querySelectorAll(".slide");
+const slidesBox = document.querySelector(".slides");
 
-function resize() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+/* Sidebar */
+function openSidebar() {
+  sidebar.style.width = "250px";
+  document.body.classList.add("locked");
 }
-resize();
-window.addEventListener("resize", resize);
-
-function drawStatic() {
-    const imageData = ctx.createImageData(canvas.width, canvas.height);
-    const buffer = imageData.data;
-
-    for (let i = 0; i < buffer.length; i += 4) {
-        const value = Math.random() * 255;
-        buffer[i] = value;     // R
-        buffer[i + 1] = value; // G
-        buffer[i + 2] = value; // B
-        buffer[i + 3] = 255;   // A
-    }
-
-    ctx.putImageData(imageData, 0, 0);
+function closeSidebar() {
+  sidebar.style.width = "0";
+  document.body.classList.remove("locked");
 }
-    
-setInterval(drawStatic, 60);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSidebar();
+});
+
+/* Fade in */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => e.isIntersecting && e.target.classList.add("visible"));
+});
+document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+/* Carousel */
+let index = 0;
+slides.forEach((_, i) => {
+  const dot = document.createElement("span");
+  if (i === 0) dot.classList.add("active");
+  dotsContainer.appendChild(dot);
+});
+const dots = dotsContainer.querySelectorAll("span");
+
+setInterval(() => {
+  index = (index + 1) % slides.length;
+  slidesBox.style.transform = `translateX(-${index * 100}%)`;
+  dots.forEach(d => d.classList.remove("active"));
+  dots[index].classList.add("active");
+}, 5000);
 </script>
 
 </body>
