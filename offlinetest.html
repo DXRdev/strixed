@@ -35,14 +35,13 @@
         height: 100%;
         display: block;
     }
-
-    /* Optional subtle text */
-    .hint {
+    
+    .tease {
         position: absolute;
         bottom: 20px;
         width: 100%;
         text-align: center;
-        color: rgba(255,255,255,0.3);
+        color: rgba(0,0,0,0.3);
         font-size: 12px;
         letter-spacing: 2px;
     }
@@ -54,7 +53,7 @@
     <canvas id="noise"></canvas>
 </div>
 
-<div class="hint">TEMPORARILY OFFLINE</div>
+<div class="tease">INITIALIZING SYSTEM REBOOT</div>
 
 <script>
 const canvas = document.getElementById("noise");
@@ -81,8 +80,7 @@ function drawStatic() {
 
     ctx.putImageData(imageData, 0, 0);
 }
-
-// Mid-speed static (mysterious, not aggressive)
+    
 setInterval(drawStatic, 60);
 </script>
 
