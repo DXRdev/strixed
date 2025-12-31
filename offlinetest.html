@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Offline</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        overflow: hidden;
+        font-family: monospace;
+    }
+
+    /* Container for the static */
+    .static-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60vw;
+        height: 40vh;
+        max-width: 700px;
+        max-height: 400px;
+        transform: translate(-50%, -50%);
+        background: #000;
+        box-shadow: 0 0 40px rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        overflow: hidden;
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    /* Optional subtle text */
+    .hint {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        color: rgba(255,255,255,0.3);
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+</style>
+</head>
+<body>
+
+<div class="static-box">
+    <canvas id="noise"></canvas>
+</div>
+
+<div class="hint">TEMPORARILY OFFLINE</div>
+
+<script>
+const canvas = document.getElementById("noise");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+function drawStatic() {
+    const imageData = ctx.createImageData(canvas.width, canvas.height);
+    const buffer = imageData.data;
+
+    for (let i = 0; i < buffer.length; i += 4) {
+        const value = Math.random() * 255;
+        buffer[i] = value;     // R
+        buffer[i + 1] = value; // G
+        buffer[i + 2] = value; // B
+        buffer[i + 3] = 255;   // A
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+}
+
+// Mid-speed static (mysterious, not aggressive)
+setInterval(drawStatic, 60);
+</script>
+
+</body>
+</html>
