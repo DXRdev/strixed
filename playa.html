@@ -1,330 +1,335 @@
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8">  
-  <title>STRIXED</title>  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>STRIXED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->  
-  <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon" type="image/x-icon">  
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">  
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">  
+<style>
+/* ---------- BASE ---------- */
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
 
-  <!-- External CSS -->  
-  <link rel="stylesheet" href="style.css">  
+body.locked {
+  overflow: hidden;
+}
 
-  <style>  
-    :root {
-      --bg: #000000;
-      --text: #ffffff;
-    }
-    body {  
-      font-family: "Press Start 2P", system-ui;  
-      margin: 0;  
-      background: var(--bg);  
-      color: var(--text);  
-      transition: background 0.3s, color 0.3s;
-    }  
+h1 {
+  font-family: "Press Start 2P", system-ui;
+}
 
-    img.banner { max-width: 90%; height: auto; }  
-    video { max-width: 100%; height: auto; display: block; margin: 0 auto; }  
-    .about-section, .notice { padding: 0 15px; }  
+/* ---------- HEADER ---------- */
+header img.banner {
+  display: block;
+  margin: 70px auto 20px;
+  max-width: 90%;
+  pointer-events: none;
+}
 
-    .container { display: flex; align-items: center; justify-content: center; }  
-    img { max-width: 100%; max-height: 100%; }  
+/* ---------- HAMBURGER ---------- */
+.top-left {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+}
 
-    .about-title { font-family: 'Inter', sans-serif; font-weight: 400; color: white; text-align: center; margin-bottom: 1em; }  
-    .about-section { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; color: white; text-align: center; line-height: 1.6; max-width: 800px; margin: 0 auto; }  
+.hamburger {
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  position: relative;
+}
 
-    p { margin-bottom: 1em; }  
-    .text { font-size: 20px; padding-left: 20px; }  
-    .notice { font-family: 'Inter', sans-serif; font-size: 20px; color: #ff4d4d; text-align: center; margin: 10px auto 20px; max-width: 800px; line-height: 1.4; }  
+.hamburger span {
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: white;
+  transition: 0.3s ease;
+}
 
-    p.beeg { font-size: 30px; }  
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 9px; }
+.hamburger span:nth-child(3) { top: 18px; }
 
-    /* Sidebar */  
-    .sidebar {  
-      height: 100%; width: 0; position: fixed; top: 0; left: 0;  
-      background-color: rgba(17, 17, 17, 0.95);  
-      overflow-x: hidden; transition: 0.3s; padding-top: 60px; z-index: 1000;  
-    }  
-    .sidebar a { padding: 10px 20px; text-decoration: none; font-size: 18px; font-family: 'Inter', sans-serif; color: #f1f1f1; display: block; transition: 0.2s; }  
-    .sidebar a:hover { background: #575757; }  
-    .sidebar h3 { color: #bbb; margin: 20px 16px 8px; font-size: 14px; text-transform: uppercase; }  
-    .sidebar .closebtn { position: absolute; top: 10px; right: 20px; font-size: 36px; color: #fff; }  
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
 
-    .top-left { position: fixed; top: 10px; left: 10px; display: flex; align-items: center; gap: 10px; z-index: 1100; }  
-    .openbtn { font-size: 24px; cursor: pointer; background: none; border: none; color: white; }  
-    header img.banner { display: block; margin: 60px auto 20px; }  
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
 
-    /* --- Gallery styles --- */
-    .gallery { max-width: 800px; margin: 40px auto; overflow: hidden; border-radius: 12px; }
-    .carousel { position: relative; width: 100%; }
-    .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; }
-    .slide { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
-    .slide img { width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 8px; display: block; }
-    .slide p { margin: 10px 0 20px; font-size: 16px; font-family: 'Inter', sans-serif; }
-    .slide a { color: #69cfff; text-decoration: none; font-weight: 500; }
-    .slide a:hover { color: #ff4d4d; }
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 9px;
+}
 
-    /* Settings dropdown */
-    .top-right { position: fixed; top: 10px; right: 10px; z-index: 1100; }
-    .settings-btn { font-size: 20px; cursor: pointer; background: none; border: none; color: white; }
-    .settings-menu { 
-      display: none; 
-      position: absolute; right: 0; top: 40px; 
-      background: rgba(30,30,30,0.95); 
-      border-radius: 8px; 
-      min-width: 220px; 
-      font-family: 'Inter', sans-serif; 
-    }
-    .settings-menu a { display: block; padding: 10px 15px; color: #f1f1f1; text-decoration: none; font-size: 14px; }
-    .settings-menu a:hover { background: #575757; }
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: rgba(17,17,17,0.97);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  padding-top: 70px;
+}
 
-    /* Dark mode */
-    body.dark { --bg: #111111; --text: #eeeeee; }
+.sidebar.open {
+  transform: translateX(0);
+}
 
-    /* Light mode */
-    body.light { --bg: #ffffff; --text: #000000; }
+.sidebar h3 {
+  font-family: "Press Start 2P";
+  font-size: 12px;
+  color: #aaa;
+  margin: 20px 20px 8px;
+}
 
-    /* Evil mode */
-    body.evil { filter: invert(1) hue-rotate(180deg); }
-  </style>  
-</head>  
+.sidebar a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: white;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+}
 
-<body>  
-  <!-- Sidebar -->  
-  <div id="mySidebar" class="sidebar">  
-    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>  
-    <h3>Main</h3>  
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/socials">Socials</a>
-    <a href="/diary">Blogpost (Coming soon)</a>  
-    <h3>Site</h3>  
-    <a href="/riftedwiki">Rifted Wiki (Coming Soon)</a>  
-    <a href="/space">[C:]</a>  
-  </div>  
+.sidebar a:hover {
+  background: #333;
+}
 
-  <!-- Top left controls -->
-  <div class="top-left">  
-    <button class="openbtn" onclick="toggleSidebar()">☰</button>  
-    <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" alt="Home" width="35" height="40"></a>  
-  </div>  
+/* Projects dropdown */
+.sub-toggle {
+  cursor: pointer;
+}
 
-  <!-- Top right settings -->
-  <div class="top-right">
-    <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
-    <div class="settings-menu" id="settingsMenu">
-      <a href="javascript:void(0)" onclick="toggleSidebarMode()">Enable Smooth Sidebar: <span id="sidebarModeLabel">OFF</span></a>
-      <a href="javascript:void(0)" onclick="setMode('light')">☀️ Light Mode</a>
-      <a href="javascript:void(0)" onclick="setMode('dark')">🌙 Dark Mode</a>
-      <a href="javascript:void(0)" onclick="setMode('evil')">Super Secret Evil Mode</a>
-    </div>
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.submenu.open {
+  max-height: 300px;
+}
+
+.locked-link {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 900;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------- CAROUSEL ---------- */
+.gallery {
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.carousel {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar { display: none; }
+
+.slides {
+  display: flex;
+}
+
+.slide {
+  min-width: 100%;
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+.slide img {
+  width: 100%;
+  max-height: 450px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.slide a {
+  color: #69cfff;
+  text-decoration: none;
+}
+
+.slide a:hover {
+  color: #ff4d4d;
+}
+
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #555;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 4px;
+}
+
+.dot.active {
+  background: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-left">
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <h3>MAIN</h3>
+  <a href="/index">Home</a>
+  <a href="/updates">Blogpost</a>
+  <a href="/socials">Socials</a>
+
+  <h3 class="sub-toggle" id="projectsToggle">PROJECTS ▾</h3>
+  <div class="submenu" id="projectsMenu">
+    <a href="/rifted">RIFTED</a>
+    <a class="locked-link">???</a>
+    <a href="/starbound">STARBOUND</a>
   </div>
 
-  <!-- Banner -->
-  <header>    
-    <a href="/"><img class="banner" width="600" height="150" src="https://i.imgur.com/7yo4ycF.png" alt="Banner" /></a>    
-  </header>    
+  <h3>SITE</h3>
+  <a href="/songoftheday">Song Of The Day</a>
+  <a class="locked-link">???</a>
+</div>
 
-  <div class="notice">    
-    ⚠️ Projects are currently in slower progress than usual due to my job<br>    
-    Updates will be posted on socials and here when hiatus is over.    
-  </div>    
+<div class="overlay" id="overlay"></div>
 
-  <br>    
-  <h1 style="color:White;">elastrixx</h1>    
-  <h2 style="color:White;">professional girlfailure and novice gamedev</h2>    
+<header>
+  <img class="banner" loading="lazy" src="https://i.imgur.com/7yo4ycF.png">
+</header>
 
-  <video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>    
+<h1>elastrixx</h1>
+<h2>professional girlfailure and novice gamedev</h2>
 
-  <!-- GALLERY SHOWCASE -->    
-  <br><br><hr><br>  
-  <h2 style="color:White;">PROJECT GALLERY</h2>  
-  <br><hr>  
+<section class="gallery">
+  <div class="carousel" id="carousel">
+    <div class="slides">
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/98EJWYG_d.webp">
+        <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>
+      </div>
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/hCN1xUG.jpeg">
+        <p><a href="/starbound">STARBOUND</a></p>
+      </div>
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/ucS0p5N.jpeg">
+        <p><a href="/rifted">RIFTED</a></p>
+      </div>
+      <div class="slide">
+        <img loading="lazy" src="https://i.imgur.com/ucS0p5N.jpeg">
+        <p><a href="/forbidden">COMING SOON</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="dots" id="dots"></div>
+</section>
 
-  <section class="gallery">    
-    <div class="carousel" id="carousel">    
-      <div class="slides">    
-        <div class="slide">    
-          <img src="https://i.imgur.com/98EJWYG_d.webp?maxwidth=1520&fidelity=grand" alt="Project 1">    
-          <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>    
-        </div>    
-        <div class="slide">    
-          <img src="https://i.imgur.com/g1EiBvk.png" alt="STARBOUND">    
-          <p><a href="https://example.com/project2" target="_blank">STARBOUND</a></p>    
-        </div>    
-        <div class="slide">    
-          <img src="https://i.imgur.com/ucS0p5N.jpeg" alt="Project 3">    
-          <p><a href="https://example.com/project3" target="_blank">More to come...</a></p>    
-        </div>    
-      </div>    
-    </div>    
-  </section>  
+<script>
+/* Sidebar */
+const hamburger = document.getElementById("hamburger");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
 
-  <br><br><hr><br>    
-  <h2 style="color:White;">ABOUT</h2>    
-  <br><hr>    
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  hamburger.classList.remove("active");
+  overlay.classList.remove("active");
+  document.body.classList.remove("locked");
+}
 
-  <div class="about-section">    
-    <p>Welcome traveler, I am the internet witch, Elaina, also known as elastrix...</p>    
-    <p>I go by Elaina, I'm currently working on my project "Rifted" and studying game dev for it.</p>    
-    <p>I also do UEFN/Fortnite Creative work sometimes!</p>    
-    <p>This page will work as a blogpost for updates on works and projects,</p>    
-    <p>some of these I'll be posting updates for in my socials every once in a while,</p>    
-    <p>which you can find right below here yes like right here ↓</p>    
-  </div>    
+hamburger.onclick = () => {
+  sidebar.classList.toggle("open");
+  hamburger.classList.toggle("active");
+  overlay.classList.toggle("active");
+  document.body.classList.toggle("locked");
+};
 
-  <br><hr><br>    
-  <h2 style="color:White;">SOCIALS</h2>    
-  <br><hr>    
+overlay.onclick = closeSidebar;
 
-  <p style="color:White;">    
-    <br><br>    
-    <div class="container">    
-      <div class="image"><img src="https://i.imgur.com/0Ig8fuc.png"></div>    
-      <div class="text"><a href="https://x.com/elastrixx" style="color: #2378d9" target="_blank">Twitter (still it's name)</a></div>    
-    </div>    
+/* Projects submenu */
+document.getElementById("projectsToggle").onclick = () => {
+  document.getElementById("projectsMenu").classList.toggle("open");
+};
 
-    <br><br>    
-    <div class="container">    
-      <div class="image"><img src="https://i.imgur.com/eGgZzZa.png"></div>    
-      <div class="text"><a href="https://bsky.app/profile/elastrixx.bsky.social" style="color: #69cfff" target="_blank">Boomer Twitter (BlueSky)</a></div>    
-    </div>    
+/* Carousel */
+const carousel = document.getElementById("carousel");
+const slides = document.querySelectorAll(".slide");
+const dotsContainer = document.getElementById("dots");
 
-    <br><br>    
-    <div class="container">    
-      <div class="image"><img src="https://i.imgur.com/iGi5EqB.png"></div>    
-      <div class="text"><a href="https://www.fortnite.com/@dxrdev" style="color: #c559e5" target="_blank">Fortnite Creator Profile</a></div>    
-    </div>    
+let index = 0;
+let auto = true;
+let timer;
 
-    <br><br>    
-    <div class="container">    
-      <div class="image"><img src="https://i.imgur.com/Bet3Dtv.png"></div>    
-      <div class="text"><a href="mailto:elastrixed@gmail.com" style="color: #FF0000" target="_blank">Email</a></div>    
-    </div>    
-  </p>    
+slides.forEach(() => {
+  const d = document.createElement("span");
+  d.className = "dot";
+  dotsContainer.appendChild(d);
+});
+const dots = document.querySelectorAll(".dot");
 
-  <hr><br>    
-  <h2 style="color:White;">MORE MORE MORE MORE MORE</h2>    
-  <br><hr><br><br>    
-  <a href="https://elastrix.itch.io/rifted-together" style="color:White;" target="_blank">Rifted: Together (Coming Soon)</a>    
+function updateDots() {
+  dots.forEach(d => d.classList.remove("active"));
+  dots[index].classList.add("active");
+}
+updateDots();
 
-  <br><br><br><br><br>    
-  <h4 style="color:White;">this is a WIP so...give me time here......</h4>    
+setInterval(() => {
+  if (!auto) return;
+  index = (index + 1) % slides.length;
+  carousel.scrollTo({ left: index * carousel.clientWidth, behavior: "smooth" });
+  updateDots();
+}, 5000);
 
-  <video autoplay loop muted width="300" height="100" src="https://i.imgur.com/o2ksfSs.mp4"></video>    
-  <a href="https://ela.is-a.dev/space" style="color:White;" target="_blank">login</a>    
-  <br><br><br>    
+carousel.addEventListener("scroll", () => {
+  auto = false;
+  clearTimeout(timer);
+  index = Math.round(carousel.scrollLeft / carousel.clientWidth);
+  updateDots();
+  timer = setTimeout(() => auto = true, 4000);
+});
+</script>
 
-  <script>
-    const sidebar = document.getElementById("mySidebar");
-    const topLeft = document.querySelector(".top-left");
-    const openBtn = document.querySelector(".openbtn");
-    const settingsMenu = document.getElementById("settingsMenu");
-    let sidebarClean = false; // OFF by default
-
-    // Sidebar modes
-    function applySidebarMode() {
-      if (sidebarClean) {
-        sidebar.style.width = "250px";
-        sidebar.style.transform = "translateX(-250px)";
-        sidebar.style.transition = "transform 0.3s";
-      } else {
-        sidebar.style.width = "0";
-        sidebar.style.transition = "width 0.3s";
-        sidebar.style.transform = "none";
-      }
-      localStorage.setItem("sidebarMode", sidebarClean ? "clean" : "normal");
-      document.getElementById("sidebarModeLabel").innerText = sidebarClean ? "ON" : "OFF";
-    }
-    function toggleSidebarMode() {
-      sidebarClean = !sidebarClean;
-      applySidebarMode();
-    }
-
-    // Sidebar open/close
-    function openSidebar() {
-      if (sidebarClean) {
-        sidebar.classList.add("open");
-        sidebar.style.transform = "translateX(0)";
-      } else {
-        sidebar.style.width = "250px";
-      }
-      if (topLeft) topLeft.style.display = "none";
-      document.addEventListener("click", outsideClickListener);
-    }
-    function closeSidebar() {
-      if (sidebarClean) {
-        sidebar.style.transform = "translateX(-250px)";
-      } else {
-        sidebar.style.width = "0";
-      }
-      if (topLeft) topLeft.style.display = "flex";
-      document.removeEventListener("click", outsideClickListener);
-    }
-    function toggleSidebar() {
-      if ((!sidebarClean && sidebar.style.width === "250px") || 
-          (sidebarClean && sidebar.style.transform === "translateX(0px)")) {
-        closeSidebar();
-      } else {
-        openSidebar();
-      }
-    }
-    function outsideClickListener(e) {
-      if (!sidebar.contains(e.target) && !openBtn.contains(e.target)) {
-        closeSidebar();
-      }
-      if (!settingsMenu.contains(e.target) && !e.target.closest(".settings-btn")) {
-        settingsMenu.style.display = "none";
-      }
-    }
-
-    // Close sidebar on link click
-    sidebar.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => closeSidebar());
-    });
-
-    // Settings dropdown
-    function toggleSettings() {
-      settingsMenu.style.display = settingsMenu.style.display === "block" ? "none" : "block";
-    }
-
-    // Theme modes
-    function setMode(mode) {
-      document.body.classList.remove("light", "dark", "evil");
-      document.body.classList.add(mode);
-      localStorage.setItem("siteMode", mode);
-    }
-
-    // Carousel
-    (function initCarousel(){
-      const slidesContainer = document.querySelector(".slides");
-      const slideElems = document.querySelectorAll(".slide");
-      if (!slidesContainer || slideElems.length === 0) return;
-
-      const total = slideElems.length;
-      slidesContainer.style.width = (total * 100) + "%";
-      slideElems.forEach(s => s.style.width = (100 / total) + "%");
-
-      let index = 0;
-      setInterval(() => {
-        index = (index + 1) % total;
-        slidesContainer.style.transform = `translateX(-${index * (100 / total)}%)`;
-      }, 5000);
-    })();
-
-    // Restore saved settings
-    window.addEventListener("DOMContentLoaded", () => {
-      const savedMode = localStorage.getItem("siteMode");
-      if (savedMode) document.body.classList.add(savedMode);
-      else document.body.classList.add("light"); // default light
-
-      const savedSidebarMode = localStorage.getItem("sidebarMode");
-      if (savedSidebarMode === "clean") sidebarClean = true;
-      applySidebarMode();
-    });
-  </script>
 </body>
+</html>
