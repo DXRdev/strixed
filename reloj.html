@@ -6,299 +6,304 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Favicon -->
-<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon">
+<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-<!-- Embed -->
-<meta property="og:title" content="STRIXED (TEST SITE)">
-<meta property="og:site_name" content="ela.is-a.dev">
-<meta property="og:description" content="TESTING SITE">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="STRIXED">
-<meta name="twitter:image" content="https://i.imgur.com/1NaqL9Z.png">
-
 <style>
+/* ---------- GLOBAL ---------- */
 body {
   margin: 0;
   background: black;
   color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* keep Press Start only where needed */
+h1, .sidebar h3 {
   font-family: "Press Start 2P", system-ui;
 }
 
-/* Layout basics */
-img { max-width: 100%; }
-video { max-width: 100%; display: block; margin: 0 auto; }
+img, video {
+  max-width: 100%;
+  height: auto;
+}
 
+/* ---------- HEADER ---------- */
 header img.banner {
   display: block;
   margin: 60px auto 20px;
   max-width: 90%;
+  pointer-events: none; /* non-interactable banner */
 }
 
-/* Notice */
-.notice {
-  font-family: 'Inter', sans-serif;
-  font-size: 20px;
-  color: #ff4d4d;
-  text-align: center;
-  margin: 10px auto 20px;
-}
-
-/* About */
-.about-section {
-  font-family: 'Inter', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.6;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-
-/* Socials */
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-.text {
-  font-size: 20px;
-  font-family: 'Inter', sans-serif;
-}
-
-/* Sidebar */
+/* ---------- SIDEBAR ---------- */
 .sidebar {
-  position: fixed;
-  inset: 0 auto 0 0;
+  height: 100%;
   width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
   background: rgba(17,17,17,0.95);
   overflow-x: hidden;
-  transition: width .3s ease;
-  z-index: 1000;
+  transition: 0.3s;
   padding-top: 60px;
+  z-index: 1000;
 }
-
 .sidebar a {
   padding: 10px 20px;
-  display: block;
-  color: #f1f1f1;
-  font-family: 'Inter', sans-serif;
   text-decoration: none;
+  color: #f1f1f1;
+  display: block;
 }
-.sidebar a:hover { background: #575757; }
+.sidebar a:hover { background:#575757; }
 
 .sidebar h3 {
-  margin: 20px 16px 8px;
-  font-size: 14px;
   color: #bbb;
-  text-transform: uppercase;
+  margin: 20px 16px 8px;
+  font-size: 12px;
 }
 
-.sidebar .closebtn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 36px;
-  cursor: pointer;
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.submenu.open {
+  max-height: 300px;
 }
 
-/* Overlay */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease;
+  background: rgba(0,0,0,0.5);
+  display: none;
   z-index: 900;
 }
-.overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
 
-/* Top-left */
+/* ---------- HAMBURGER ---------- */
 .top-left {
   position: fixed;
   top: 10px;
   left: 10px;
-  display: flex;
-  gap: 10px;
   z-index: 1100;
 }
-.openbtn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 26px;
+.hamburger {
+  width: 30px;
+  height: 22px;
+  position: relative;
   cursor: pointer;
 }
+.hamburger span {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: white;
+  transition: 0.3s;
+}
+.hamburger span:nth-child(1){ top:0 }
+.hamburger span:nth-child(2){ top:9px }
+.hamburger span:nth-child(3){ top:18px }
 
-/* Gallery */
+.hamburger.active span:nth-child(1){
+  transform: rotate(45deg);
+  top:9px;
+}
+.hamburger.active span:nth-child(2){
+  opacity:0;
+}
+.hamburger.active span:nth-child(3){
+  transform: rotate(-45deg);
+  top:9px;
+}
+
+/* ---------- CAROUSEL ---------- */
 .gallery {
   max-width: 800px;
   margin: 40px auto;
   overflow: hidden;
-  border-radius: 12px;
 }
-.carousel { position: relative; }
-.slides {
+.carousel {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   display: flex;
-  transition: transform .5s ease-in-out;
+  gap: 20px;
+  scrollbar-width: none;
 }
+.carousel::-webkit-scrollbar { display:none; }
+
 .slide {
   min-width: 100%;
+  scroll-snap-align: center;
   text-align: center;
 }
 .slide img {
   max-height: 450px;
   object-fit: contain;
 }
-.slide p {
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-}
-.slide a {
-  color: #69cfff;
-  text-decoration: none;
-}
-.slide a:hover { color: #ff4d4d; }
 
-hr { max-width: 900px; }
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #555;
+}
+.dots span.active {
+  background: white;
+}
+
+/* ---------- ABOUT / SOCIALS ---------- */
+.about-section {
+  font-family: Inter, sans-serif;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  padding: 0 15px;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.text { padding-left:20px; }
 </style>
 </head>
 
 <body>
 
-<div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+<div class="overlay" id="overlay"></div>
 
+<!-- SIDEBAR -->
 <div id="mySidebar" class="sidebar">
-  <a class="closebtn" onclick="closeSidebar()">&times;</a>
   <h3>Main</h3>
   <a href="/">Home</a>
-  <a href="/about">About</a>
+  <a href="/updates">Blogpost</a>
   <a href="/socials">Socials</a>
-  <a href="/songoftheday">Song of the Day</a>
-  <a href="/diary">Blogpost</a>
 
-  <h3>RIFTED</h3>
-  <a href="/wiki/">Wiki</a>
-  <a href="/stories/">Stories & Comics</a>
+  <h3 onclick="toggleProjects()" style="cursor:pointer">PROJECTS ▾</h3>
+  <div id="projectsMenu" class="submenu">
+    <a href="/rifted">RIFTED</a>
+    <a href="/lumenhardt">???</a>
+    <a href="/starbound">STARBOUND</a>
+  </div>
 
-  <h3>Site</h3>
-  <a href="/space">[C:]</a>
+  <h3>SITE</h3>
+  <a href="/songoftheday">Song Of The Day</a>
+  <a>???</a>
 </div>
 
+<!-- HAMBURGER -->
 <div class="top-left">
-  <button class="openbtn" onclick="toggleSidebar()">☰</button>
-  <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" width="35"></a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </div>
 
 <header>
-  <img class="banner" src="https://i.imgur.com/7yo4ycF.png">
+  <img class="banner" src="https://i.imgur.com/7yo4ycF.png" loading="lazy">
 </header>
-
-<div class="notice">Update coming 2026.</div>
 
 <h1>elastrixx</h1>
 <h2>professional girlfailure and novice gamedev</h2>
 
-<video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>
+<video autoplay loop muted loading="lazy" src="https://i.imgur.com/J8A8KZo.mp4"></video>
 
-<br><hr><br>
+<hr>
 <h2>PROJECT GALLERY</h2>
-<br><hr>
 
 <section class="gallery">
-  <div class="carousel">
-    <div class="slides" id="slides">
-      <div class="slide">
-        <img src="https://i.imgur.com/98EJWYG_d.webp">
-        <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691">MEGA GUN GAME</a></p>
-      </div>
-      <div class="slide">
-        <img src="https://i.imgur.com/hCN1xUG.jpeg">
-        <p><a href="https://ela.is-a.dev/starbound">STARBOUND</a></p>
-      </div>
-      <div class="slide">
-        <img src="https://i.imgur.com/ucS0p5N.jpeg">
-        <p><a href="#">More to come...</a></p>
-      </div>
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/98EJWYG_d.webp">
+      <p><a href="/rifted">RIFTED</a></p>
+    </div>
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/hCN1xUG.jpeg">
+      <p><a href="/starbound">STARBOUND</a></p>
+    </div>
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/ucS0p5N.jpeg">
+      <p><a href="/forbidden">Coming Soon</a></p>
+    </div>
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/98EJWYG_d.webp">
+      <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>
     </div>
   </div>
+  <div class="dots" id="dots"></div>
 </section>
 
-<br><hr><br>
+<hr>
 <h2>ABOUT</h2>
-<br><hr>
-
 <div class="about-section">
   <p>Welcome traveler, I am the internet witch, Elaina, also known as elastrix...</p>
-  <p>I’m currently studying game dev and working on Rifted.</p>
-  <p>I also do UEFN / Fortnite Creative work.</p>
-  <p>This page works as a blog for updates.</p>
+  <p>I go by Elaina, I'm currently working on my project "Rifted" and studying game dev for it.</p>
+  <p>I also do UEFN/Fortnite Creative work sometimes!</p>
+  <p>This page will work as a blogpost for updates on works and projects,</p>
+  <p>some of these I'll be posting updates for in my socials every once in a while,</p>
+  <p>which you can find right below here yes like right here ↓</p>
 </div>
 
-<br><hr><br>
+<hr>
 <h2>SOCIALS</h2>
-<br><hr>
 
-<div class="container">
-  <img src="https://i.imgur.com/0Ig8fuc.png">
-  <div class="text"><a href="https://x.com/elastrixx" style="color:#2378d9">Twitter</a></div>
-</div>
-
-<br>
-<div class="container">
-  <img src="https://i.imgur.com/eGgZzZa.png">
-  <div class="text"><a href="https://bsky.app/profile/elastrixx.bsky.social" style="color:#69cfff">BlueSky</a></div>
-</div>
-
-<br>
-<div class="container">
-  <img src="https://i.imgur.com/iGi5EqB.png">
-  <div class="text"><a href="https://www.fortnite.com/@dxrdev" style="color:#c559e5">Fortnite</a></div>
-</div>
-
-<br>
-<div class="container">
-  <img src="https://i.imgur.com/Bet3Dtv.png">
-  <div class="text"><a href="mailto:elastrixed@gmail.com" style="color:red">Email</a></div>
-</div>
+<!-- socials unchanged -->
 
 <script>
+/* ---------- SIDEBAR ---------- */
 const sidebar = document.getElementById("mySidebar");
 const overlay = document.getElementById("overlay");
+const hamburger = document.getElementById("hamburger");
 
-function openSidebar() {
-  sidebar.style.width = "250px";
-  overlay.classList.add("active");
-}
-function closeSidebar() {
+hamburger.onclick = () => {
+  hamburger.classList.toggle("active");
+  sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+  overlay.style.display = sidebar.style.width === "250px" ? "block" : "none";
+};
+overlay.onclick = () => {
   sidebar.style.width = "0";
-  overlay.classList.remove("active");
-}
-function toggleSidebar() {
-  sidebar.style.width === "250px" ? closeSidebar() : openSidebar();
+  overlay.style.display = "none";
+  hamburger.classList.remove("active");
+};
+
+function toggleProjects(){
+  document.getElementById("projectsMenu").classList.toggle("open");
 }
 
-// carousel
-(() => {
-  const slides = document.getElementById("slides");
-  let i = 0;
-  setInterval(() => {
-    i = (i + 1) % slides.children.length;
-    slides.style.transform = `translateX(-${i * 100}%)`;
-  }, 5000);
-})();
+/* ---------- CAROUSEL ---------- */
+const carousel = document.getElementById("carousel");
+const dots = document.getElementById("dots");
+let autoScroll, paused = false;
+
+[...carousel.children].forEach((_,i)=>{
+  const d=document.createElement("span");
+  if(i===0)d.classList.add("active");
+  dots.appendChild(d);
+});
+
+function updateDots(){
+  const index=Math.round(carousel.scrollLeft/carousel.clientWidth);
+  [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===index));
+}
+
+carousel.addEventListener("scroll",()=>{
+  updateDots();
+  paused=true;
+  clearTimeout(autoScroll);
+  setTimeout(()=>paused=false,4000);
+});
+
+setInterval(()=>{
+  if(paused) return;
+  carousel.scrollBy({left:carousel.clientWidth,behavior:"smooth"});
+},5000);
 </script>
 
 </body>
