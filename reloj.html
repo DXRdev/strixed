@@ -5,49 +5,35 @@
 <title>STRIXED</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Preconnect Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Favicon -->
+<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-<!-- Favicon -->
-<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon">
-
-<!-- OpenGraph -->
+<!-- Embed -->
 <meta property="og:title" content="STRIXED (TEST SITE)">
 <meta property="og:site_name" content="ela.is-a.dev">
 <meta property="og:description" content="TESTING SITE">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ela.is-a.dev/">
 <meta property="og:image" content="https://i.imgur.com/1NaqL9Z.png">
 
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="STRIXED">
+<meta name="twitter:image" content="https://i.imgur.com/1NaqL9Z.png">
+
 <style>
-/* ===== Base ===== */
 body {
   margin: 0;
   background: black;
   color: white;
-  font-family: 'Inter', sans-serif;
-}
-body.locked { overflow: hidden; }
-
-h1, h2, h3, h4 {
-  font-family: "Press Start 2P", monospace;
-  text-align: center;
+  font-family: "Press Start 2P", system-ui;
 }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Layout basics */
+img { max-width: 100%; }
+video { max-width: 100%; display: block; margin: 0 auto; }
 
 header img.banner {
   display: block;
@@ -55,38 +41,91 @@ header img.banner {
   max-width: 90%;
 }
 
-/* ===== Sidebar ===== */
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(17,17,17,.95);
-  overflow-x: hidden;
-  transition: .3s;
-  padding-top: 60px;
-  z-index: 1000;
+/* Notice */
+.notice {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  color: #ff4d4d;
+  text-align: center;
+  margin: 10px auto 20px;
 }
+
+/* About */
+.about-section {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Socials */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.text {
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: rgba(17,17,17,0.95);
+  overflow-x: hidden;
+  transition: width .3s ease;
+  z-index: 1000;
+  padding-top: 60px;
+}
+
 .sidebar a {
   padding: 10px 20px;
   display: block;
+  color: #f1f1f1;
+  font-family: 'Inter', sans-serif;
   text-decoration: none;
-  color: #eee;
 }
-.sidebar a:hover { background: #444; }
+.sidebar a:hover { background: #575757; }
+
 .sidebar h3 {
-  color: #aaa;
-  font-size: 12px;
   margin: 20px 16px 8px;
+  font-size: 14px;
+  color: #bbb;
+  text-transform: uppercase;
 }
+
 .sidebar .closebtn {
   position: absolute;
   top: 10px;
   right: 20px;
   font-size: 36px;
+  cursor: pointer;
 }
 
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 900;
+}
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Top-left */
 .top-left {
   position: fixed;
   top: 10px;
@@ -96,83 +135,50 @@ header img.banner {
   z-index: 1100;
 }
 .openbtn {
-  font-size: 24px;
   background: none;
   border: none;
   color: white;
+  font-size: 26px;
   cursor: pointer;
 }
 
-/* ===== Sections ===== */
-.notice {
-  text-align: center;
-  color: #ff4d4d;
-  font-size: 18px;
-  max-width: 800px;
-  margin: 10px auto;
-}
-.about-section {
-  max-width: 800px;
-  margin: auto;
-  font-size: 17px;
-  line-height: 1.7;
-  text-align: center;
-}
-
-/* ===== Gallery ===== */
+/* Gallery */
 .gallery {
   max-width: 800px;
   margin: 40px auto;
+  overflow: hidden;
+  border-radius: 12px;
 }
-.carousel { overflow: hidden; }
+.carousel { position: relative; }
 .slides {
   display: flex;
   transition: transform .5s ease-in-out;
 }
 .slide {
-  width: 100%;
-  flex-shrink: 0;
+  min-width: 100%;
   text-align: center;
 }
 .slide img {
-  width: 100%;
   max-height: 450px;
   object-fit: contain;
-  border-radius: 10px;
 }
-.slide p { margin: 12px 0; }
+.slide p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+.slide a {
+  color: #69cfff;
+  text-decoration: none;
+}
+.slide a:hover { color: #ff4d4d; }
 
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-.dots span {
-  width: 8px;
-  height: 8px;
-  background: #444;
-  border-radius: 50%;
-}
-.dots span.active { background: #69cfff; }
-
-/* ===== Socials ===== */
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-.container img { max-width: 40px; }
-
-/* ===== Footer ===== */
-footer {
-  text-align: center;
-  margin: 60px 0;
-}
+hr { max-width: 900px; }
 </style>
 </head>
 
 <body>
+
+<div id="overlay" class="overlay" onclick="closeSidebar()"></div>
 
 <div id="mySidebar" class="sidebar">
   <a class="closebtn" onclick="closeSidebar()">&times;</a>
@@ -181,99 +187,118 @@ footer {
   <a href="/about">About</a>
   <a href="/socials">Socials</a>
   <a href="/songoftheday">Song of the Day</a>
+  <a href="/diary">Blogpost</a>
+
+  <h3>RIFTED</h3>
+  <a href="/wiki/">Wiki</a>
+  <a href="/stories/">Stories & Comics</a>
+
   <h3>Site</h3>
   <a href="/space">[C:]</a>
 </div>
 
 <div class="top-left">
-  <button class="openbtn" onclick="openSidebar()">☰</button>
+  <button class="openbtn" onclick="toggleSidebar()">☰</button>
   <a href="/"><img src="https://i.imgur.com/1NaqL9Z.png" width="35"></a>
 </div>
 
-<header class="fade-in">
+<header>
   <img class="banner" src="https://i.imgur.com/7yo4ycF.png">
 </header>
 
-<main>
+<div class="notice">Update coming 2026.</div>
 
-<div class="notice fade-in">Update coming 2026.</div>
+<h1>elastrixx</h1>
+<h2>professional girlfailure and novice gamedev</h2>
 
-<h1 class="fade-in">elastrixx</h1>
-<h2 class="fade-in">professional girlfailure · novice gamedev · internet witch</h2>
+<video autoplay loop muted src="https://i.imgur.com/J8A8KZo.mp4"></video>
 
-<video class="fade-in" autoplay muted loop src="https://i.imgur.com/J8A8KZo.mp4"></video>
+<br><hr><br>
+<h2>PROJECT GALLERY</h2>
+<br><hr>
 
-<section class="gallery fade-in">
+<section class="gallery">
   <div class="carousel">
-    <div class="slides">
+    <div class="slides" id="slides">
       <div class="slide">
-        <img loading="lazy" src="https://i.imgur.com/98EJWYG_d.webp">
+        <img src="https://i.imgur.com/98EJWYG_d.webp">
         <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691">MEGA GUN GAME</a></p>
       </div>
       <div class="slide">
-        <img loading="lazy" src="https://i.imgur.com/hCN1xUG.jpeg">
-        <p><a href="/starbound">STARBOUND</a></p>
+        <img src="https://i.imgur.com/hCN1xUG.jpeg">
+        <p><a href="https://ela.is-a.dev/starbound">STARBOUND</a></p>
       </div>
       <div class="slide">
-        <img loading="lazy" src="https://i.imgur.com/ucS0p5N.jpeg">
-        <p>More to come…</p>
+        <img src="https://i.imgur.com/ucS0p5N.jpeg">
+        <p><a href="#">More to come...</a></p>
       </div>
     </div>
   </div>
-  <div class="dots"></div>
 </section>
 
-<section class="about-section fade-in">
-  <p>Welcome traveler, I am the internet witch, Elaina.</p>
-  <p>Game dev student, UEFN creator, builder of strange things.</p>
-</section>
+<br><hr><br>
+<h2>ABOUT</h2>
+<br><hr>
 
-</main>
+<div class="about-section">
+  <p>Welcome traveler, I am the internet witch, Elaina, also known as elastrix...</p>
+  <p>I’m currently studying game dev and working on Rifted.</p>
+  <p>I also do UEFN / Fortnite Creative work.</p>
+  <p>This page works as a blog for updates.</p>
+</div>
 
-<footer class="fade-in">
-  <a href="/space">login</a>
-</footer>
+<br><hr><br>
+<h2>SOCIALS</h2>
+<br><hr>
+
+<div class="container">
+  <img src="https://i.imgur.com/0Ig8fuc.png">
+  <div class="text"><a href="https://x.com/elastrixx" style="color:#2378d9">Twitter</a></div>
+</div>
+
+<br>
+<div class="container">
+  <img src="https://i.imgur.com/eGgZzZa.png">
+  <div class="text"><a href="https://bsky.app/profile/elastrixx.bsky.social" style="color:#69cfff">BlueSky</a></div>
+</div>
+
+<br>
+<div class="container">
+  <img src="https://i.imgur.com/iGi5EqB.png">
+  <div class="text"><a href="https://www.fortnite.com/@dxrdev" style="color:#c559e5">Fortnite</a></div>
+</div>
+
+<br>
+<div class="container">
+  <img src="https://i.imgur.com/Bet3Dtv.png">
+  <div class="text"><a href="mailto:elastrixed@gmail.com" style="color:red">Email</a></div>
+</div>
 
 <script>
 const sidebar = document.getElementById("mySidebar");
-const dotsContainer = document.querySelector(".dots");
-const slides = document.querySelectorAll(".slide");
-const slidesBox = document.querySelector(".slides");
+const overlay = document.getElementById("overlay");
 
-/* Sidebar */
 function openSidebar() {
   sidebar.style.width = "250px";
-  document.body.classList.add("locked");
+  overlay.classList.add("active");
 }
 function closeSidebar() {
   sidebar.style.width = "0";
-  document.body.classList.remove("locked");
+  overlay.classList.remove("active");
 }
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeSidebar();
-});
+function toggleSidebar() {
+  sidebar.style.width === "250px" ? closeSidebar() : openSidebar();
+}
 
-/* Fade in */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => e.isIntersecting && e.target.classList.add("visible"));
-});
-document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
-
-/* Carousel */
-let index = 0;
-slides.forEach((_, i) => {
-  const dot = document.createElement("span");
-  if (i === 0) dot.classList.add("active");
-  dotsContainer.appendChild(dot);
-});
-const dots = dotsContainer.querySelectorAll("span");
-
-setInterval(() => {
-  index = (index + 1) % slides.length;
-  slidesBox.style.transform = `translateX(-${index * 100}%)`;
-  dots.forEach(d => d.classList.remove("active"));
-  dots[index].classList.add("active");
-}, 5000);
+// carousel
+(() => {
+  const slides = document.getElementById("slides");
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % slides.children.length;
+    slides.style.transform = `translateX(-${i * 100}%)`;
+  }, 5000);
+})();
 </script>
 
 </body>
