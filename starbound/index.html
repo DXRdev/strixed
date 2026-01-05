@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Article</title>
+<title>Starbound Blog</title>
 
 <style>
-/* ===== GLOBAL ===== */
 body {
   margin: 0;
   font-family: system-ui, Arial, sans-serif;
@@ -14,7 +13,6 @@ body {
   color: #eaeaea;
 }
 
-/* ===== PAGE WRAPPER ===== */
 .page {
   min-height: 100vh;
   padding: 40px 16px;
@@ -22,7 +20,6 @@ body {
   justify-content: center;
 }
 
-/* ===== POST CONTAINER ===== */
 .post {
   background: #151515;
   max-width: 900px;
@@ -32,33 +29,27 @@ body {
   box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
-/* ===== TITLE ===== */
 .post-title {
   padding: 36px 36px 16px;
   font-size: 2.2rem;
-  line-height: 1.2;
 }
 
-/* ===== THUMBNAIL ===== */
 .post-thumbnail img {
   width: 100%;
   display: block;
 }
 
-/* ===== META ===== */
 .post-meta {
   padding: 12px 36px;
   font-size: 0.8rem;
   opacity: 0.75;
 }
 
-/* ===== BODY ===== */
 .post-body {
   padding: 32px 36px;
   line-height: 1.7;
 }
 
-/* ===== GALLERY ===== */
 .post-gallery {
   padding: 0 36px 32px;
   display: grid;
@@ -71,14 +62,12 @@ body {
   border-radius: 8px;
 }
 
-/* ===== FOOTNOTE ===== */
 .post-footnote {
   padding: 24px 36px 36px;
   font-size: 0.95rem;
   opacity: 0.9;
 }
 
-/* ===== NAVIGATION ===== */
 .post-nav {
   display: flex;
   justify-content: space-between;
@@ -95,11 +84,15 @@ body {
   cursor: pointer;
 }
 
-.post-nav button:hover {
+.post-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.post-nav button:hover:not(:disabled) {
   background: rgba(255,255,255,0.08);
 }
 
-/* ===== MOBILE ===== */
 @media (max-width: 600px) {
   .post-title {
     font-size: 1.6rem;
@@ -138,85 +131,82 @@ body {
     <div class="post-footnote" id="footnote"></div>
 
     <div class="post-nav">
-      <button onclick="prevPost()">← Previous</button>
-      <button onclick="nextPost()">Next →</button>
+      <button id="prevBtn">← Previous</button>
+      <button id="nextBtn">Next →</button>
     </div>
 
   </article>
 </div>
 
 <script>
-/* ===== POST DATA (REUSABLE) ===== */
-const posts = [
-  {
-    title: "First Update",
-    author: "Admin",
-    date: "04/01/26",
-    thumbnail: "thumb1.jpg",
-    body: `
-      <p>This is the main body of the post.</p>
-      <p>You can write articles, news, devlogs, anything.</p>
-    `,
-    gallery: [
-      "img1.jpg",
-      "img2.jpg"
-    ],
-    footnote: "Final notes or closing thoughts."
-  },
+/* ===== CONFIG ===== */
+const POSTS_BASE = "/files/posts/";
+const INDEX_FILE = "SBindex.json";
 
-  {
-    title: "Second Article",
-    author: "Admin",
-    date: "10/01/26",
-    thumbnail: "thumb2.jpg",
-    body: `
-      <p>This post has no gallery.</p>
-    `,
-    gallery: [],
-    footnote: "End of post."
-  }
-];
+/* ===== STATE ===== */
+const params = new URLSearchParams(window.location.search);
+let currentPostId = params.get("post");
 
-let current = 0;
+let postList = [];
+let currentIndex = 0;
 
-/* ===== RENDER ===== */
-function renderPost() {
-  const p = posts[current];
+/* ===== LOAD INDEX ===== */
+fetch(POSTS_BASE + INDEX_FILE)
+  .then(res => res.json())
+  .then(list => {
+    postList = list;
 
-  title.textContent = p.title;
-  thumbnail.src = p.thumbnail;
-  meta.textContent = `Posted by: ${p.author} | ${p.date}`;
-  body.innerHTML = p.body;
-  footnote.textContent = p.footnote;
+    if (!currentPostId) {
+      currentPostId = postList[0];
+    }
 
-  gallery.innerHTML = "";
-  if (p.gallery.length === 0) {
-    gallery.style.display = "none";
-  } else {
-    gallery.style.display = "grid";
-    p.gallery.forEach(img => {
-      const i = document.createElement("img");
-      i.src = img;
-      gallery.appendChild(i);
+    currentIndex = postList.indexOf(currentPostId);
+    loadPost(currentPostId);
+  });
+
+/* ===== LOAD POST ===== */
+function loadPost(id) {
+  fetch(`${POSTS_BASE}${id}.json`)
+    .then(res => res.json())
+    .then(p => {
+      document.title = p.title + " | Starbound";
+      title.textContent = p.title;
+      thumbnail.src = p.thumbnail;
+      meta.textContent = `Posted by: ${p.author} | ${p.date}`;
+      body.innerHTML = p.body.join("");
+      footnote.textContent = p.footnote || "";
+
+      gallery.innerHTML = "";
+      if (!p.gallery || p.gallery.length === 0) {
+        gallery.style.display = "none";
+      } else {
+        gallery.style.display = "grid";
+        p.gallery.forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          gallery.appendChild(img);
+        });
+      }
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === postList.length - 1;
     });
-  }
 }
 
-function prevPost() {
-  if (current > 0) {
-    current--;
-    renderPost();
+/* ===== NAV ===== */
+prevBtn.onclick = () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    window.location.search = `?post=${postList[currentIndex]}`;
   }
-}
+};
 
-function nextPost() {
-  if (current < posts.length - 1) {
-    current++;
-    renderPost();
+nextBtn.onclick = () => {
+  if (currentIndex < postList.length - 1) {
+    currentIndex++;
+    window.location.search = `?post=${postList[currentIndex]}`;
   }
-}
-
-renderPost();
+};
 </script>
 
 </body>
