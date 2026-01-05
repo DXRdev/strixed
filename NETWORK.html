@@ -7,7 +7,7 @@
 
 <style>
   :root {
-    --progress: 48%;
+    --progress: 0%;
   }
 
   html, body {
@@ -44,11 +44,19 @@
     height: 100%;
     background: white;
     border-radius: 6px;
+    transition: width 0.6s ease;
   }
 
   .status {
     font-size: clamp(10px, 3vw, 18px);
     letter-spacing: 2px;
+  }
+
+  .timer {
+    margin-top: 10px;
+    font-size: clamp(9px, 2.5vw, 14px);
+    opacity: 0.75;
+    letter-spacing: 1px;
   }
 
   .dots {
@@ -67,19 +75,60 @@
   </div>
   
   <div class="status">
-    CONNECTED: RETRIEVING PACKS<span class="dots"></span>
-    <!-- Woah, alright well atleast there's something!, Hmm, it says it's "loading"... -->
+    CONNECTED: RETRIEVING DATA<span class="dots"></span>
+  </div>
+<!-- Woah, this place looks even weirder! Hmm...-->
+  <div class="timer" id="timer">
+    INITIALIZING TIME SYNC
   </div>
 </div>
 
 <script>
   const dotsEl = document.querySelector(".dots");
   let count = 0;
-  
   setInterval(() => {
     count = (count + 1) % 4;
     dotsEl.textContent = ".".repeat(count);
   }, 500);
+
+  const root = document.documentElement;
+  const timerEl = document.getElementById("timer");
+
+  const targetDate = new Date("2026-01-10T00:00:00-06:00");
+
+  const startDate = new Date("2026-01-01T00:00:00-06:00");
+
+  const totalHours = Math.floor((targetDate - startDate) / 36e5);
+
+  function updateTimerAndProgress() {
+    const now = new Date();
+
+    const remainingMs = targetDate - now;
+    const remainingHours = Math.max(0, Math.floor(remainingMs / 36e5));
+
+    const elapsedHours = Math.min(
+      totalHours,
+      Math.max(0, totalHours - remainingHours)
+    );
+
+    const percent = Math.floor((elapsedHours / totalHours) * 100);
+    root.style.setProperty("--progress", percent + "%");
+
+    if (remainingMs <= 0) {
+      timerEl.textContent = "DATA SYNC COMPLETE";
+      root.style.setProperty("--progress", "100%");
+      return;
+    }
+
+    const days = Math.floor(remainingHours / 24);
+    const hours = remainingHours % 24;
+
+    timerEl.textContent =
+      `TIME REMAINING: ${days}D ${hours}H`;
+  }
+
+  updateTimerAndProgress();
+  setInterval(updateTimerAndProgress, 60 * 60 * 1000); // update every hour
 </script>
 
 </body>
