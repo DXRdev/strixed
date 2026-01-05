@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Article</title>
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #0b0b0b;
+  color: #eaeaea;
+}
+
+/* ===== PAGE WRAPPER ===== */
+.page {
+  min-height: 100vh;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== POST CONTAINER ===== */
+.post {
+  background: #151515;
+  max-width: 900px;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+/* ===== TITLE ===== */
+.post-title {
+  padding: 36px 36px 16px;
+  font-size: 2.2rem;
+  line-height: 1.2;
+}
+
+/* ===== THUMBNAIL ===== */
+.post-thumbnail img {
+  width: 100%;
+  display: block;
+}
+
+/* ===== META ===== */
+.post-meta {
+  padding: 12px 36px;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+/* ===== BODY ===== */
+.post-body {
+  padding: 32px 36px;
+  line-height: 1.7;
+}
+
+/* ===== GALLERY ===== */
+.post-gallery {
+  padding: 0 36px 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.post-gallery img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* ===== FOOTNOTE ===== */
+.post-footnote {
+  padding: 24px 36px 36px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* ===== NAVIGATION ===== */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 36px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.post-nav button {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.post-nav button:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .post-title {
+    font-size: 1.6rem;
+    padding: 24px 20px 12px;
+  }
+
+  .post-meta,
+  .post-body,
+  .post-footnote,
+  .post-nav,
+  .post-gallery {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <article class="post">
+
+    <h1 class="post-title" id="title"></h1>
+
+    <div class="post-thumbnail">
+      <img id="thumbnail" alt="">
+    </div>
+
+    <div class="post-meta" id="meta"></div>
+
+    <div class="post-body" id="body"></div>
+
+    <div class="post-gallery" id="gallery"></div>
+
+    <div class="post-footnote" id="footnote"></div>
+
+    <div class="post-nav">
+      <button onclick="prevPost()">← Previous</button>
+      <button onclick="nextPost()">Next →</button>
+    </div>
+
+  </article>
+</div>
+
+<script>
+/* ===== POST DATA (REUSABLE) ===== */
+const posts = [
+  {
+    title: "First Update",
+    author: "Admin",
+    date: "04/01/26",
+    thumbnail: "thumb1.jpg",
+    body: `
+      <p>This is the main body of the post.</p>
+      <p>You can write articles, news, devlogs, anything.</p>
+    `,
+    gallery: [
+      "img1.jpg",
+      "img2.jpg"
+    ],
+    footnote: "Final notes or closing thoughts."
+  },
+
+  {
+    title: "Second Article",
+    author: "Admin",
+    date: "10/01/26",
+    thumbnail: "thumb2.jpg",
+    body: `
+      <p>This post has no gallery.</p>
+    `,
+    gallery: [],
+    footnote: "End of post."
+  }
+];
+
+let current = 0;
+
+/* ===== RENDER ===== */
+function renderPost() {
+  const p = posts[current];
+
+  title.textContent = p.title;
+  thumbnail.src = p.thumbnail;
+  meta.textContent = `Posted by: ${p.author} | ${p.date}`;
+  body.innerHTML = p.body;
+  footnote.textContent = p.footnote;
+
+  gallery.innerHTML = "";
+  if (p.gallery.length === 0) {
+    gallery.style.display = "none";
+  } else {
+    gallery.style.display = "grid";
+    p.gallery.forEach(img => {
+      const i = document.createElement("img");
+      i.src = img;
+      gallery.appendChild(i);
+    });
+  }
+}
+
+function prevPost() {
+  if (current > 0) {
+    current--;
+    renderPost();
+  }
+}
+
+function nextPost() {
+  if (current < posts.length - 1) {
+    current++;
+    renderPost();
+  }
+}
+
+renderPost();
+</script>
+
+</body>
+</html>
