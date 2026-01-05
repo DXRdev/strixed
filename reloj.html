@@ -343,6 +343,23 @@ header img.banner {
 <br><br><br>
 
 <script>
+  
+/* ---------- RANDOM GIF ---------- */
+window.addEventListener("DOMContentLoaded", () => {
+  const mumei = document.querySelector("video[src='https://i.imgur.com/J8A8KZo.mp4']");
+  if (!mumei) return;
+
+  if (Math.random() < 0.5) {
+    const img = document.createElement("img");
+    img.src = "/files/images/MINTOBEAMU.gif";
+    img.loading = "lazy";
+    img.style.maxWidth = "100%";
+    img.style.height = "auto";
+
+    mumei.replaceWith(img);
+  }
+});
+  
 /* ---------- SIDEBAR ---------- */
 const sidebar = document.getElementById("mySidebar");
 const overlay = document.getElementById("overlay");
