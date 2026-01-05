@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rifted</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #0b0b0b;
+  color: #eaeaea;
+}
+
+/* ===== PAGE LAYOUT ===== */
+.page {
+  min-height: 100vh;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center;
+}
+
+.hero img {
+  max-width: 260px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  opacity: 0.85;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  background: #151515;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 20px 28px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== NEWSFEED ===== */
+.post-title {
+  padding: 28px 28px 12px;
+  font-size: 1.8rem;
+}
+
+.post-thumbnail img {
+  width: 100%;
+  display: block;
+}
+
+.post-meta {
+  padding: 8px 28px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.post-body {
+  padding: 24px 28px;
+  line-height: 1.7;
+}
+
+.post-gallery {
+  padding: 0 28px 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.post-gallery img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.post-footnote {
+  padding: 20px 28px 28px;
+  opacity: 0.9;
+}
+
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 28px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.post-nav button {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.post-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ===== SOCIALS ===== */
+.socials {
+  display: grid;
+  gap: 14px;
+  padding: 24px 28px 28px;
+}
+
+.socials a {
+  text-decoration: none;
+  color: #fff;
+  background: #1c1c1c;
+  padding: 14px 18px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.socials a:hover {
+  background: #242424;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .post-title {
+    font-size: 1.4rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="wrapper">
+
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+      <!-- Replace with your Rifted logo -->
+      <img src="/images/rifted-logo.png" alt="Rifted Logo">
+      <p>
+        Rifted is a narrative-driven project exploring fractured realities,
+        looping worlds, and the cost of escaping systems designed to trap you.
+      </p>
+    </div>
+
+    <!-- ===== NEWSFEED ===== -->
+    <div class="section">
+      <div class="section-header">NEWSFEED</div>
+
+      <h1 class="post-title" id="title"></h1>
+
+      <div class="post-thumbnail">
+        <img id="thumbnail" alt="">
+      </div>
+
+      <div class="post-meta" id="meta"></div>
+
+      <div class="post-body" id="body"></div>
+
+      <div class="post-gallery" id="gallery"></div>
+
+      <div class="post-footnote" id="footnote"></div>
+
+      <div class="post-nav">
+        <button id="prevBtn">← Previous</button>
+        <button id="nextBtn">Next →</button>
+      </div>
+    </div>
+
+    <!-- ===== SOCIALS ===== -->
+    <div class="section">
+      <div class="section-header">SOCIALS</div>
+      <div class="socials">
+        <a href="https://x.com/riftedTV" target="_blank">
+          Twitter / X
+          <span>↗</span>
+        </a>
+        <a href="https://vgen.co/elastrix/characters" target="_blank">
+          VGen Character Profiles
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ===== CONFIG ===== */
+const POSTS_BASE = "/files/posts/RF/";
+const INDEX_FILE = "RFindex.json";
+
+/* ===== STATE ===== */
+const params = new URLSearchParams(window.location.search);
+let currentPostId = params.get("post");
+
+let postList = [];
+let currentIndex = 0;
+
+/* ===== LOAD INDEX ===== */
+fetch(POSTS_BASE + INDEX_FILE)
+  .then(res => res.json())
+  .then(list => {
+    postList = list;
+
+    if (!currentPostId) {
+      currentPostId = postList[0];
+    }
+
+    currentIndex = postList.indexOf(currentPostId);
+    loadPost(currentPostId);
+  });
+
+function loadPost(id) {
+  fetch(`${POSTS_BASE}${id}.json`)
+    .then(res => res.json())
+    .then(p => {
+      document.title = p.title + " | Rifted";
+      title.textContent = p.title;
+      thumbnail.src = p.thumbnail;
+      meta.textContent = `Posted by: ${p.author} | ${p.date}`;
+      body.innerHTML = p.body.join("");
+      footnote.textContent = p.footnote || "";
+
+      gallery.innerHTML = "";
+      if (!p.gallery || p.gallery.length === 0) {
+        gallery.style.display = "none";
+      } else {
+        gallery.style.display = "grid";
+        p.gallery.forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          gallery.appendChild(img);
+        });
+      }
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === postList.length - 1;
+    });
+}
+
+prevBtn.onclick = () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    window.location.search = `?post=${postList[currentIndex]}`;
+  }
+};
+
+nextBtn.onclick = () => {
+  if (currentIndex < postList.length - 1) {
+    currentIndex++;
+    window.location.search = `?post=${postList[currentIndex]}`;
+  }
+};
+</script>
+
+</body>
+</html>
