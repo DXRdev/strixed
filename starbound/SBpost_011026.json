@@ -1,0 +1,15 @@
+{
+  "title": "First Update",
+  "author": "Admin",
+  "date": "04/01/26",
+  "thumbnail": "/images/thumb1.jpg",
+  "body": [
+    "<p>This is the main body of the post.</p>",
+    "<p>You can write articles, news, devlogs, etc.</p>"
+  ],
+  "gallery": [
+    "/images/img1.jpg",
+    "/images/img2.jpg"
+  ],
+  "footnote": "Final notes or closing thoughts."
+}
