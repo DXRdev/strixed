@@ -4,12 +4,12 @@
   "date": "10/01/26",
   "thumbnail": "/images/thumb1.jpg",
   "body": [
-    "<p>This is the main body of the post.</p>",
-    "<p>You can write long-form content here.</p>"
+    "<p>Welcome! This is the start of the Starbound news page! Here you'll find updates and new announcements regarding this project!</p>",
+    "<p>What's Starbound? Glad nobody asked! Starbound is a private Minecraft SMP i play with my friends, it has it's own story, events and more!</p>"
   ],
   "gallery": [
     "/images/img1.jpg",
     "/images/img2.jpg"
   ],
-  "footnote": "Final thoughts go here."
+  "footnote": "This is only the start of the newsletter, more will be continued to be shown and updated so stay tuned!"
 }
