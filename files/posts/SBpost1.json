@@ -1,0 +1,15 @@
+{
+  "title": "Starbound Newspost now Live!",
+  "author": "elastrixx",
+  "date": "10/01/26",
+  "thumbnail": "/images/thumb1.jpg",
+  "body": [
+    "<p>This is the main body of the post.</p>",
+    "<p>You can write long-form content here.</p>"
+  ],
+  "gallery": [
+    "/images/img1.jpg",
+    "/images/img2.jpg"
+  ],
+  "footnote": "Final thoughts go here."
+}
