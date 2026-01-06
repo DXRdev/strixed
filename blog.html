@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWSFEED</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #0b0b0b;
+  color: #eaeaea;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.post {
+  background: #151515;
+  max-width: 900px;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+.post-title {
+  padding: 36px 36px 16px;
+  font-size: 2.2rem;
+}
+
+.post-thumbnail img {
+  width: 100%;
+  display: block;
+}
+
+.post-meta {
+  padding: 12px 36px;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.post-body {
+  padding: 32px 36px;
+  line-height: 1.7;
+}
+
+.post-gallery {
+  padding: 0 36px 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.post-gallery img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.post-footnote {
+  padding: 24px 36px 36px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 36px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.post-nav button {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.post-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.post-nav button:hover:not(:disabled) {
+  background: rgba(255,255,255,0.08);
+}
+
+@media (max-width: 600px) {
+  .post-title {
+    font-size: 1.6rem;
+    padding: 24px 20px 12px;
+  }
+
+  .post-meta,
+  .post-body,
+  .post-footnote,
+  .post-nav,
+  .post-gallery {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <article class="post">
+
+    <h1 class="post-title" id="title"></h1>
+
+    <div class="post-thumbnail">
+      <img id="thumbnail" alt="">
+    </div>
+
+    <div class="post-meta" id="meta"></div>
+
+    <div class="post-body" id="body"></div>
+
+    <div class="post-gallery" id="gallery"></div>
+
+    <div class="post-footnote" id="footnote"></div>
+
+    <div class="post-nav">
+      <button id="prevBtn">← Previous</button>
+      <button id="nextBtn">Next →</button>
+    </div>
+
+  </article>
+</div>
+
+<script>
+/* ===== CONFIG ===== */
+const POSTS_BASE = "/files/posts/blog/";
+const INDEX_FILE = "STRindex.json";
+
+/* ===== STATE ===== */
+const params = new URLSearchParams(window.location.search);
+let currentPostId = params.get("post");
+
+let postList = [];
+let currentIndex = 0;
+
+/* ===== LOAD INDEX ===== */
+fetch(POSTS_BASE + INDEX_FILE)
+  .then(res => res.json())
+  .then(list => {
+    postList = list;
+
+    if (!currentPostId) {
+      currentPostId = postList[0];
+    }
+
+    currentIndex = postList.indexOf(currentPostId);
+    loadPost(currentPostId);
+  });
+
+/* ===== LOAD POST ===== */
+function loadPost(id) {
+  fetch(`${POSTS_BASE}${id}.json`)
+    .then(res => res.json())
+    .then(p => {
+      document.title = p.title + " | RIFTED";
+      title.textContent = p.title;
+      thumbnail.src = p.thumbnail;
+      meta.textContent = `Posted by: ${p.author} | ${p.date}`;
+      body.innerHTML = p.body.join("");
+      footnote.textContent = p.footnote || "";
+
+      gallery.innerHTML = "";
+      if (!p.gallery || p.gallery.length === 0) {
+        gallery.style.display = "none";
+      } else {
+        gallery.style.display = "grid";
+        p.gallery.forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          gallery.appendChild(img);
+        });
+      }
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === postList.length - 1;
+    });
+}
+
+/* ===== NAV ===== */
+prevBtn.onclick = () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    window.location.search = `?post=${postList[currentIndex]}`;
+  }
+};
+
+nextBtn.onclick = () => {
+  if (currentIndex < postList.length - 1) {
+    currentIndex++;
+    window.location.search = `?post=${postList[currentIndex]}`;
+  }
+};
+</script>
+
+</body>
+</html>
