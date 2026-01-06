@@ -152,7 +152,14 @@ let currentIndex = 0;
 
 /* ===== LOAD INDEX ===== */
 fetch(POSTS_BASE + INDEX_FILE)
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Index not found");
+    return res.json();
+  })
+  .catch(err => {
+    document.body.innerHTML = "<h2 style='color:red'>INDEX LOAD FAILED</h2>";
+    console.error(err);
+  });
   .then(list => {
     postList = list;
 
