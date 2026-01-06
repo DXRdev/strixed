@@ -156,10 +156,6 @@ fetch(POSTS_BASE + INDEX_FILE)
     if (!res.ok) throw new Error("Index not found");
     return res.json();
   })
-  .catch(err => {
-    document.body.innerHTML = "<h2 style='color:red'>INDEX LOAD FAILED</h2>";
-    console.error(err);
-  });
   .then(list => {
     postList = list;
 
@@ -169,6 +165,11 @@ fetch(POSTS_BASE + INDEX_FILE)
 
     currentIndex = postList.indexOf(currentPostId);
     loadPost(currentPostId);
+  })
+  .catch(err => {
+    document.body.innerHTML = "<h2 style='color:red'>INDEX LOAD FAILED</h2>";
+    console.error(err);
+    
   });
 
 /* ===== LOAD POST ===== */
