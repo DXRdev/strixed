@@ -23,47 +23,19 @@ body {
   animation: fadeIn 0.4s ease-out forwards;
 }
 
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
+@keyframes fadeIn { to { opacity: 1; } }
 
-h1, .sidebar h3 {
-  font-family: "Press Start 2P", system-ui;
-}
+h1, .sidebar h3 { font-family: "Press Start 2P", system-ui; }
+h1, h2, h3, h4, p { text-align: center; }
 
-  h1, h2, h3, h4, p {
-  text-align: center;
-}
-
-video, img {
+img, video {
   display: block;
   margin: 0 auto;
-}
-
-.socials {
-  text-align: center;
-}
-  
-img, video {
   max-width: 100%;
   height: auto;
 }
 
-/* ---------- HERO MEDIA ---------- */
-.hero-media {
-  max-height: 360px;
-  object-fit: contain;
-}
-
-/* ---------- HEADER ---------- */
-header img.banner {
-  display: block;
-  margin: 60px auto 20px;
-  max-width: 70%;
-  pointer-events: none;
-}
+.hero-media { max-height: 360px; object-fit: contain; }
 
 /* ---------- SIDEBAR ---------- */
 .sidebar {
@@ -78,13 +50,13 @@ header img.banner {
   padding-top: 60px;
   z-index: 1000;
 }
+
 .sidebar a {
   padding: 10px 20px;
-  text-decoration: none;
   color: #f1f1f1;
   display: block;
+  text-decoration: none;
 }
-.sidebar a:hover { background:#575757; }
 
 .sidebar h3 {
   color: #bbb;
@@ -97,9 +69,7 @@ header img.banner {
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
-.submenu.open {
-  max-height: 300px;
-}
+.submenu.open { max-height: 300px; }
 
 .overlay {
   position: fixed;
@@ -116,12 +86,14 @@ header img.banner {
   left: 10px;
   z-index: 1100;
 }
+
 .hamburger {
   width: 30px;
   height: 22px;
   position: relative;
   cursor: pointer;
 }
+
 .hamburger span {
   position: absolute;
   width: 100%;
@@ -129,33 +101,22 @@ header img.banner {
   background: white;
   transition: 0.3s;
 }
+
 .hamburger span:nth-child(1){ top:0 }
 .hamburger span:nth-child(2){ top:9px }
 .hamburger span:nth-child(3){ top:18px }
 
-.hamburger.active span:nth-child(1){
-  transform: rotate(45deg);
-  top:9px;
-}
-.hamburger.active span:nth-child(2){
-  opacity:0;
-}
-.hamburger.active span:nth-child(3){
-  transform: rotate(-45deg);
-  top:9px;
-}
+.hamburger.active span:nth-child(1){ transform:rotate(45deg); top:9px }
+.hamburger.active span:nth-child(2){ opacity:0 }
+.hamburger.active span:nth-child(3){ transform:rotate(-45deg); top:9px }
 
 /* ---------- CAROUSEL ---------- */
-.gallery {
-  max-width: 800px;
-  margin: 40px auto;
-  overflow: hidden;
-}
+.gallery { max-width: 800px; margin: 40px auto; overflow: hidden; }
 .carousel {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
   display: flex;
   gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
 .carousel::-webkit-scrollbar { display:none; }
@@ -164,10 +125,6 @@ header img.banner {
   min-width: 100%;
   scroll-snap-align: center;
   text-align: center;
-}
-.slide img {
-  max-height: 450px;
-  object-fit: contain;
 }
 
 .dots {
@@ -181,9 +138,7 @@ header img.banner {
   border-radius: 50%;
   background: #555;
 }
-.dots span.active {
-  background: white;
-}
+.dots span.active { background: white; }
 
 /* ---------- ABOUT / SOCIALS ---------- */
 .about-section {
@@ -360,41 +315,30 @@ header img.banner {
 <br><br><br>
 
 <script>
-  
-/* ---------- RANDOM GIF ---------- */
-window.addEventListener("DOMContentLoaded", () => {
-  const mumei = document.querySelector("video[src='https://i.imgur.com/J8A8KZo.mp4']");
-  if (!mumei) return;
 
-  if (Math.random() < 0.5) {
+/* ---------- RANDOM OSHI MEDIA ---------- */
+window.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".hero-media");
+  if (hero && Math.random() < 0.5) {
     const img = document.createElement("img");
     img.className = "hero-media";
     img.src = "/files/images/MINTOBEAMU.gif";
-    img.loading = "lazy";
-    img.style.maxWidth = "100%";
-    img.style.height = "auto";
-
-    mumei.replaceWith(img);
+    hero.replaceWith(img);
   }
 });
-  
+
 /* ---------- SIDEBAR ---------- */
 const sidebar = document.getElementById("mySidebar");
 const overlay = document.getElementById("overlay");
 const hamburger = document.getElementById("hamburger");
 
-  carousel.addEventListener("wheel", (e) => {  
-  if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {  
-    e.preventDefault();  
-    carousel.scrollLeft += e.deltaY;  
-  }  
-}, { passive: false });
-  
 hamburger.onclick = () => {
-  hamburger.classList.toggle("active");
-  sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
-  overlay.style.display = sidebar.style.width === "250px" ? "block" : "none";
+  const open = sidebar.style.width === "250px";
+  sidebar.style.width = open ? "0" : "250px";
+  overlay.style.display = open ? "none" : "block";
+  hamburger.classList.toggle("active", !open);
 };
+
 overlay.onclick = () => {
   sidebar.style.width = "0";
   overlay.style.display = "none";
@@ -408,7 +352,7 @@ function toggleProjects(){
 /* ---------- CAROUSEL ---------- */
 const carousel = document.getElementById("carousel");
 const dots = document.getElementById("dots");
-let autoScroll, paused = false;
+let paused = false;
 
 [...carousel.children].forEach((_,i)=>{
   const d=document.createElement("span");
@@ -424,15 +368,25 @@ function updateDots(){
 carousel.addEventListener("scroll",()=>{
   updateDots();
   paused=true;
-  clearTimeout(autoScroll);
   setTimeout(()=>paused=false,4000);
 });
 
+/* Translate mouse scroll to Carousel */
+carousel.addEventListener("wheel",(e)=>{
+  if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+    e.preventDefault();
+    carousel.scrollLeft+=e.deltaY;
+  }
+},{passive:false});
+
 setInterval(()=>{
-  if(paused) return;
-  carousel.scrollBy({left:carousel.clientWidth,behavior:"smooth"});
+  if(!paused){
+    carousel.scrollBy({left:carousel.clientWidth,behavior:"smooth"});
+  }
 },5000);
+
 </script>
 
+  
 </body>
 </html>
