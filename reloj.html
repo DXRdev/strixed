@@ -51,6 +51,12 @@ img, video {
   height: auto;
 }
 
+/* ---------- HERO MEDIA ---------- */
+.hero-media {
+  max-height: 360px;
+  object-fit: contain;
+}
+
 /* ---------- HEADER ---------- */
 header img.banner {
   display: block;
@@ -235,7 +241,7 @@ header img.banner {
 <h1>elastrixx</h1>
 <h2>professional girlfailure and novice gamedev</h2>
 
-<video autoplay loop muted loading="lazy" src="https://i.imgur.com/J8A8KZo.mp4"></video>
+<video class="hero-media" autoplay loop muted loading="lazy" src="https://i.imgur.com/J8A8KZo.mp4"></video>
 <br>
   
 <hr>
@@ -352,6 +358,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (Math.random() < 0.5) {
     const img = document.createElement("img");
+    img.classname = "hero-media";
     img.src = "/files/images/MINTOBEAMU.gif";
     img.loading = "lazy";
     img.style.maxWidth = "100%";
