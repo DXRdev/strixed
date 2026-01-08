@@ -368,7 +368,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (Math.random() < 0.5) {
     const img = document.createElement("img");
-    img.classname = "hero-media";
+    img.className = "hero-media";
     img.src = "/files/images/MINTOBEAMU.gif";
     img.loading = "lazy";
     img.style.maxWidth = "100%";
@@ -383,6 +383,13 @@ const sidebar = document.getElementById("mySidebar");
 const overlay = document.getElementById("overlay");
 const hamburger = document.getElementById("hamburger");
 
+  carousel.addEventListener("wheel", (e) => {  
+  if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {  
+    e.preventDefault();  
+    carousel.scrollLeft += e.deltaY;  
+  }  
+}, { passive: false });
+  
 hamburger.onclick = () => {
   hamburger.classList.toggle("active");
   sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
