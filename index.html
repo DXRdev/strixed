@@ -75,7 +75,7 @@
   </div>
   
   <div class="status">
-    SYSTEM REBOOT FINISHED: UPDATING FILES<span class="dots"></span>
+    INITIALITING SYSTEM<span class="dots"></span>
   </div>
 <!-- Woah, this place looks even weirder! Hmm...-->
 
@@ -119,7 +119,7 @@
     root.style.setProperty("--progress", percent + "%");
 
     if (remainingMs <= 0) {
-      timerEl.textContent = "DATA SYNC COMPLETE";
+      timerEl.textContent = "SYSTEM LOAD COMPLETE";
       root.style.setProperty("--progress", "100%");
       return;
     }
@@ -128,7 +128,7 @@
     const hours = remainingHours % 24;
 
     timerEl.textContent =
-      `TIME REMAINING: ${days}D ${hours}H`;
+      `BOOTING IN: ${days}D ${hours}H`;
   }
 
   updateTimerAndProgress();
