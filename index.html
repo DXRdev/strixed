@@ -2,138 +2,391 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>UPDATING...</title>
+<title>STRIXED</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Favicon -->
+<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+T8AAPt/AACGfwAAe78AAL3fAADe7wAA728AAPfvAAD77wAA/fcAAP23AAD9VwAA/fcAAP7vAAD/HwAA" rel="icon">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --progress: 0%;
-  }
+/* ---------- GLOBAL ---------- */
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+}
 
-  html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    color: white;
-    font-family: monospace;
-  }
+@keyframes fadeIn { to { opacity: 1; } }
 
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+h1, .sidebar h3 { font-family: "Press Start 2P", system-ui; }
+h1, h2, h3, h4, p { text-align: center; }
 
-  .wrapper {
-    width: min(80vw, 420px);
-    text-align: center;
-  }
+img, video {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.hero-media { max-height: 360px; object-fit: contain; }
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(17,17,17,0.95);
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+
+.sidebar a {
+  padding: 10px 20px;
+  color: #f1f1f1;
+  display: block;
+  text-decoration: none;
+}
+
+.sidebar h3 {
+  color: #bbb;
+  margin: 20px 16px 8px;
+  font-size: 12px;
+}
+
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.submenu.open { max-height: 300px; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 900;
+}
+
+/* ---------- HAMBURGER ---------- */
+.top-left {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+}
+
+.hamburger {
+  width: 30px;
+  height: 22px;
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger span {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: white;
+  transition: 0.3s;
+}
+
+.hamburger span:nth-child(1){ top:0 }
+.hamburger span:nth-child(2){ top:9px }
+.hamburger span:nth-child(3){ top:18px }
+
+.hamburger.active span:nth-child(1){ transform:rotate(45deg); top:9px }
+.hamburger.active span:nth-child(2){ opacity:0 }
+.hamburger.active span:nth-child(3){ transform:rotate(-45deg); top:9px }
+
+/* ---------- CAROUSEL ---------- */
+.gallery { max-width: 800px; margin: 40px auto; overflow: hidden; }
+.carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar { display:none; }
+
+.slide {
+  min-width: 100%;
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #555;
+}
+.dots span.active { background: white; }
+
+/* ---------- ABOUT / SOCIALS ---------- */
+.about-section {
+  font-family: Inter, sans-serif;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  padding: 0 15px;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   
-  .bar {
-    width: 100%;
-    height: 10px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-  
-  .bar-fill {
-    width: var(--progress);
-    height: 100%;
-    background: white;
-    border-radius: 6px;
-    transition: width 0.6s ease;
-  }
+.text { padding-left:20px; }
 
-  .status {
-    font-size: clamp(10px, 3vw, 18px);
-    letter-spacing: 2px;
-  }
-
-  .timer {
-    margin-top: 10px;
-    font-size: clamp(9px, 2.5vw, 14px);
-    opacity: 0.75;
-    letter-spacing: 1px;
-  }
-
-  .dots {
-    display: inline-block;
-    width: 24px;
-    text-align: left;
-  }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <div class="bar">
-    <div class="bar-fill"></div>
-  </div>
-  
-  <div class="status">
-    INITIALITING SYSTEM<span class="dots"></span>
-  </div>
-<!-- Woah, this place looks even weirder! Hmm...-->
+<div class="overlay" id="overlay"></div>
 
-<!-- What the? Are these portals? Wait, that's the city! -->
-<!-- Alright Me. Portal... i'll trust in you! -->
-<!-- @: PROJECT "LUMENHARDT" WAS UPDATED. -->
-  <div class="timer" id="timer">
-    INITIALIZING TIME SYNC
+<!-- SIDEBAR -->
+<div id="mySidebar" class="sidebar">
+  <h3>Main</h3>
+  <a href="/">Home</a>
+  <a href="/blog">Newsfeed</a>
+  <a href="/socials">Socials</a>
+
+  <h3 onclick="toggleProjects()" style="cursor:pointer">PROJECTS ▾</h3>
+  <div id="projectsMenu" class="submenu">
+    <a href="/rifted">RIFTED</a>
+    <a>???</a>
+    <a href="/starbound">STARBOUND</a>
+  </div>
+
+  <h3>SITE</h3>
+  <a href="/songoftheday">Song Of The Day</a>
+  <a>???</a>
+</div>
+
+<!-- HAMBURGER -->
+<div class="top-left">
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
   </div>
 </div>
 
+<header>
+  <img class="banner" src="https://i.imgur.com/7yo4ycF.png" loading="lazy">
+</header>
+  
+<h1>elastrixx</h1>
+<h2>professional girlfailure and novice gamedev</h2>
+
+<video class="hero-media" autoplay loop muted loading="lazy" src="https://i.imgur.com/J8A8KZo.mp4"></video>
+<br>
+  
+<hr>
+<h2>PROJECT GALLERY</h2>
+<hr>
+  
+<section class="gallery">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/oWF2EHA.jpeg">
+      <p><a href="/rifted">RIFTED</a></p>
+    </div>
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/hCN1xUG.jpeg">
+      <p><a href="/starbound">STARBOUND</a></p>
+    </div>
+    <div class="slide">
+      <img loading="lazy" src="https://i.imgur.com/ucS0p5N.jpeg">
+      <p><a href="/forbidden">Coming Soon</a></p>
+    </div>
+    <div class="slide">
+      <img loading="lazy" src="https://cdn-0001.qstv.on.epicgames.com/zjpklzDAVjAVYOXnZx/image/landscape_comp.jpeg">
+      <p><a href="https://www.fortnite.com/@dxrdev/7006-0547-9691" target="_blank">MEGA GUN GAME (UEFN)</a></p>
+    </div>
+  </div>
+  <div class="dots" id="dots"></div>
+</section>
+
+<hr>
+<h2>ABOUT</h2>
+<hr>
+<div class="about-section">
+  <p>Welcome traveler!</p>
+  <p>I am the internet witch, Elaina, also known as elastrix, i go by Elaina or Ela, either works! And I'm currently working on my project "Rifted" and studying game dev for it.</p>
+  <p>This page will work as a blogpost for updates on works and projects, some of these I'll be posting updates for in my socials every once in a while, which you can find right below here yes like right here ↓</p>
+</div>
+
+<hr>
+<h2>SOCIALS</h2>
+<hr>
+
+<div class="socials">
+
+  <div class="container">
+    <div class="image">
+      <img src="https://i.imgur.com/0Ig8fuc.png" alt="Twitter">
+    </div>
+    <div class="text">
+      <a href="https://x.com/elastrixx" style="color:#2378d9" target="_blank">
+        Twitter (X if youre a nerd)
+      </a>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="container">
+    <div class="image">
+      <img src="https://i.imgur.com/0Ig8fuc.png" alt="Rfited's Twitter">
+    </div>
+    <div class="text">
+      <a href="https://x.com/riftedtv" style="color:#69cfff" target="_blank">
+        Rifted's Official Twitter
+      </a>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="container">
+    <div class="image">
+      <img src="https://i.imgur.com/iGi5EqB.png" alt="Fortnite">
+    </div>
+    <div class="text">
+      <a href="https://www.fortnite.com/@dxrdev" style="color:#c559e5" target="_blank">
+        Fortnite Creator Profile
+      </a>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="container">
+    <div class="image">
+      <img src="https://i.imgur.com/Bet3Dtv.png" alt="Email">
+    </div>
+    <div class="text">
+      <a href="mailto:elastrixed@gmail.com" style="color:#ff0000">
+        Email
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<hr>
+<h2>MORE MORE MORE MORE MORE</h2>
+<hr>
+<br>
+<div class="about-section">
+<p>
+  Check out the
+  <a href="/blog" style="color:#69cfff; text-decoration: underline;">
+    blog
+  </a>
+  for more info about the newest and most recent updates!
+</p>
+<br>
+  
+<h4>this is STILL a WIP so...give me time here......</h4>
+
+<video autoplay loop muted width="300" height="100" src="https://i.imgur.com/o2ksfSs.mp4"></video>
+
+<br>
+
+<br><br><br>
+
 <script>
-  const dotsEl = document.querySelector(".dots");
-  let count = 0;
-  setInterval(() => {
-    count = (count + 1) % 4;
-    dotsEl.textContent = ".".repeat(count);
-  }, 500);
 
-  const root = document.documentElement;
-  const timerEl = document.getElementById("timer");
-
-  const targetDate = new Date("2026-01-10T00:00:00-06:00");
-
-  const startDate = new Date("2026-01-01T00:00:00-06:00");
-
-  const totalHours = Math.floor((targetDate - startDate) / 36e5);
-
-  function updateTimerAndProgress() {
-    const now = new Date();
-
-    const remainingMs = targetDate - now;
-    const remainingHours = Math.max(0, Math.floor(remainingMs / 36e5));
-
-    const elapsedHours = Math.min(
-      totalHours,
-      Math.max(0, totalHours - remainingHours)
-    );
-
-    const percent = Math.floor((elapsedHours / totalHours) * 100);
-    root.style.setProperty("--progress", percent + "%");
-
-    if (remainingMs <= 0) {
-      timerEl.textContent = "SYSTEM LOAD COMPLETE";
-      root.style.setProperty("--progress", "100%");
-      return;
-    }
-
-    const days = Math.floor(remainingHours / 24);
-    const hours = remainingHours % 24;
-
-    timerEl.textContent =
-      `BOOTING IN: ${days}D ${hours}H`;
+/* ---------- RANDOM OSHI MEDIA ---------- */
+window.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".hero-media");
+  if (hero && Math.random() < 0.5) {
+    const img = document.createElement("img");
+    img.className = "hero-media";
+    img.src = "/files/images/MINTOBEAMU.gif";
+    hero.replaceWith(img);
   }
+});
 
-  updateTimerAndProgress();
-  setInterval(updateTimerAndProgress, 60 * 60 * 1000);
+/* ---------- SIDEBAR ---------- */
+const sidebar = document.getElementById("mySidebar");
+const overlay = document.getElementById("overlay");
+const hamburger = document.getElementById("hamburger");
+
+hamburger.onclick = () => {
+  const open = sidebar.style.width === "250px";
+  sidebar.style.width = open ? "0" : "250px";
+  overlay.style.display = open ? "none" : "block";
+  hamburger.classList.toggle("active", !open);
+};
+
+overlay.onclick = () => {
+  sidebar.style.width = "0";
+  overlay.style.display = "none";
+  hamburger.classList.remove("active");
+};
+
+function toggleProjects(){
+  document.getElementById("projectsMenu").classList.toggle("open");
+}
+
+/* ---------- CAROUSEL ---------- */
+const carousel = document.getElementById("carousel");
+const dots = document.getElementById("dots");
+let paused = false;
+
+[...carousel.children].forEach((_,i)=>{
+  const d=document.createElement("span");
+  if(i===0)d.classList.add("active");
+  dots.appendChild(d);
+});
+
+function updateDots(){
+  const index=Math.round(carousel.scrollLeft/carousel.clientWidth);
+  [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===index));
+}
+
+carousel.addEventListener("scroll",()=>{
+  updateDots();
+  paused=true;
+  setTimeout(()=>paused=false,4000);
+});
+
+/* Translate mouse scroll to Carousel */
+carousel.addEventListener("wheel",(e)=>{
+  if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+    e.preventDefault();
+    carousel.scrollLeft+=e.deltaY;
+  }
+},{passive:false});
+
+setInterval(()=>{
+  if(!paused){
+    carousel.scrollBy({left:carousel.clientWidth,behavior:"smooth"});
+  }
+},5000);
+
 </script>
 
+  
 </body>
 </html>
