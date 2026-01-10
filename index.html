@@ -35,6 +35,15 @@ img, video {
   height: auto;
 }
 
+.banner {
+  display: block;
+  margin: 60px auto 20px;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  pointer-events: none;
+}
+
 .hero-media { max-height: 360px; object-fit: contain; }
 
 /* ---------- SIDEBAR ---------- */
@@ -112,6 +121,7 @@ img, video {
 
 /* ---------- CAROUSEL ---------- */
 .gallery { max-width: 800px; margin: 40px auto; overflow: hidden; }
+  
 .carousel {
   display: flex;
   gap: 20px;
@@ -119,6 +129,11 @@ img, video {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
+  
+.carousel {
+  overscroll-behavior: contain;
+}
+  
 .carousel::-webkit-scrollbar { display:none; }
 
 .slide {
@@ -371,6 +386,14 @@ carousel.addEventListener("scroll",()=>{
   setTimeout(()=>paused=false,4000);
 });
 
+carousel.addEventListener("mouseenter", () => {
+  document.body.style.overflowY = "hidden";
+});
+
+carousel.addEventListener("mouseleave", () => {
+  document.body.style.overflowY = "";
+});
+  
 /* Translate mouse scroll to Carousel */
 carousel.addEventListener("wheel",(e)=>{
   if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
