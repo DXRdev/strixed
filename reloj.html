@@ -35,6 +35,15 @@ img, video {
   height: auto;
 }
 
+.banner {
+  display: block;
+  margin: 60px auto 20px;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  pointer-events: none;
+}
+
 .hero-media { max-height: 360px; object-fit: contain; }
 
 /* ---------- SIDEBAR ---------- */
@@ -112,6 +121,7 @@ img, video {
 
 /* ---------- CAROUSEL ---------- */
 .gallery { max-width: 800px; margin: 40px auto; overflow: hidden; }
+  
 .carousel {
   display: flex;
   gap: 20px;
@@ -119,6 +129,15 @@ img, video {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
+
+/* indicate draggable area and avoid text selection while dragging */
+.carousel { cursor: grab; }
+.carousel.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+  
+.carousel {
+  overscroll-behavior: contain;
+}
+  
 .carousel::-webkit-scrollbar { display:none; }
 
 .slide {
@@ -350,40 +369,185 @@ function toggleProjects(){
 }
 
 /* ---------- CAROUSEL ---------- */
-const carousel = document.getElementById("carousel");
-const dots = document.getElementById("dots");
-let paused = false;
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const carousel = document.getElementById('carousel');
+  const dots = document.getElementById('dots');
 
-[...carousel.children].forEach((_,i)=>{
-  const d=document.createElement("span");
-  if(i===0)d.classList.add("active");
-  dots.appendChild(d);
-});
+  // read gap from CSS (fallback to 0)
+  const computed = window.getComputedStyle(carousel);
+  let gap = parseInt(computed.getPropertyValue('gap')) || 0;
 
-function updateDots(){
-  const index=Math.round(carousel.scrollLeft/carousel.clientWidth);
-  [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===index));
-}
+  // Grab real slides initially
+  let realSlides = Array.from(carousel.children);
+  const realCount = realSlides.length;
 
-carousel.addEventListener("scroll",()=>{
-  updateDots();
-  paused=true;
-  setTimeout(()=>paused=false,4000);
-});
+  // create clones for looping (prepend last, append first)
+  const firstClone = realSlides[0].cloneNode(true);
+  const lastClone = realSlides[realSlides.length - 1].cloneNode(true);
+  carousel.appendChild(firstClone);
+  carousel.insertBefore(lastClone, carousel.firstChild);
 
-/* Translate mouse scroll to Carousel */
-carousel.addEventListener("wheel",(e)=>{
-  if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+  // We'll recalc sizes and set initial position after clones are in DOM
+  let slideWidth;
+  function recalcSizes() {
+    // slide DOM element width (the visible width per slide)
+    const slideEl = carousel.querySelector('.slide');
+    slideWidth = slideEl.getBoundingClientRect().width + gap;
+    // place viewport at the *first real* slide (index 1 because of prepended clone)
+    carousel.scrollLeft = slideWidth;
+  }
+  recalcSizes();
+
+  // build dots for the real slides
+  dots.innerHTML = '';
+  for (let i = 0; i < realCount; i++) {
+    const d = document.createElement('span');
+    if (i === 0) d.classList.add('active');
+    dots.appendChild(d);
+  }
+
+  // helper to compute "real" index from current scrollLeft
+  function realIndexFromScroll() {
+    const rawIndex = Math.round(carousel.scrollLeft / slideWidth);
+    // rawIndex = 0 => clone(last), rawIndex = 1..realCount => real slides, rawIndex = realCount+1 => clone(first)
+    let realIndex = rawIndex - 1;
+    realIndex = ((realIndex % realCount) + realCount) % realCount;
+    return realIndex;
+  }
+
+  function updateDots() {
+    const idx = realIndexFromScroll();
+    [...dots.children].forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  // handle infinite loop by snapping without animation when hitting clones
+  let isJumping = false;
+  carousel.addEventListener('scroll', () => {
+    if (isJumping) return; // ignore events while we programmatically jump
+    const maxIndex = realCount + 1;
+    const current = carousel.scrollLeft;
+    // tolerance (px)
+    const tol = 2;
+    if (current <= tol) {
+      // at the prepended clone -> jump to last real slide
+      isJumping = true;
+      // disable smooth, jump, then re-enable smooth
+      const prev = carousel.style.scrollBehavior;
+      carousel.style.scrollBehavior = 'auto';
+      carousel.scrollLeft = realCount * slideWidth;
+      carousel.style.scrollBehavior = prev || '';
+      setTimeout(()=> { isJumping = false; updateDots(); }, 50);
+      return;
+    }
+    if (current >= (maxIndex * slideWidth) - tol) {
+      // at the appended clone -> jump to first real slide
+      isJumping = true;
+      const prev = carousel.style.scrollBehavior;
+      carousel.style.scrollBehavior = 'auto';
+      carousel.scrollLeft = slideWidth;
+      carousel.style.scrollBehavior = prev || '';
+      setTimeout(()=> { isJumping = false; updateDots(); }, 50);
+      return;
+    }
+    updateDots();
+  });
+
+  // snap-to-nearest after user stops dragging
+  let snapTimeout;
+  function snapToNearest() {
+    clearTimeout(snapTimeout);
+    snapTimeout = setTimeout(() => {
+      const index = Math.round(carousel.scrollLeft / slideWidth);
+      carousel.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
+    }, 80);
+  }
+
+  // ----- Drag to scroll (desktop mouse) -----
+  let isDown = false;
+  let startX;
+  let startScrollLeft;
+
+  carousel.addEventListener('mousedown', (e) => {
+    isDown = true;
+    carousel.classList.add('dragging');
+    startX = e.pageX - carousel.getBoundingClientRect().left;
+    startScrollLeft = carousel.scrollLeft;
     e.preventDefault();
-    carousel.scrollLeft+=e.deltaY;
-  }
-},{passive:false});
+  });
 
-setInterval(()=>{
-  if(!paused){
-    carousel.scrollBy({left:carousel.clientWidth,behavior:"smooth"});
-  }
-},5000);
+  document.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - carousel.getBoundingClientRect().left;
+    const walk = x - startX;
+    carousel.scrollLeft = startScrollLeft - walk;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDown) return;
+    isDown = false;
+    carousel.classList.remove('dragging');
+    snapToNearest();
+  });
+
+  carousel.addEventListener('mouseleave', () => {
+    if (isDown) {
+      isDown = false;
+      carousel.classList.remove('dragging');
+      snapToNearest();
+    }
+  });
+
+  // ----- Touch support (mobile) -----
+  carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].pageX - carousel.getBoundingClientRect().left;
+    startScrollLeft = carousel.scrollLeft;
+  }, {passive: true});
+
+  carousel.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX - carousel.getBoundingClientRect().left;
+    const walk = x - startX;
+    carousel.scrollLeft = startScrollLeft - walk;
+  }, {passive: true});
+
+  carousel.addEventListener('touchend', () => {
+    snapToNearest();
+  });
+
+  // ----- Mouse wheel (vertical -> horizontal) - keep your current behaviour -----
+  carousel.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      carousel.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  // ----- Auto scroll with looping -----
+  let autoPaused = false;
+  let autoInterval = setInterval(()=> {
+    if (autoPaused || isDown) return;
+    carousel.scrollBy({ left: slideWidth, behavior: 'smooth' });
+  }, 5000);
+
+  // Pause auto on hover / drag
+  carousel.addEventListener('mouseenter', () => { autoPaused = true; document.body.style.overflowY = "hidden"; });
+  carousel.addEventListener('mouseleave', () => { autoPaused = false; document.body.style.overflowY = ""; });
+
+  // recalc on resize
+  window.addEventListener('resize', () => {
+    gap = parseInt(window.getComputedStyle(carousel).getPropertyValue('gap')) || 0;
+    recalcSizes();
+  });
+
+  // If user clicks dots to jump (optional: added for UX)
+  dots.addEventListener('click', (e) => {
+    if (!e.target) return;
+    const idx = Array.from(dots.children).indexOf(e.target);
+    if (idx === -1) return;
+    // idx is 0..realCount-1; real slides start at position 1 (because of clone)
+    carousel.scrollTo({ left: (idx + 1) * slideWidth, behavior: 'smooth' });
+  });
+});
 
 </script>
 
